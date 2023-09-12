@@ -2,10 +2,16 @@ import java.util.ArrayList;
 
 public class Premisse {
     
-    ArrayList<Element> _elementList;
+    ArrayList<Element> _elementList = new ArrayList<>();
 
     public Premisse(ArrayList<Element> elementList){
         this._elementList = elementList;
+    }
+
+    public Premisse(String description){
+        String[] tampon = description.split("ET");
+        for (int i = 0; i < tampon.length;i++)
+            _elementList.add(new Element(tampon[i].trim()));
     }
 
     public String toString(){
@@ -16,7 +22,7 @@ public class Premisse {
             if (i == 0)
                 resultat+=_elementList.get(i).toString();
             else
-                resultat+=_elementList.get(i).toString();
+                resultat+=" & " +_elementList.get(i).toString();
         }
         return resultat;
     }
