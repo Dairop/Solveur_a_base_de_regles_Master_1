@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class BaseDeRegles {
 
-    ArrayList<Règle> _reglesListe = new ArrayList<>();
+    ArrayList<Regle> _reglesListe = new ArrayList<>();
 
-    public void ajouterRègle(Règle règle){
+    public void ajouterRègle(Regle règle){
         _reglesListe.add(règle);
     }
 
