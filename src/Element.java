@@ -17,6 +17,7 @@ public class Element {
     }
 
     public String toString(){
-        return _nom + " " + ((this._estVrai) ? 1: 0);
+        
+        return ((this._estVrai) ? "": "!") + _nom;
     }
 }

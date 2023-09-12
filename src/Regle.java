@@ -4,7 +4,6 @@ public class Regle {
     Premisse _consequent;
     Premisse _premice;
 
-
     public Regle(String nom, Premisse premice, Premisse consequent){
         this._nom = nom;
         this._premice = premice;
@@ -12,7 +11,9 @@ public class Regle {
     }
 
     public Regle(String string) {
-        System.out.print(string.split(":")[0]+"a\n");
+        _nom = string.split(":")[0].trim();
+        _premice = new Premisse(string.split(":")[1].split("->")[0].trim());
+        _consequent = new Premisse(string.split(":")[1].split("->")[1].trim());
     }
 
     public String toString(){
