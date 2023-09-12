@@ -18,6 +18,7 @@ public class Moteur {
 
     public void executer(){
         if (this._strategie == null) return;
+        this._strategie.executer(_baseDeFaits, _baseDeRegles);
     }
 
     //setter Strategie
