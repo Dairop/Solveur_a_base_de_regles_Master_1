@@ -3,8 +3,10 @@ public class Element {
     Boolean _estVrai;
 
     public Element(String nom){
-        this._nom = nom;
+        this._nom = nom.trim();
+
         this._estVrai = true;
+        if (this._nom.charAt(0) == '!') this._estVrai = false;
     }
 
     public Element(String nom, Boolean estVrai){
@@ -17,6 +19,6 @@ public class Element {
     }
 
     public String toString(){
-        return _nom + " " + ((this._estVrai) ? 1: 0);
+        return ((this._estVrai) ? "": "!") + _nom;
     }
 }
