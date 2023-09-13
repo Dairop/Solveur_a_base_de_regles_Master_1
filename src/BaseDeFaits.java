@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BaseDeFaits {
-    ArrayList<Element> _base = new ArrayList<Element>();
+    private ArrayList<Element> _base = new ArrayList<Element>();
 
     public BaseDeFaits(){}
     
@@ -34,6 +34,5 @@ public class BaseDeFaits {
         str += "]";
         return str;
     }
-
     
 }

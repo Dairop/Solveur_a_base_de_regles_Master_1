@@ -1,6 +1,6 @@
 public class Element {
-    String _nom;
-    Boolean _estVrai;
+    private String _nom;
+    private Boolean _estVrai;
 
     public Element(String nom){
         this._nom = nom.trim();

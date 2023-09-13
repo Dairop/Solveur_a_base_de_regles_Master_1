@@ -1,7 +1,7 @@
 public class Moteur {
-    BaseDeFaits _baseDeFaits = new BaseDeFaits();
-    BaseDeRegles _baseDeRegles = new BaseDeRegles();
-    Strategie _strategie = null;
+    private BaseDeFaits _baseDeFaits = new BaseDeFaits();
+    private BaseDeRegles _baseDeRegles = new BaseDeRegles();
+    private Strategie _strategie = null;
 
     public Moteur(){}
 

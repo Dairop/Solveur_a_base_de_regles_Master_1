@@ -1,13 +1,21 @@
 public class Regle {
     
-    String _nom;
-    Premisse _consequent;
-    Premisse _premice;
+    private String _nom;
+    private Premisse _consequent;
+    private Premisse _premice;
 
     public Regle(String nom, Premisse premice, Premisse consequent){
         this._nom = nom;
         this._premice = premice;
         this._consequent = consequent;
+    }
+
+    public int getTaillePremice(){
+        return _premice.taille();
+    }
+
+    public Element getPremice(int indice){
+        return _premice.geElement(indice);
     }
 
     public Regle(String string) {

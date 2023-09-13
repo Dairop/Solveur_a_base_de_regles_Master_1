@@ -2,10 +2,18 @@ import java.util.ArrayList;
 
 public class Premisse {
     
-    ArrayList<Element> _elementList = new ArrayList<>();
+    private ArrayList<Element> _elementList = new ArrayList<>();
 
     public Premisse(ArrayList<Element> elementList){
         this._elementList = elementList;
+    }
+
+    public Element geElement(int indice){
+        return _elementList[indice];
+    }
+
+    public int taille(){
+        return _elementList.size();
     }
 
     public Premisse(String description){

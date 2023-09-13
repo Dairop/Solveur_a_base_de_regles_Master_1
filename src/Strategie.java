@@ -1,5 +1,3 @@
 public interface Strategie {
-    public default void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
-        //
-    }
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles);
 }
