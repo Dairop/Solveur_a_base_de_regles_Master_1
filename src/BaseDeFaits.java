@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BaseDeFaits {
     private ArrayList<Element> _base = new ArrayList<Element>();
@@ -62,5 +63,67 @@ public class BaseDeFaits {
 
         }
         return -1;
+    }
+
+    public void verifierIncoherences() throws Exception {
+        verifierDoublons();
+        verifierNoms();
+    }
+
+    //on regarde si les mots clés/symboles ne sont pas dans le nom
+    private void verifierNoms() throws Exception {
+        ArrayList<Element> listesInterdites = new ArrayList<>(_base);
+        for (int i = 0; i < _base.size();i++){
+            if (_base.get(i).nom().contains("!") || _base.get(i).nom().contains("ET") || 
+            _base.get(i).nom().contains("->"))
+                listesInterdites.add(_base.get(i));
+        }
+
+        if (listesInterdites.isEmpty())
+            return;
+        String msg = "Problème mots clés / symboles interdits dans des noms d'éléments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les éléments de problèmes : ";
+        for (int i = 0; i < listesInterdites.size();i++)
+            msg+=listesInterdites.get(i).nom()+" / ";
+        msg +="1 : arrêter le programme\n2: Enlever ces symboles/noms interdits";
+
+        Moteur.print(msg);
+        if (Moteur.lireReponse(msg).equals("1"))
+            throw new Exception("Caractères interdits dans les symboles / mots");
+        else  {
+            for (int i = 0; i < _base.size();i++){
+                _base.set(i, new Element(_base.get(i).nom().replace("Et", "").replace("!", "").replace("->", ""), _base.get(i).estVrai()));
+            }
+        }
+
+        msg = "Nouvelle base de faits : "+_base.toString();
+        Moteur.print(msg);
+            
+    }
+
+    public void verifierDoublons() throws Exception{
+        ArrayList<Element> elementsTampon = new ArrayList<>();
+        ArrayList<Element> doublons = new ArrayList<>();
+
+        for (int i = 0; i < _base.size();i++)
+            if (elementsTampon.contains(_base.get(i)))
+                doublons.add(_base.get(i));
+            else
+                elementsTampon.add(_base.get(i));
+
+        if (doublons.size() == 0)return;
+
+        String msg = "Attention doublon(s) détecté(s) dans la base de faits : \n";
+        for (int i = 0; i < doublons.size();i++){
+            msg+=" / "+doublons.get(i).toString();
+        }
+
+        msg+="\n1 : pour enlever les doublons\n2 : pour ne pas lancer la simulation : \n";
+        if (Moteur.lireReponse(msg).equals("1")){
+            throw new Exception("Doublons dans la base de faits");
+        }else{
+            _base = elementsTampon;
+        }
+        Moteur.print("Nouvelle base de faits : "+toString());
+        
     }
 }

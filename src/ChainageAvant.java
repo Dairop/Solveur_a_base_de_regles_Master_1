@@ -11,7 +11,7 @@ public class ChainageAvant implements Strategie{
         boolean dec = true;
 
         
-        while (inf && nbInf <= 200000000) {
+        while (inf) {
             // Réinitialisez inf à false au début de chaque itération
             inf = false;
 
@@ -32,14 +32,11 @@ public class ChainageAvant implements Strategie{
                 }
                 // Si toutes les prémises sont satisfaites, exécutez la règle
                 if (dec) {
-                    //System.out.println("==");
-                    //System.out.println("Inf : "+nbInf+" | "+regle.toString()+" ajoute ");
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
                         if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k)))
                             baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                         baseDeReglesEnTampon.enleverRegle(regle.nom());
-                        //System.out.println(regle.avoirConsequentParIndice(k).toString());
                     }
 
                     inf = true; // Indique qu'au moins une règle a été exécutée à cette itération
@@ -48,7 +45,7 @@ public class ChainageAvant implements Strategie{
             }
         }      
         Chronometre.stop();
-        System.out.println("Résultat : Temps d'exécution : "+Chronometre.time()+" ms Nombres d'inférences : "+nbInf);
+        System.out.println("Résultat : Temps d'exécution : "+Chronometre.time()+" ms / Nombres d'inférences : "+nbInf);
         System.out.println(baseDeFaitsEnTampon.toString());
     }
 }

@@ -48,4 +48,7 @@ public class BaseDeRegles {
             }
     }
 
+    public void verifierIncoherences() {
+    }
+
 }
