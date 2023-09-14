@@ -2,6 +2,7 @@ public class ChainageAvant implements Strategie{
     
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
 
+        Chronometre.start();
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesEnTampon = BaseDeRegles.copy(baseDeRegles);
 
@@ -31,22 +32,23 @@ public class ChainageAvant implements Strategie{
                 }
                 // Si toutes les prémises sont satisfaites, exécutez la règle
                 if (dec) {
-                    System.out.println("==");
-                    System.out.println("Inf : "+nbInf+" | "+regle.toString()+" ajoute ");
+                    //System.out.println("==");
+                    //System.out.println("Inf : "+nbInf+" | "+regle.toString()+" ajoute ");
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
                         if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k)))
                             baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                         baseDeReglesEnTampon.enleverRegle(regle.nom());
-                        System.out.println(regle.avoirConsequentParIndice(k).toString());
+                        //System.out.println(regle.avoirConsequentParIndice(k).toString());
                     }
 
                     inf = true; // Indique qu'au moins une règle a été exécutée à cette itération
                     nbInf++; // Incrémente le compteur de règles exécutées
                 }
             }
-        }       
-        System.out.println("Résultat : ");
+        }      
+        Chronometre.stop();
+        System.out.println("Résultat : Temps d'exécution : "+Chronometre.time()+" ms Nombres d'inférences : "+nbInf);
         System.out.println(baseDeFaitsEnTampon.toString());
     }
 }
