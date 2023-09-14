@@ -40,4 +40,8 @@ public class Element {
     public int hashCode() {
         return Objects.hash(_nom, _estVrai);
     }
+
+    public boolean estVrai() {
+        return _estVrai;
+    }
 }

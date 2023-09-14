@@ -6,33 +6,42 @@ public class ChainageAvant implements Strategie{
 
         boolean inf = true;
         int nbInf = 0;
-
         boolean dec = true;
 
-        while (inf){
+        
+        while (inf && nbInf <= 200) {
+            // Réinitialisez inf à false au début de chaque itération
             inf = false;
-            for (int i = 0; i < baseDeRegles.taille();i++){
+
+            for (int i = 0; i < baseDeRegles.taille(); i++) {
                 dec = true;
                 Regle regle = baseDeRegles.avoirRegleParIndice(i);
+
                 for (int j = 0; j < regle.taillePremice(); j++) {
-                    Element premice = regle.avoirPremiceParIndice(j); // Utilisation de j ici
-    
+                    Element premice = regle.avoirPremiceParIndice(j);
+
                     // Vérification si la prémisse est satisfaite
-                    if (!baseDeFaitsEnTampon.contient(premice)) {
+                    if (!baseDeFaitsEnTampon.contient(premice) 
+                    || (baseDeFaitsEnTampon.contient(premice) && 
+                    baseDeFaitsEnTampon.avoirValeurFait(premice.nom()) == 1)) {
                         dec = false; // La prémisse n'est pas satisfaite, la règle ne peut pas être exécutée
-                        break; // Sortir de la boucle dès qu'une prémisse n'est pas satisfaite
+                        break;
                     }
+                    
                 }
-    
                 // Si toutes les prémises sont satisfaites, exécutez la règle
                 if (dec) {
                     // Ajoutez le résultat de la règle à la base de faits
-                    for (int k = 0; k < regle.tailleConsequent();k++)
+                    for (int k = 0; k < regle.tailleConsequent(); k++) {
                         baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
+                    }
+
                     inf = true; // Indique qu'au moins une règle a été exécutée à cette itération
                     nbInf++; // Incrémente le compteur de règles exécutées
                 }
             }
-        }
+        }       
+        System.out.println("Résultat : ");
+        System.out.println(baseDeFaitsEnTampon.toString());
     }
 }

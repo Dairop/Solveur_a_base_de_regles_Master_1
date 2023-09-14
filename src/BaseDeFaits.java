@@ -46,4 +46,21 @@ public class BaseDeFaits {
             nouvelleBase.ajouterFait(b.recupererFaitParIndice(i).clone());
         return nouvelleBase;
     }
+
+
+    //alors 1 == true
+    //0 == false
+    //Sinon renvoie -1 si on sait pas
+    public int avoirValeurFait(String premiceNom) {
+        for (int i = 0; i < _base.size();i++){
+            if (_base.get(i).nom().equals(premiceNom)){
+                if (_base.get(i).estVrai())
+                    return 1;
+                else 
+                    return 0;
+            }
+
+        }
+        return -1;
+    }
 }
