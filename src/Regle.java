@@ -38,4 +38,29 @@ public class Regle {
     }
 
 
+    //si on a -1 alors le premice ne fais pas partie
+    public int avoirValeurPremice(String nomPremice) {
+        for (int i = 0; i < _premice.taille();i++){
+            if (_premice.avoirElementIndice(i).nom() == nomPremice){
+                if (_premice.avoirElementIndice(i).estVrai())
+                return 1;
+                else 
+                    return 0;
+            }
+        }
+
+        return -1;
+    }
+
+    public String nom(){
+        return _nom;
+    }
+
+    public Regle clone(){
+        Regle nouvelle = new Regle(new String(_nom), _premice.clone(), _consequent.clone());
+        
+        return nouvelle;
+    }
+
+
 }

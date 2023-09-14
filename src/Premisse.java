@@ -22,6 +22,9 @@ public class Premisse {
             _elementListe.add(new Element(tampon[i].trim()));
     }
 
+    public Premisse() {
+    }
+
     public String toString(){
         if (_elementListe.size() == 0)
             return "Premisse Vide";
@@ -33,6 +36,17 @@ public class Premisse {
                 resultat+=" & " +_elementListe.get(i).toString();
         }
         return resultat;
+    }
+
+    public void ajouterElement(Element e){
+        _elementListe.add(e);
+    }
+
+    public Premisse clone(){
+        Premisse nouvelle = new Premisse();
+        for (int i = 0; i < _elementListe.size();i++)
+            nouvelle.ajouterElement(_elementListe.get(i).clone());
+        return nouvelle;
     }
 
 }

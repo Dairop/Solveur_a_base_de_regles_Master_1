@@ -3,6 +3,7 @@ public class ChainageAvant implements Strategie{
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
 
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
+        BaseDeRegles baseDeReglesEnTampon = BaseDeRegles.copy(baseDeRegles);
 
         boolean inf = true;
         int nbInf = 0;
@@ -13,9 +14,9 @@ public class ChainageAvant implements Strategie{
             // Réinitialisez inf à false au début de chaque itération
             inf = false;
 
-            for (int i = 0; i < baseDeRegles.taille(); i++) {
+            for (int i = 0; i < baseDeReglesEnTampon.taille(); i++) {
                 dec = true;
-                Regle regle = baseDeRegles.avoirRegleParIndice(i);
+                Regle regle = baseDeReglesEnTampon.avoirRegleParIndice(i);
 
                 for (int j = 0; j < regle.taillePremice(); j++) {
                     Element premice = regle.avoirPremiceParIndice(j);
@@ -23,7 +24,7 @@ public class ChainageAvant implements Strategie{
                     // Vérification si la prémisse est satisfaite
                     if (!baseDeFaitsEnTampon.contient(premice) 
                     || (baseDeFaitsEnTampon.contient(premice) && 
-                    baseDeFaitsEnTampon.avoirValeurFait(premice.nom()) == 1)) {
+                    baseDeFaitsEnTampon.avoirValeurFait(premice.nom()) == regle.avoirValeurPremice(premice.nom()))) {
                         dec = false; // La prémisse n'est pas satisfaite, la règle ne peut pas être exécutée
                         break;
                     }
@@ -33,6 +34,7 @@ public class ChainageAvant implements Strategie{
                 if (dec) {
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
+                        baseDeReglesEnTampon.enleverRegle(regle.nom());
                         baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                     }
 
