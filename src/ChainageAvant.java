@@ -10,7 +10,7 @@ public class ChainageAvant implements Strategie{
         boolean dec = true;
 
         
-        while (inf && nbInf <= 200) {
+        while (inf && nbInf <= 200000000) {
             // Réinitialisez inf à false au début de chaque itération
             inf = false;
 
@@ -20,11 +20,10 @@ public class ChainageAvant implements Strategie{
 
                 for (int j = 0; j < regle.taillePremice(); j++) {
                     Element premice = regle.avoirPremiceParIndice(j);
-
                     // Vérification si la prémisse est satisfaite
                     if (!baseDeFaitsEnTampon.contient(premice) 
                     || (baseDeFaitsEnTampon.contient(premice) && 
-                    baseDeFaitsEnTampon.avoirValeurFait(premice.nom()) == regle.avoirValeurPremice(premice.nom()))) {
+                    baseDeFaitsEnTampon.avoirValeurFait(premice.nom()) != regle.avoirValeurPremice(premice.nom()))) {
                         dec = false; // La prémisse n'est pas satisfaite, la règle ne peut pas être exécutée
                         break;
                     }
@@ -32,10 +31,14 @@ public class ChainageAvant implements Strategie{
                 }
                 // Si toutes les prémises sont satisfaites, exécutez la règle
                 if (dec) {
+                    System.out.println("==");
+                    System.out.println("Inf : "+nbInf+" | "+regle.toString()+" ajoute ");
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
+                        if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k)))
+                            baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                         baseDeReglesEnTampon.enleverRegle(regle.nom());
-                        baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
+                        System.out.println(regle.avoirConsequentParIndice(k).toString());
                     }
 
                     inf = true; // Indique qu'au moins une règle a été exécutée à cette itération
