@@ -2,35 +2,35 @@ import java.util.ArrayList;
 
 public class Premisse {
     
-    private ArrayList<Element> _elementList = new ArrayList<>();
+    private ArrayList<Element> _elementListe = new ArrayList<>();
 
-    public Premisse(ArrayList<Element> elementList){
-        this._elementList = elementList;
+    public Premisse(ArrayList<Element> elementListe){
+        this._elementListe = elementListe;
     }
 
-    public Element geElement(int indice){
-        return _elementList[indice];
+    public Element avoirElementIndice(int indice){
+        return _elementListe.get(indice);
     }
 
     public int taille(){
-        return _elementList.size();
+        return _elementListe.size();
     }
 
     public Premisse(String description){
         String[] tampon = description.split("ET");
         for (int i = 0; i < tampon.length;i++)
-            _elementList.add(new Element(tampon[i].trim()));
+            _elementListe.add(new Element(tampon[i].trim()));
     }
 
     public String toString(){
-        if (_elementList.size() == 0)
+        if (_elementListe.size() == 0)
             return "Premisse Vide";
         String resultat = "";
-        for (int i = 0; i < _elementList.size();i++){
+        for (int i = 0; i < _elementListe.size();i++){
             if (i == 0)
-                resultat+=_elementList.get(i).toString();
+                resultat+=_elementListe.get(i).toString();
             else
-                resultat+=" & " +_elementList.get(i).toString();
+                resultat+=" & " +_elementListe.get(i).toString();
         }
         return resultat;
     }

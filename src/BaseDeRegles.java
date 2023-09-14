@@ -8,20 +8,20 @@ public class BaseDeRegles {
         _reglesListe.add(règle);
     }
 
-    public int getTaille(){
+    public int taille(){
         return _reglesListe.size();
     }
 
-    public Regle getRegle(int index){
+    public Regle avoirRegleParIndice(int index){
         return _reglesListe.get(index);
     }
 
     public String toString(){
-        String result = "";
+        String resultat = "";
         for (int i = 0;i < _reglesListe.size();i++){
-            result+=_reglesListe.get(i).toString()+"\n";
+            resultat+=_reglesListe.get(i).toString()+"\n";
         }
-        return result;
+        return resultat;
     }
 
 }

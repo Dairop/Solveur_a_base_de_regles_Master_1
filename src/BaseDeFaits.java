@@ -34,5 +34,16 @@ public class BaseDeFaits {
         str += "]";
         return str;
     }
+
+    public boolean contient(Element element){
+        return _base.contains(element);
+    }
     
+
+    public static BaseDeFaits copy(BaseDeFaits b){
+        BaseDeFaits nouvelleBase = new BaseDeFaits();
+        for (int i = 0; i < b.nombreFaits();i++)
+            nouvelleBase.ajouterFait(b.recupererFaitParIndice(i).clone());
+        return nouvelleBase;
+    }
 }

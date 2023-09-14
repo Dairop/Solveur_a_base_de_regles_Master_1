@@ -1,6 +1,9 @@
 public class ChainageAvant implements Strategie{
     
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
+
+        BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
+
         boolean inf = true;
         int nbInf = 0;
 
@@ -8,14 +11,14 @@ public class ChainageAvant implements Strategie{
 
         while (inf){
             inf = false;
-            for (int i = 0; i < baseDeRegles.getTaille();i++){
+            for (int i = 0; i < baseDeRegles.taille();i++){
                 dec = true;
-                Regle regle = baseDeRegles.getRegle(i);
-                for (int j = 0; j < regle.getTaillePremice(); j++) {
-                    Element premice = regle.getPremice(j); // Utilisation de j ici
+                Regle regle = baseDeRegles.avoirRegleParIndice(i);
+                for (int j = 0; j < regle.taillePremice(); j++) {
+                    Element premice = regle.avoirPremiceParIndice(j); // Utilisation de j ici
     
                     // Vérification si la prémisse est satisfaite
-                    if (!baseDeFaits.contient(premice)) {
+                    if (!baseDeFaitsEnTampon.contient(premice)) {
                         dec = false; // La prémisse n'est pas satisfaite, la règle ne peut pas être exécutée
                         break; // Sortir de la boucle dès qu'une prémisse n'est pas satisfaite
                     }
@@ -24,7 +27,8 @@ public class ChainageAvant implements Strategie{
                 // Si toutes les prémises sont satisfaites, exécutez la règle
                 if (dec) {
                     // Ajoutez le résultat de la règle à la base de faits
-                    baseDeFaits.ajouter(regle.get$);
+                    for (int k = 0; k < regle.tailleConsequent();k++)
+                        baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                     inf = true; // Indique qu'au moins une règle a été exécutée à cette itération
                     nbInf++; // Incrémente le compteur de règles exécutées
                 }
