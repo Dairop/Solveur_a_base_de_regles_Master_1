@@ -18,6 +18,14 @@ public class Regle {
         return _premice.geElement(indice);
     }
 
+    public int getTailleConsequent(){
+        return _consequent.taille();
+    }
+
+    public Element getConsequent(int indice){
+        return _consequent.geElement(indice);
+    }
+
     public Regle(String string) {
         _nom = string.split(":")[0].trim();
         _premice = new Premisse(string.split(":")[1].split("->")[0].trim());
