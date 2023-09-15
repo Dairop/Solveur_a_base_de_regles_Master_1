@@ -18,11 +18,14 @@ public class ChainageArriere implements Strategie{
     }
 
     public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace){
-
+        if (trace) System.out.println("Base de faits: "+baseDeFaits.toString());
         boolean dem = false;
         
         //1er cas
-        if (baseDeFaits.contient(b)) dem = true;
+        if (baseDeFaits.contient(b)) {
+            dem = true;
+            if (trace) System.out.println("Base de fait contient: "+b.toString());
+        }
 
         //2nd cas, vérifier si b est conséquent d'une des règles de BR
         for (int i = 0; i < baseDeRegles.taille() && !dem; i++) {
@@ -31,6 +34,7 @@ public class ChainageArriere implements Strategie{
              if (r.consequentContient(b)){
                 //vérifier si les prémisses d'une règle avec b en conséquent sont connues
                 dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles);
+                if (dem && trace) System.out.println("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
             }
         }
 

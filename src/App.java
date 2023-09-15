@@ -1,7 +1,8 @@
 public class App {
     public static void main(String[] args) throws Exception {
 
-        testChainageAvant();
+        //testChainageAvant();
+        //System.out.println("\n\n");
         testChainageArriere();
     }
 
@@ -36,7 +37,7 @@ public class App {
         br.ajouterRègle(new Regle("R1 : a -> !b"));
         br.ajouterRègle(new Regle("R2 : a -> e"));
         br.ajouterRègle(new Regle("R3 : a ET b -> c"));
-        br.ajouterRègle(new Regle("R4 : c ET e -> !d"));
+        br.ajouterRègle(new Regle("R4 : c ET e -> d"));
         br.ajouterRègle(new Regle("R5 : a ET d -> E"));
         br.ajouterRègle(new Regle("R6 : E -> a"));
 

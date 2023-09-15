@@ -7,7 +7,7 @@ public class BaseDeFaits {
     public BaseDeFaits(){}
     
     public void ajouterFait(Element nouveauFait){
-        this._base.add(nouveauFait);
+        if (!contient(nouveauFait))this._base.add(nouveauFait);
     }
 
     public void retireFait(Element faitARetirer) {
