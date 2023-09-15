@@ -6,9 +6,10 @@ public class Moteur {
     private BaseDeFaits _baseDeFaits = new BaseDeFaits();
     private BaseDeRegles _baseDeRegles = new BaseDeRegles();
     private Strategie _strategie = null;
+    private boolean _trace = true;
 
     private static boolean enConsole = true;
-
+    
     public Moteur(){}
 
     public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
@@ -22,6 +23,13 @@ public class Moteur {
         this._strategie = strategie;
     }
 
+    public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace){
+        this._baseDeFaits = baseDeFaits;
+        this._baseDeRegles = baseDeRegles;
+        this._strategie = strategie;
+        this._trace = true;
+    }
+
     public void executer(){
         try {
             verifierIncoherences();
@@ -29,7 +37,7 @@ public class Moteur {
             e.printStackTrace();
         }
         if (this._strategie == null) return;
-        this._strategie.executer(_baseDeFaits, _baseDeRegles);
+        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
     }
 
     //setter Strategie

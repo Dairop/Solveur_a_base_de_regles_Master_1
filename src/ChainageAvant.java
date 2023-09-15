@@ -1,6 +1,6 @@
 public class ChainageAvant implements Strategie{
     
-    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace){
 
         Chronometre.start();
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);

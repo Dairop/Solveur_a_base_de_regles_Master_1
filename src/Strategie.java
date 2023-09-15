@@ -1,3 +1,3 @@
 public interface Strategie {
-    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles);
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace);
 }
