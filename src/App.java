@@ -8,7 +8,7 @@ public class App {
     static void testChainageAvant(){
         BaseDeFaits bf = new BaseDeFaits();
         bf.ajouterFait(new Element("a"));
-        bf.ajouterFait(new Element("b"));
+        bf.ajouterFait(new Element("!b"));
         bf.ajouterFait(new Element("b"));
 
         BaseDeRegles br = new BaseDeRegles();

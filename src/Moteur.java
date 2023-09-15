@@ -7,7 +7,7 @@ public class Moteur {
     private BaseDeRegles _baseDeRegles = new BaseDeRegles();
     private Strategie _strategie = null;
 
-    private static boolean enConsole = false;
+    private static boolean enConsole = true;
 
     public Moteur(){}
 
@@ -56,7 +56,7 @@ public class Moteur {
             System.out.println(msg);
             Scanner sc = new Scanner(System.in);
             String reponse = sc.nextLine();
-            sc.close();
+            //sc.close();
             return reponse;
         }
         else

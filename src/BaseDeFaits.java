@@ -68,26 +68,84 @@ public class BaseDeFaits {
     public void verifierIncoherences() throws Exception {
         verifierDoublons();
         verifierNoms();
+        verifierPresenceVraiFaux();//on doit enlever les doublons en 1er
+    }
+
+
+    //on vérifie si on a pas A et !A
+    private void verifierPresenceVraiFaux() throws Exception {
+        //on considère qu'avant on a enlevé les doublons
+        ArrayList<Element> listesNomsDejaFaits = new ArrayList<>();
+        ArrayList<Element> listesPb = new ArrayList<>();
+        boolean appartient = false;
+        for (int i = 0; i < _base.size();i++){
+            appartient = false;
+            for (int j = 0; j < listesNomsDejaFaits.size();j++){
+                if (listesNomsDejaFaits.get(j).nom().equals(_base.get(i).nom()) && i != j)
+                    appartient = true;
+
+            }
+
+            if (appartient)
+                listesPb.add(_base.get(i));
+            else
+                listesNomsDejaFaits.add(_base.get(i));
+
+        }
+
+        if (listesPb.isEmpty())
+            return;
+
+        String msg = "On a des valeurs incohérentes on a la fois : ";
+        for (int i = 0; i < listesPb.size();i++){
+            msg+=listesPb.get(i).toString()+" et !" +listesPb.get(i).toString()+"; ";
+        }
+        msg+="\n1 : Arrêter le programme\n2:Enlever tous ses faits\n3:Choisir pour chaque lequel laissé";
+        String reponse = Moteur.lireReponse(msg);
+        if (reponse.contains("1"))
+            throw new Exception("Valeurs incohérentes : Vrai/Faux en même temps dans la base des faits");
+        else if (reponse.contains("2")){
+            _base = listesNomsDejaFaits;
+        }else{
+            for (int i = 0; i < listesPb.size();i++){
+                reponse = Moteur.lireReponse("--------------------\n\n1 : Supprimer "+listesPb.get(i).toString()+ "\n2 : Supprimer son contraire");
+                if (reponse.contains("1")){
+                    for (int j = 0;j < _base.size();j++)
+                        if (_base.get(j).toString().equals(listesPb.get(i).toString())){
+                            _base.remove(j);
+                            j--;
+                        }
+                }else{
+                    for (int j = 0;j < _base.size();j++)
+                        if (_base.get(j).nom().equals(listesPb.get(i).nom()) && _base.get(j).estVrai() != listesPb.get(i).estVrai()){
+                            _base.remove(j);
+                            j--;
+                        }
+                }
+            }
+        }
+        Moteur.print("Nouvelle base de faits : "+toString());
     }
 
     //on regarde si les mots clés/symboles ne sont pas dans le nom
     private void verifierNoms() throws Exception {
-        ArrayList<Element> listesInterdites = new ArrayList<>(_base);
-        for (int i = 0; i < _base.size();i++){
+        ArrayList<Element> listesInterdites = new ArrayList<>();
+        for (int i = 0; i < _base.size();i++)
             if (_base.get(i).nom().contains("!") || _base.get(i).nom().contains("ET") || 
             _base.get(i).nom().contains("->"))
                 listesInterdites.add(_base.get(i));
-        }
-
+                
+        
+        //cas d'arrêt
         if (listesInterdites.isEmpty())
             return;
+
         String msg = "Problème mots clés / symboles interdits dans des noms d'éléments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les éléments de problèmes : ";
         for (int i = 0; i < listesInterdites.size();i++)
             msg+=listesInterdites.get(i).nom()+" / ";
         msg +="1 : arrêter le programme\n2: Enlever ces symboles/noms interdits";
 
-        Moteur.print(msg);
-        if (Moteur.lireReponse(msg).equals("1"))
+        if (Moteur.lireReponse(msg).contains("1"))
             throw new Exception("Caractères interdits dans les symboles / mots");
         else  {
             for (int i = 0; i < _base.size();i++){
@@ -118,7 +176,7 @@ public class BaseDeFaits {
         }
 
         msg+="\n1 : pour enlever les doublons\n2 : pour ne pas lancer la simulation : \n";
-        if (Moteur.lireReponse(msg).equals("1")){
+        if (Moteur.lireReponse(msg).contains("1")){
             throw new Exception("Doublons dans la base de faits");
         }else{
             _base = elementsTampon;
