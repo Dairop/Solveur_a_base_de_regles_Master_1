@@ -49,4 +49,8 @@ public class Premisse {
         return nouvelle;
     }
 
+    public ArrayList<Element> listeElements(){
+        return this._elementListe;
+    }
+
 }

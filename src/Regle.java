@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Regle {
     
     private String _nom;
@@ -32,6 +34,25 @@ public class Regle {
     public Element avoirConsequentParIndice(int indice){
         return _consequent.avoirElementIndice(indice);
     }
+
+    public boolean consequentContient(Element e){
+        for (int i = 0; i < this._consequent.taille(); i++){
+            if (this._consequent.avoirElementIndice(i).equals(e)) return true;
+        }
+        return false;
+    }
+
+    public boolean premiceContient(Element e){
+        for (int i = 0; i < this._premice.taille(); i++){
+            if (this._premice.avoirElementIndice(i).equals(e)) return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Element> avoirPremicesListe(){
+        return this._premice.listeElements();
+    }
+
 
     public String toString(){
         return _nom + " : "+_premice.toString()+" -> "+_consequent;
