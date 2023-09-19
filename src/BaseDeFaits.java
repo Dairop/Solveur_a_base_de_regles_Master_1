@@ -7,7 +7,7 @@ public class BaseDeFaits {
     public BaseDeFaits(){}
     
     public void ajouterFait(Element nouveauFait){
-        this._base.add(nouveauFait);
+        if (!contient(nouveauFait))this._base.add(nouveauFait);
     }
 
     public void retireFait(Element faitARetirer) {
@@ -96,11 +96,11 @@ public class BaseDeFaits {
         if (listesPb.isEmpty())
             return;
 
-        String msg = "On a des valeurs incohérentes on a la fois : ";
+        String msg = "Erreur valeurs incohérentes, à la fois : ";
         for (int i = 0; i < listesPb.size();i++){
             msg+=listesPb.get(i).toString()+" et !" +listesPb.get(i).toString()+"; ";
         }
-        msg+="\n1 : Arrêter le programme\n2:Enlever tous ses faits\n3:Choisir pour chaque lequel laissé";
+        msg+="\n1: Arrêter le programme\n2: Supprimer tous ses faits\n3: Choisir le fait à garder";
         String reponse = Moteur.lireReponse(msg);
         if (reponse.contains("1"))
             throw new Exception("Valeurs incohérentes : Vrai/Faux en même temps dans la base des faits");
