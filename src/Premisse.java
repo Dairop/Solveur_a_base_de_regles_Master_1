@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Premisse {
     
@@ -23,6 +26,24 @@ public class Premisse {
     }
 
     public Premisse() {
+    }
+
+    @Override
+    public boolean equals(Object o){
+        Premisse p = (Premisse)o;
+        if (_elementListe.size() != p._elementListe.size()) 
+            return false; // Si les listes n'ont pas la même taille, elles ne peuvent pas être égales
+    
+        // Créez des copies des listes pour les manipuler sans affecter les originales
+        List<Element> copieListe1 = new ArrayList<>(_elementListe);
+        List<Element> copieListe2 = new ArrayList<>(p._elementListe);
+
+        // Triez les copies des listes pour aligner les éléments
+        Collections.sort(copieListe1, Comparator.comparing(Element::hashCode)); // Tri par valeur, ajustez-le selon vos besoins
+        Collections.sort(copieListe2, Comparator.comparing(Element::hashCode)); // Tri par valeur, ajustez-le selon vos besoins
+
+        // Comparez les listes triées
+        return copieListe1.equals(copieListe2);
     }
 
     public String toString(){

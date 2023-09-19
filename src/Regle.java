@@ -21,6 +21,20 @@ public class Regle {
         return _premice.taille();
     }
 
+    public Premisse avoirPremices() {
+        return _premice;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        Regle r = (Regle) o;
+        return (r._premice.equals(_premice) && r._consequent.equals(_consequent));
+    }
+
+    public Premisse avoirConsequents() {
+        return _consequent;
+    }
+
     public Element avoirPremiceParIndice(int indice){
         return _premice.avoirElementIndice(indice);
     }
@@ -60,6 +74,10 @@ public class Regle {
         Regle nouvelle = new Regle(new String(_nom), _premice.clone(), _consequent.clone());
         
         return nouvelle;
+    }
+
+    public void setNom(String nouveauNom) {
+        this._nom = nouveauNom;
     }
 
 
