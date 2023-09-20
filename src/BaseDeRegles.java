@@ -234,4 +234,12 @@ public class BaseDeRegles {
 
     }
 
+    public Regle avoirRegleParNom(String string) {
+        for (int i = 0; i < _reglesListe.size();i++){
+            if (_reglesListe.get(i).nom().equals(string))
+                return _reglesListe.get(i);
+        }
+        return null;
+    }
+
 }
