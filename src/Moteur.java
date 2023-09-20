@@ -6,7 +6,7 @@ public class Moteur {
     private BaseDeFaits _baseDeFaits = new BaseDeFaits();
     private BaseDeRegles _baseDeRegles = new BaseDeRegles();
     private Strategie _strategie = null;
-    private boolean _trace = true;
+    private boolean _trace = false;
 
     private static boolean enConsole = true;
     

@@ -11,6 +11,10 @@ public class Premisse {
         this._elementListe = elementListe;
     }
 
+    public boolean contient(Element e){
+        return _elementListe.contains(e);
+    }
+
     public Element avoirElementIndice(int indice){
         return _elementListe.get(indice);
     }
