@@ -31,7 +31,6 @@ public class BaseDeRegles {
         return nouvelleBase;
     }
 
-
     public BaseDeRegles clone(){
         BaseDeRegles nouvelle = new BaseDeRegles();
         for (int i = 0; i < _reglesListe.size();i++)
@@ -50,5 +49,6 @@ public class BaseDeRegles {
 
     public void verifierIncoherences() {
     }
+
 
 }

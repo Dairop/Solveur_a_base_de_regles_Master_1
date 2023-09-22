@@ -3,12 +3,12 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Moteur {
-    private BaseDeFaits _baseDeFaits = new BaseDeFaits();
-    private BaseDeRegles _baseDeRegles = new BaseDeRegles();
-    private Strategie _strategie = null;
-    private boolean _trace = true;
+    protected BaseDeFaits _baseDeFaits = new BaseDeFaits();
+    protected BaseDeRegles _baseDeRegles = new BaseDeRegles();
+    protected Strategie _strategie = null;
+    protected boolean _trace = true;
 
-    private static boolean enConsole = true;
+    protected static boolean enConsole = true;
     
     public Moteur(){}
 
@@ -27,7 +27,7 @@ public class Moteur {
         this._baseDeFaits = baseDeFaits;
         this._baseDeRegles = baseDeRegles;
         this._strategie = strategie;
-        this._trace = true;
+        this._trace = trace;
     }
 
     public void executer(){

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class BaseDeFaits {
     private ArrayList<Element> _base = new ArrayList<Element>();
