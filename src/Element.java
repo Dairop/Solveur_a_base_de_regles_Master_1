@@ -7,6 +7,7 @@ public class Element {
     public Element(String nom){
         this._nom = nom.trim();
         this._estVrai = true;
+
         if (this._nom.charAt(0) == '!'){
             this._estVrai = false;
             _nom = nom.substring(1).trim();

@@ -1,5 +1,6 @@
 public class ChainageAvant implements Strategie{
     
+
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace){
 
         Chronometre.start();
@@ -34,8 +35,13 @@ public class ChainageAvant implements Strategie{
                 if (dec) {
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
-                        if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k)))
+                        if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k))){
                             baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
+                            if (trace){
+                                System.out.println("\n--------- Nombre d'inférences : " +nbInf);
+                                System.out.println("\nOn a : "+regle.avoirPremices().toString()+" donc on utilise la règle : \n"+regle.toString()+" et on obtient : \n"+regle.avoirConsequents().toString()+" \nNouvelle base de faits : \n"+baseDeFaitsEnTampon.toString());
+                            }
+                        }
                         baseDeReglesEnTampon.enleverRegle(regle.nom());
                     }
 
