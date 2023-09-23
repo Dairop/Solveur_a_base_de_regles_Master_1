@@ -67,9 +67,13 @@ public class Regle {
         return this._premice.listeElements();
     }
 
+    public ArrayList<Element> avoirConsequentsListe(){
+        return this._consequent.listeElements();
+    }
+
 
     public String toString(){
-        return _nom + " : "+_premice.toString()+" -> "+_consequent;
+        return _nom + " : "+_premice.toString()+" -> "+_consequent.toString();
     }
 
 
