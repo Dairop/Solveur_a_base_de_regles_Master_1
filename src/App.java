@@ -15,7 +15,7 @@ public class App {
 
 
         BaseDeRegles br = new BaseDeRegles();
-        br.ajouterRègle(new Regle("R1 : a(B) -> !d"));
+        br.ajouterRègle(new Regle("R1 : a(B) -> !d ET f(B)"));
         br.ajouterRègle(new Regle("R2 : a -> e(B)"));
         br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));
         
