@@ -37,9 +37,70 @@ public class BaseDeFaits {
     }
 
     public boolean contient(Element element){
-        return _base.contains(element);
+        //si ca appartien déjà on donne vrai
+        if (_base.contains(element))
+            return true;
+        //si l'élément n'est pas constitué de variable(s)
+        if (!element.nom().contains("(") && !element.nom().contains(")")){
+            return false;
+        }
+
+        //sinon c'est constitué de variable(s) donc on va chercher dans la base de faits, quelque chose qui fonctionne
+
+        String elementTransforme = formeSansVariable(element.nom());
+        Element element1 = new Element(formeSansVariable(element.nom()), element.estVrai());
+        Element element2;
+        for (int i = 0; i < _base.size();i++){
+            element2 = new Element(formeSansVariable(_base.get(i).nom()), _base.get(i).estVrai());
+            if (element1.equals(element2))
+                return true;
+        }
+
+        return false;
     }
     
+
+    //ça permet de transformer une formule => "fonction(X, Y, predicat(Y))" en "fonction(, , predicat())"
+    public static String formeSansVariable(String s){
+        
+        ArrayList<String> variables = avoirVariable(s);
+
+        for (int i = 0; i < variables.size();i++)
+            s = s.replace(variables.get(i), "");
+
+        return s;
+    }
+
+    public static ArrayList<String> avoirVariable(String s){
+        String [] split1 = s.split("\\(");
+        
+        int profondeur = 0;
+        int curseurDebut = split1.length;
+
+
+        ArrayList<String> variables = new ArrayList<>();
+        for (int j = split1.length;j < s.length();j++){
+                if (s.charAt(j) == ','){
+                    variables.add(s.substring(curseurDebut, j));
+                    curseurDebut = j+1;
+                }else if (s.charAt(j) == '('){
+                    curseurDebut = j+1;
+                    profondeur++;
+
+                }else if (s.charAt(j) == ')'){
+                    
+                    if (s.substring(curseurDebut, j).length() != 0)
+                        variables.add(s.substring(curseurDebut, j));
+
+                    curseurDebut = j+1;
+                    if (profondeur == 0)
+                        break;
+                }else if (j == s.length()-1)
+                    Moteur.print("Erreur : élément "+ s +" mal construit");
+
+            }
+        return variables;
+    }
 
     public static BaseDeFaits copy(BaseDeFaits b){
         BaseDeFaits nouvelleBase = new BaseDeFaits();
@@ -53,8 +114,9 @@ public class BaseDeFaits {
     //0 == false
     //Sinon renvoie -1 si on sait pas
     public int avoirValeurFait(String premiceNom) {
+        premiceNom = formeSansVariable(premiceNom);
         for (int i = 0; i < _base.size();i++){
-            if (_base.get(i).nom().equals(premiceNom)){
+            if (formeSansVariable(_base.get(i).nom()).equals(premiceNom)){
                 if (_base.get(i).estVrai())
                     return 1;
                 else 

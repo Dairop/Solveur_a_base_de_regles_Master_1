@@ -1,8 +1,31 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class App {
     public static void main(String[] args) throws Exception {
 
         //System.out.println(new Regle("R1 : a -> C ET b").equals(new Regle("R2 : a -> b ET C")));
-        ChainageParPaquetTest();
+        //testChainageArriere();
+
+        BaseDeFaits bf = new BaseDeFaits();
+        bf.ajouterFait(new Element("a"));
+        bf.ajouterFait(new Element("test(Dimitri,dsqd)"));
+
+        BaseDeRegles br = new BaseDeRegles();
+
+        br.ajouterRègle(new Regle("R1 : test(Y,X) -> vide(X, Y)X"));
+
+        
+       System.out.println(BaseDeFaits.formeSansVariable("F( X, chat(Y,tres(ds)))")); 
+       
+        /*         System.out.println("On vérifie");
+
+
+        Moteur moteur = new Moteur(bf, br, new ChainageAvant());
+        moteur.executer();
+
+        
+*/
     }
 
 

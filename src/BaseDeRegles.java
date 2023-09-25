@@ -135,8 +135,7 @@ public class BaseDeRegles {
             //ensuite on va transformer les règles 
             for (int k = 0; k < reglesQuiOntCommePremicesLelement.size();k++){
                 ArrayList<Element> premicesAvecContexte = new ArrayList<>();
-                ArrayList<Element> consequent = new ArrayList<>();
-
+                
                 //on remplit le premicesAvecContexte avec les prémices de base
                 for (int l = 0; l < reglesQuiOntCommePremicesLelement.get(k).taillePremice();l++){
                     premicesAvecContexte.add(reglesQuiOntCommePremicesLelement.get(k).avoirPremiceParIndice(l));

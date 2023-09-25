@@ -8,13 +8,16 @@ public class ChainageArriere implements Strategie{
     }
 
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace){
-
+        Chronometre.start();
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
         boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace);
-        if (result)   System.out.println( this._objectif.toString() + " a été vérifié, avec un retour positif");
-        else          System.out.println( this._objectif.toString() + " n'a pas été résolu");
+
+        Chronometre.stop();
+
+        if (result)   System.out.println( this._objectif.toString() + " a été vérifié, avec un retour positif (en "+Chronometre.time()+" ms");
+        else          System.out.println( this._objectif.toString() + " n'a pas été résolu (en "+Chronometre.time()+ " ms)");
     }
 
     public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace){

@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class ChainageParPaquet implements Strategie{
 
-
     ArrayList<ArrayList<String>> _blocs = new ArrayList<>();
 
     @Override
@@ -26,8 +25,10 @@ public class ChainageParPaquet implements Strategie{
             _blocs.add(blockAcompleter);
             
         }
-
+        
         Moteur.print("\n\nOn a les blocs suivants : \n"+_blocs.toString());
+
+        Chronometre.start();
         //on fais les calculs sur tous les blocs
         for (int i = 0;i < _blocs.size();i++){
             for (int j = 0; j < _blocs.get(i).size();j++){
@@ -72,8 +73,9 @@ public class ChainageParPaquet implements Strategie{
                 
             }
         }
-        
-        Moteur.print("Chainage par paquets réussi avec les paquets : "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString());
+        Chronometre.stop();
+
+        Moteur.print("Chainage par paquets réussi avec les paquets : "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString()+" en "+Chronometre.time()+" ms");
     }
 
 
