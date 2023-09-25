@@ -4,10 +4,26 @@ public class App {
         testChainageAvant();
         //System.out.println("\n\n");
         //testChainageArriere();
+        Graphism.initialiser();
     }
 
 
     static void testChainageAvant(){
+
+
+
+        BaseDeFaits bf = new BaseDeFaits();
+        bf.ajouterFait(new Element("stupide(Dorian)"));
+        bf.ajouterFait(new Element("beau(Dorian)"));
+        bf.ajouterFait(new Element("giovanni(Test)"));
+
+
+        BaseDeRegles br = new BaseDeRegles();
+        br.ajouterRègle(new Regle("R1 : stupide(B) -> stupidePLUS(B)"));
+        //br.ajouterRègle(new Regle("R2 : a -> e(B)"));
+        //br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));
+
+        /* 
         BaseDeFaits bf = new BaseDeFaits();
         bf.ajouterFait(new Element("a(h0, az)"));
         bf.ajouterFait(new Element("b"));
@@ -17,7 +33,7 @@ public class App {
         BaseDeRegles br = new BaseDeRegles();
         br.ajouterRègle(new Regle("R1 : a(B) -> !d ET f(B)"));
         br.ajouterRègle(new Regle("R2 : a -> e(B)"));
-        br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));
+        br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));*/
         
         MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, new ChainageAvant());
         moteur.executer();
