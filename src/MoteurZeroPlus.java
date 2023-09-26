@@ -13,21 +13,24 @@ public class MoteurZeroPlus extends Moteur {
 
     public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, HashMap<String, Variable> variables) {
         super(baseDeFaits, baseDeRegles);
-        _variables = variables;
+        if (variables == null) _variables = new HashMap<String, Variable>();
+        else _variables = variables;
     }
 
     public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
             HashMap<String, Variable> variables){
                 
         super(baseDeFaits, baseDeRegles, strategie);
-        _variables = variables;
+        if (variables == null) _variables = new HashMap<String, Variable>();
+        else _variables = variables;    
     }
 
     public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
             HashMap<String, Variable> variables, boolean trace){
 
         super(baseDeFaits, baseDeRegles, strategie, trace);
-        _variables = variables;
+        if (variables == null) _variables = new HashMap<String, Variable>();
+        else _variables = variables;
     }
 
     @Override public void executer(){
