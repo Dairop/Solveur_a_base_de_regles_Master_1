@@ -1,34 +1,51 @@
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MoteurZeroPlus extends Moteur {
     ArrayList<Predicat> _predicats = new ArrayList<Predicat>();
+    HashMap<String, Variable> _variables;
 
-    public MoteurZeroPlus(){}
+    public MoteurZeroPlus(){
+        _variables = new HashMap<String, Variable>();
+    }
 
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles) {
+    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, HashMap<String, Variable> variables) {
         super(baseDeFaits, baseDeRegles);
+        _variables = variables;
     }
 
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie){
+    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
+            HashMap<String, Variable> variables){
+                
         super(baseDeFaits, baseDeRegles, strategie);
+        _variables = variables;
     }
 
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace){
+    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
+            HashMap<String, Variable> variables, boolean trace){
+
         super(baseDeFaits, baseDeRegles, strategie, trace);
+        _variables = variables;
     }
 
     @Override public void executer(){
-        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
         try {
             verifierIncoherences();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (this._strategie == null) return;
-        analyserRegles();
+
+        if (this._strategie == null) {
+            if (_trace) print("Aucune stratégie n'a été définie");
+            return;
+        }
+
+        //remplace les variables
+        remplacerVariables();
+        
+        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
     }
 
 
@@ -46,10 +63,10 @@ public class MoteurZeroPlus extends Moteur {
     public String stringAleatoire(int taille){
         String alphabet = "0123456789abcdefghijklmnopqrstuvxyz";
         String stringAleatoire = "";
-            for (int j = 0; j < taille; j++){
-                int ch = (int)(alphabet.length() * Math.random());
-                stringAleatoire += alphabet.charAt(ch);
-            }
+        for (int j = 0; j < taille; j++){
+            int ch = (int)(alphabet.length() * Math.random());
+            stringAleatoire += alphabet.charAt(ch);
+        }
         return stringAleatoire;
     }
 
@@ -62,20 +79,21 @@ public class MoteurZeroPlus extends Moteur {
     }
 
 
-    public void analyserRegles(){
-        System.out.println("Début de l'analyse des règles afin de remplacer les variables ...");
+    public void remplacerVariables(){
+        if (this._trace) print("Début de l'analyse des règles afin de remplacer les variables ...");
 
-        _predicats.clear();
+        //_predicats.clear();
         
-        ArrayList<String> listeVariables = new ArrayList<String>();
+        //liste ordonnée de toutes les variables trouvées dans nos règles
+        //Si certaines ne sont pas définies dans this._variables, on demandera à l'utilisateur de les définir
+        ArrayList<String> listeVariablesTrouvees = new ArrayList<String>();
 
         ArrayList<ArrayList<String>> valeursPossiblesVariables = new ArrayList<ArrayList<String>>();
 
-        int nbRegles = this._baseDeRegles.taille();
-
-        for (int i = 0; i < nbRegles; i++){
+        int i = 0;
+        while (i < this._baseDeRegles.taille()){
             Regle r = this._baseDeRegles.avoirRegleParIndice(i);
-            System.out.println("  Analyse la regle "+r.toString()+" ...");
+            if (this._trace) print("  Analyse la regle "+r.toString()+" ...");
 
 
             //recuperer tous les Elements de la règle et regarder si certains sont des Predicats
@@ -84,47 +102,60 @@ public class MoteurZeroPlus extends Moteur {
 
             for (int p_i = 0; p_i < elementsDeR.size(); p_i++){
                 //cherche s'il y a des parenthèses dans l'element     
-                String pr = elementsDeR.get(p_i).toString();  
-                String pr_nom = elementsDeR.get(p_i).nom();
+                String pr = elementsDeR.get(p_i).toString().replaceAll("\\s", "");  
                 
-                System.out.println("\n    Analyse de: '"+pr+"'");
+                if (this._trace) print("\n    Analyse de: '"+pr+"'");
 
                 if (estPredicat(pr)){
                     String[] parametres = pr.substring(pr.indexOf("(")+1, pr.indexOf(")")).split(",");
 
-                    System.out.println("        Predicat trouvé\n");
+                    if (this._trace) print("        Predicat trouvé\n");
                     
+                    /*
                     _predicats.add(new 
                         Predicat(pr_nom,        //nom du Predicat
                         parametres.length)      //nombre de parametres dans le predicat
                     );
+                    */
 
                     for (String param: parametres) {
+                        //si le paramètre commence par une majuscule, alors c'est une variable
                         if (param.charAt(0) >= 65 && param.charAt(0) <= 90){
-                            listeVariables.add(param);
 
-                            ArrayList<String> vals = new ArrayList<String>();
-                            valeursPossiblesAleatoires(vals);
+                            if (this._trace) print("Nouvelle variable: "+param);
+                            
+                            listeVariablesTrouvees.add(param);
+
+                            ArrayList<String> vals;
+                            if (this._variables.containsKey(param)){
+                                vals = this._variables.get(param)._valeursPossibles;
+                            } else {
+                                // erreur, variable non définié. demander à l'utilisateur
+                                if (this._trace) print("Variable "+param+" non définie");
+                                vals = new ArrayList<String>();
+                                valeursPossiblesAleatoires(vals);
+                            }
                             valeursPossiblesVariables.add(vals);
                         }
                     }
                 } else {
-                    System.out.println("        Aucun prédicat trouvé\n");
+                    if (this._trace) print("        Aucun prédicat trouvé\n");
                 }              
             }
 
             //à chaque regle, remplacer les variables par leurs valeurs possibles s'il y en a
             Integer nombreReglesSupprimees = 
-            remplacerVariables(r, listeVariables, valeursPossiblesVariables);
+            remplacerVariables(r, listeVariablesTrouvees, valeursPossiblesVariables);
             i -= nombreReglesSupprimees;
 
-            System.out.println(nombreReglesSupprimees);
-        
+            i++;
         }
 
         //afficher les nouvelles regles
-        System.out.println("nouvelles regles: ");
-        for (int i = 0; i < this._baseDeRegles.taille(); i++) System.out.println("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
+        if (this._trace) {
+            print("nouvelles regles: ");
+            for (i = 0; i < this._baseDeRegles.taille(); i++) print("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
+        }
     }
 
     //renvoie le nombre de regles supprimées afin de ne pas perdre le compte dans la boucle principale
@@ -145,7 +176,7 @@ public class MoteurZeroPlus extends Moteur {
             stringNouvelleRegle = stringNouvelleRegle.replaceFirst(r.nom() + " : ", "");
             String nomNouvelleRegle = stringAleatoire(6);
 
-            System.out.println("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
+            if (this._trace) print("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
 
             Regle nouvelleRegle = new Regle(
                 //nouvelle regle avec un nouveau nom
