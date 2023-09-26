@@ -1,10 +1,10 @@
 public class App {
     public static void main(String[] args) throws Exception {
-
+        Graphism.initialiser();
         testChainageAvant();
         //System.out.println("\n\n");
         //testChainageArriere();
-        Graphism.initialiser();
+        
     }
 
 

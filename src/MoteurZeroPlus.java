@@ -21,6 +21,7 @@ public class MoteurZeroPlus extends Moteur {
     }
 
     @Override public void executer(){
+
         this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
         try {
             verifierIncoherences();
@@ -30,8 +31,6 @@ public class MoteurZeroPlus extends Moteur {
         if (this._strategie == null) return;
         analyserRegles();
     }
-
-
 
     public boolean estPredicat(String chaine) {
         // Utilisation d'une expression régulière pour vérifier le format abc(E, M, pf5)
