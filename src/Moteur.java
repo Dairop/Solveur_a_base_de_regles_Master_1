@@ -8,7 +8,7 @@ public class Moteur {
     protected Strategie _strategie = null;
     protected boolean _trace = true;
 
-    protected static boolean enConsole = true;
+    protected static boolean enConsole = false;
     
     public Moteur(){}
 
@@ -55,8 +55,10 @@ public class Moteur {
     public static void print(String msg) {
         if (enConsole)
             System.out.println(msg);
-        else
-            JOptionPane.showMessageDialog(null,msg);
+        else{
+            System.out.println(msg+ "(-------------------)" );
+            Graphism.resultat.append("\n"+msg);
+        }
     }
 
     public static String lireReponse(String msg) {

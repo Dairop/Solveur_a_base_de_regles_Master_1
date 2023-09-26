@@ -48,8 +48,6 @@ public class MoteurZeroPlus extends Moteur {
         this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
     }
 
-
-
     public boolean estPredicat(String chaine) {
         // Utilisation d'une expression régulière pour vérifier le format abc(E, M, pf5)
         

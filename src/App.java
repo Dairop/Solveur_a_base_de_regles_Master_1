@@ -3,14 +3,15 @@ import java.util.HashMap;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
+        Graphism.initialiser();
         testChainageAvant();
         //System.out.println("\n\n");
         //testChainageArriere();
+        
     }
 
 
-    static void testChainageAvant(){
+    static void testChainageAvant(){        
         BaseDeFaits bf = new BaseDeFaits();
         bf.ajouterFait(new Element("coherent(lent, tortue)"));
         bf.ajouterFait(new Element("tortue"));

@@ -38,8 +38,8 @@ public class ChainageAvant implements Strategie{
                         if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k))){
                             baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
                             if (trace){
-                                System.out.println("\n--------- Nombre d'inférences : " +nbInf);
-                                System.out.println("\nOn a : "+regle.avoirPremices().toString()+" donc on utilise la règle : \n"+regle.toString()+" et on obtient : \n"+regle.avoirConsequents().toString()+" \nNouvelle base de faits : \n"+baseDeFaitsEnTampon.toString());
+                                MoteurZeroPlus.print("\n--------- Nombre d'inférences : " +nbInf);
+                                MoteurZeroPlus.print("\nOn a : "+regle.avoirPremices().toString()+" donc on utilise la règle : \n"+regle.toString()+" et on obtient : \n"+regle.avoirConsequents().toString()+" \nNouvelle base de faits : \n"+baseDeFaitsEnTampon.toString());
                             }
                         }
                         baseDeReglesEnTampon.enleverRegle(regle.nom());
@@ -51,7 +51,7 @@ public class ChainageAvant implements Strategie{
             }
         }      
         Chronometre.stop();
-        System.out.println("Résultat : Temps d'exécution : "+Chronometre.time()+" ms / Nombres d'inférences : "+nbInf);
-        System.out.println(baseDeFaitsEnTampon.toString());
+        MoteurZeroPlus.print("Résultat : Temps d'exécution : "+Chronometre.time()+" ms / Nombres d'inférences : "+nbInf);
+        MoteurZeroPlus.print(baseDeFaitsEnTampon.toString());
     }
 }
