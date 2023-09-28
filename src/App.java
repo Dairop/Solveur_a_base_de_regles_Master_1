@@ -10,25 +10,33 @@ public class App implements Runnable{
 
 
     static void testChainageAvant(){
-
-
-
         BaseDeFaits bf = new BaseDeFaits();
-        bf.ajouterFait(new Element("stupide(Dorian)"));
-        bf.ajouterFait(new Element("beau(Dorian)"));
-        bf.ajouterFait(new Element("giovanni(Test)"));
+        /*
+        bf.ajouterFait(new Element("coherent(lent, tortue)"));
+        bf.ajouterFait(new Element("tortue"));
+        bf.ajouterFait(new Element("carapace(tortue)"));
+        bf.ajouterFait(new Element("!carapace(oiseau)"));
+        */
 
+        BaseDeRegles bre = new BaseDeRegles();
+        /*
+        bre.ajouterRègle(new Regle("R1 : carapace(Animal) -> !ailes ET lent"));
+        bre.ajouterRègle(new Regle("R2 : tortue -> lent"));
+        bre.ajouterRègle(new Regle("R3 : coherent(lent, Animal) -> !oiseau"));
+        */
 
-        BaseDeRegles br = new BaseDeRegles();
-        br.ajouterRègle(new Regle("R1 : stupide(B) -> stupidePLUS(B)"));
-        //br.ajouterRègle(new Regle("R2 : a -> e(B)"));
-        //br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));
+        //ça serait bien d'avoir une méthode plus simple pour en créer
+        //HashMap<String, Variable> variables = new HashMap<>();
 
-        /* 
-        BaseDeFaits bf = new BaseDeFaits();
-        bf.ajouterFait(new Element("a(h0, az)"));
-        bf.ajouterFait(new Element("b"));
-        bf.ajouterFait(new Element("c(az)"));
+        /*
+        ArrayList<String> valeursPossibles1 = new ArrayList<String>();
+        valeursPossibles1.add("lent"); valeursPossibles1.add("moyen"); valeursPossibles1.add("rapide");
+        variables.put("Vitesse", new Variable("Vitesse", valeursPossibles1));
+        
+        ArrayList<String> valeursPossiblesL = new ArrayList<String>();
+        valeursPossiblesL.add("oiseau"); valeursPossiblesL.add("tortue");
+        variables.put("Animal", new Variable("Animal", valeursPossiblesL));
+        */
 
 
         BaseDeRegles br = new BaseDeRegles();
@@ -36,7 +44,7 @@ public class App implements Runnable{
         br.ajouterRègle(new Regle("R2 : a -> e(B)"));
         br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));*/
         
-        MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, new ChainageAvant());
+        Moteur moteur = new Moteur(bf, br, new ChainageAvant());
         Moteur.executer(moteur);
     }
 
