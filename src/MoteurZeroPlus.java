@@ -1,9 +1,8 @@
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MoteurZeroPlus extends Moteur {
+public class MoteurZeroPlus extends Moteur{
     ArrayList<Predicat> _predicats = new ArrayList<Predicat>();
 
     public MoteurZeroPlus(){}
@@ -16,20 +15,21 @@ public class MoteurZeroPlus extends Moteur {
         super(baseDeFaits, baseDeRegles, strategie);
     }
 
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace){
-        super(baseDeFaits, baseDeRegles, strategie, trace);
+    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace, boolean verifierIncoherences){
+        super(baseDeFaits, baseDeRegles, strategie, trace, verifierIncoherences);
     }
 
-    @Override public void executer(){
+    public static void executer(MoteurZeroPlus m){
 
-        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
+        m._strategie.executer(m._baseDeFaits, m._baseDeRegles, m._trace);
         try {
-            verifierIncoherences();
+            if (m._verifierIncoherences)
+                m.verifierIncoherences();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (this._strategie == null) return;
-        analyserRegles();
+        if (m._strategie == null) return;
+        m.analyserRegles();
     }
 
     public boolean estPredicat(String chaine) {
@@ -62,7 +62,7 @@ public class MoteurZeroPlus extends Moteur {
 
 
     public void analyserRegles(){
-        System.out.println("Début de l'analyse des règles afin de remplacer les variables ...");
+        Moteur.print("Début de l'analyse des règles afin de remplacer les variables ...");
 
         _predicats.clear();
         
@@ -74,7 +74,7 @@ public class MoteurZeroPlus extends Moteur {
 
         for (int i = 0; i < nbRegles; i++){
             Regle r = this._baseDeRegles.avoirRegleParIndice(i);
-            System.out.println("  Analyse la regle "+r.toString()+" ...");
+            Moteur.print("  Analyse la regle "+r.toString()+" ...");
 
 
             //recuperer tous les Elements de la règle et regarder si certains sont des Predicats
@@ -86,12 +86,12 @@ public class MoteurZeroPlus extends Moteur {
                 String pr = elementsDeR.get(p_i).toString();  
                 String pr_nom = elementsDeR.get(p_i).nom();
                 
-                System.out.println("\n    Analyse de: '"+pr+"'");
+                Moteur.print("\n    Analyse de: '"+pr+"'");
 
                 if (estPredicat(pr)){
                     String[] parametres = pr.substring(pr.indexOf("(")+1, pr.indexOf(")")).split(",");
 
-                    System.out.println("        Predicat trouvé\n");
+                   Moteur.print("        Predicat trouvé\n");
                     
                     _predicats.add(new 
                         Predicat(pr_nom,        //nom du Predicat
@@ -108,7 +108,7 @@ public class MoteurZeroPlus extends Moteur {
                         }
                     }
                 } else {
-                    System.out.println("        Aucun prédicat trouvé\n");
+                    Moteur.print("        Aucun prédicat trouvé\n");
                 }              
             }
 
@@ -117,13 +117,13 @@ public class MoteurZeroPlus extends Moteur {
             remplacerVariables(r, listeVariables, valeursPossiblesVariables);
             i -= nombreReglesSupprimees;
 
-            System.out.println(nombreReglesSupprimees);
+            Moteur.print(nombreReglesSupprimees.toString());
         
         }
 
         //afficher les nouvelles regles
-        System.out.println("nouvelles regles: ");
-        for (int i = 0; i < this._baseDeRegles.taille(); i++) System.out.println("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
+        Moteur.print("nouvelles regles: ");
+        for (int i = 0; i < this._baseDeRegles.taille(); i++) Moteur.print("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
     }
 
     //renvoie le nombre de regles supprimées afin de ne pas perdre le compte dans la boucle principale
@@ -144,7 +144,7 @@ public class MoteurZeroPlus extends Moteur {
             stringNouvelleRegle = stringNouvelleRegle.replaceFirst(r.nom() + " : ", "");
             String nomNouvelleRegle = stringAleatoire(6);
 
-            System.out.println("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
+            Moteur.print("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
 
             Regle nouvelleRegle = new Regle(
                 //nouvelle regle avec un nouveau nom

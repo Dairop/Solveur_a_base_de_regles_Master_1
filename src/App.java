@@ -1,10 +1,11 @@
-public class App {
+public class App implements Runnable{
     public static void main(String[] args) throws Exception {
-        Graphism.initialiser();
-        testChainageAvant();
+        
         //System.out.println("\n\n");
         //testChainageArriere();
-        
+
+        Graphism.lancer();
+        new Thread(new App()).start();
     }
 
 
@@ -36,7 +37,7 @@ public class App {
         br.ajouterRègle(new Regle("R3 : a(B, !d) ET b -> c"));*/
         
         MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, new ChainageAvant());
-        moteur.executer();
+        Moteur.executer(moteur);
     }
 
 
@@ -54,7 +55,7 @@ public class App {
 
         
         Moteur moteur = new Moteur(bf, br, new ChainageParPaquet());
-        moteur.executer();
+        Moteur.executer(moteur);
     }
 
 
@@ -74,6 +75,12 @@ public class App {
         ChainageArriere ca = new ChainageArriere();
         ca.setObjectif(new Element("E"));
         Moteur moteur = new Moteur(bf, br, ca);
-        moteur.executer();
+        Moteur.executer(moteur);
+    }
+
+
+    @Override
+    public void run() {
+        testChainageAvant();
     }
 }

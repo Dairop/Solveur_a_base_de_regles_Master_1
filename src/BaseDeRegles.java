@@ -116,12 +116,12 @@ public class BaseDeRegles {
             }
             contextesDictionnaires.put(elementsQuiSontConsequents.get(i), tamponElementsCalcules);
         }
-        System.out.println("Dico"  + contextesDictionnaires.toString());
+        Moteur.print("Dico"  + contextesDictionnaires.toString());
 
         //maintenant on va vérifier s'il y a des incohérences
 
         for (Element cle : contextesDictionnaires.keySet()) {
-            System.out.println("Clé  : "+cle.toString());
+            Moteur.print("Clé  : "+cle.toString());
             //ensuite on veut obtenir toutes les regles qui ont comme prémice l'élément du contextDictionnaire
             ArrayList<Regle> reglesQuiOntCommePremicesLelement = new ArrayList<>();
             for (int j = 0; j < _reglesListe.size();j++){
@@ -134,8 +134,7 @@ public class BaseDeRegles {
             //ensuite on va transformer les règles 
             for (int k = 0; k < reglesQuiOntCommePremicesLelement.size();k++){
                 ArrayList<Element> premicesAvecContexte = new ArrayList<>();
-                ArrayList<Element> consequent = new ArrayList<>();
-
+                
                 //on remplit le premicesAvecContexte avec les prémices de base
                 for (int l = 0; l < reglesQuiOntCommePremicesLelement.get(k).taillePremice();l++){
                     premicesAvecContexte.add(reglesQuiOntCommePremicesLelement.get(k).avoirPremiceParIndice(l));
