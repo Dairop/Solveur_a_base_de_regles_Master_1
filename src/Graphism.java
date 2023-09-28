@@ -1,4 +1,3 @@
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
@@ -9,24 +8,21 @@ public class Graphism implements Runnable{
 
     //élément graphique
     static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
-    private static PanelPersonnalise panel = new PanneauPrincipale();
+    private static PanneauPersonnalise panel = new PanneauPrincipale();
 
 
     static void initialiser(){
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setVisible(true);
-        fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        fenetre.setPreferredSize(screenSize);
-        fenetre.setLayout(null);
+        fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        fenetre.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         panel.setLayout(null);
 
         fenetre.setContentPane(panel);
         panel.initialiser();
         
-        panel.repaint();
     }
 
     
@@ -36,7 +32,7 @@ public class Graphism implements Runnable{
         changementPanel = false;
         while (true && !changementPanel){
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -51,29 +47,11 @@ public class Graphism implements Runnable{
         new Thread(new Graphism()).start();
     }
 
-    public static void setPanel(PanelPersonnalise newPanel) {
+    public static void setPanel(PanneauPersonnalise newPanel) {
         changementPanel = true;
     
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        panel.removeAll();
-        panel.revalidate();
-        panel.repaint();
-    
-        fenetre.getContentPane().removeAll();
-        fenetre.revalidate();
-        fenetre.repaint();
-    
         panel = newPanel;
-        panel.initialiser(); // Vous pouvez appeler initialiser() si nécessaire pour le nouveau panel.
-    
-        fenetre.pack();
-        fenetre.revalidate();
-        fenetre.repaint();
+        
         lancer();
     }
 }

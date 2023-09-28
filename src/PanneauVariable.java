@@ -1,4 +1,4 @@
-public class PanneauVariable extends PanelPersonnalise{
+public class PanneauVariable extends PanneauPersonnalise{
 
     @Override
     void initialiser() {
