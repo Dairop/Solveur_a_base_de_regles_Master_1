@@ -32,7 +32,7 @@ public class Graphism implements Runnable{
         changementPanel = false;
         while (true && !changementPanel){
             try {
-                Thread.sleep(100);
+                Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -50,6 +50,11 @@ public class Graphism implements Runnable{
     public static void setPanel(PanneauPersonnalise newPanel) {
         changementPanel = true;
     
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         panel = newPanel;
         
         lancer();

@@ -19,6 +19,9 @@ public class PanneauRegle extends PanneauPersonnalise{
         add(titre);
 
         add(aide);
+        ActionListener[] actionListeners = retour.getActionListeners();
+        for (ActionListener a : actionListeners)
+            retour.removeActionListener(a);
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {

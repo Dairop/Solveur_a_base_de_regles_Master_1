@@ -24,7 +24,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     static JTextField input = new JTextField();
     static JTextArea faits,regles, resultat = new JTextArea("");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
-    static JButton aide, calculer;
+    static JButton aide = new JButton("?"), calculer, variable = new JButton("Variables");
     static JLabel faitsLabel,reglesLabel, resultatLabel;
     static JCheckBox trace, verifierIncoherences;
 
@@ -61,6 +61,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(resultatLabel);
  
         add(input);
+        ActionListener[] actionListeners = input.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            input.removeActionListener(listener);
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +106,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         buttonGroup.add(chainageArriere);
         buttonGroup.add(chainagePaquet);
         buttonGroup.add(chainageAvant);
-
+        actionListeners = aide.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            aide.removeActionListener(listener);
         aide = new JButton("?");
         aide.addActionListener(new ActionListener() {
             @Override
@@ -112,6 +117,22 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
         add(aide);
+
+
+        actionListeners = variable.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            variable.removeActionListener(listener);
+        
+        variable = new JButton("Variables");
+
+        variable.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Graphism.setPanel(new PanneauVariable());
+            }
+        });
+        add(variable);
+        
         
 
         calculer = new JButton("Calculer");
@@ -123,6 +144,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
         verifierIncoherences = new JCheckBox("vérification des incohérences");
         add(verifierIncoherences);
+        actionListeners = calculer.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            calculer.removeActionListener(listener);
         
 
         calculer.addActionListener(new ActionListener() {
@@ -167,6 +191,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                 Moteur.executer(moteur);
             }
         });
+        
         repaint();
         
     }
@@ -207,6 +232,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         input.setSize(w/40*19, h/20);
         input.setFont(texteFont);
         input.setLocation(w/2, h/40*38);
+
+        variable.setFont(texteFont);
+        variable.setSize(w/7, h/10);
+        variable.setLocation(w/5, h/20*12);
         
         chainageAvant.setFont(texteFont);
         chainageAvant.setSize(w/7, h/10);
