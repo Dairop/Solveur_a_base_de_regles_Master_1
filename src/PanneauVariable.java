@@ -11,7 +11,7 @@ public class PanneauVariable extends PanneauPersonnalise{
 
     private static JLabel titre = new JLabel("Variables");
     private static JButton retour = new JButton("Retour");
-    private static JTextArea variablesEntree = new JTextArea();
+    public static JTextArea variablesEntree = new JTextArea();
     private static JScrollPane scrollbar;
 
     @Override

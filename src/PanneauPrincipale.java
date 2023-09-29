@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -187,8 +189,29 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                     strategie = new ChainageParPaquet();
                 }
 
-                Moteur moteur = new Moteur(bf, br, strategie, trace.isSelected(), verifierIncoherences.isSelected());
-                Moteur.executer(moteur);
+
+
+                HashMap<String, Variable> variables = new HashMap<String, Variable>();
+                String[] texteBrut = PanneauVariable.variablesEntree.getText().replace(" ", "").split("\n");          
+                
+                //conversion du texte brut en variables
+                for (int i = 0; i < texteBrut.length; i++){
+                    String[] nomPuisRegle = texteBrut[i].split(":");
+                    if (nomPuisRegle.length == 2){
+                        ArrayList<String> valeursPossibles = new ArrayList<String>();
+                        String[] vps = nomPuisRegle[1].split(";");
+                        for (String vp : vps) {
+                            valeursPossibles.add(vp);
+                        }
+
+                        variables.put(nomPuisRegle[0], new Variable(nomPuisRegle[0], valeursPossibles));
+                    }
+
+                }
+
+
+                MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                MoteurZeroPlus.executer(moteur);
             }
         });
         
