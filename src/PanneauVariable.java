@@ -11,7 +11,7 @@ public class PanneauVariable extends PanneauPersonnalise{
 
     private static JLabel titre = new JLabel("Variables"), explications = new JLabel("Syntaxe : Nom de ma variable : val1; val2; val3"),exemple =  new JLabel("Exemple  Vitesse : lente; rapide;moyenne");
     private static JButton retour = new JButton("Retour");
-    private static JTextArea variablesEntree = new JTextArea();
+    public static JTextArea variablesEntree = new JTextArea();
     private static JScrollPane scrollbar;
 
     @Override

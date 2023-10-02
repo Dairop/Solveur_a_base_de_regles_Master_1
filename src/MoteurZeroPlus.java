@@ -33,8 +33,7 @@ public class MoteurZeroPlus extends Moteur{
         else _variables = variables;
     }
 
-    public void executer(MoteurZeroPlus m){
-        
+    public static void executer(MoteurZeroPlus m){
         try {
             if (m._verifierIncoherences)
                 m.verifierIncoherences();
@@ -46,12 +45,11 @@ public class MoteurZeroPlus extends Moteur{
             if (m._trace) print("Aucune stratégie n'a été définie");
             return;
         }
-        m.remplacerVariables();
 
         //remplace les variables
-        remplacerVariables();
+        m.remplacerVariables();
         
-        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
+        m._strategie.executer(m._baseDeFaits, m._baseDeRegles, m._trace);
 
     }
 
