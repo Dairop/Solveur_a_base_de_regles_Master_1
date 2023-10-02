@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -29,14 +30,22 @@ public class PanneauRegle extends PanneauPersonnalise{
             }
         });
         add(retour);
+
+        add(comboBox);
     }
+    String[] es = {"jtem1", "item2"};
+    JComboBox comboBox = new JComboBox<>(es);
 
     @Override
     void refresh() {
         int w = getWidth();
         int h = getHeight();
 
-
+        
+        comboBox.setFont(new Font("Gabriela", Font.BOLD, 30));
+        comboBox.setSize(w/5, h/5);
+        comboBox.setLocation(w/10*8, h/10*9);
+     
         titre.setFont(new Font("Gabriela", Font.BOLD, 30));
         titre.setSize(w/3, h/5);
         titre.setLocation(w/2, h/20);

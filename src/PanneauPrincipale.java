@@ -9,6 +9,8 @@ import java.awt.event.ItemListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -22,11 +24,12 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
     static JScrollPane scrollPane2, scrollPane3;
     static JTextField input = new JTextField();
-    static JTextArea faits,regles, resultat = new JTextArea("");
+    static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
-    static JButton aide = new JButton("?"), calculer, variable = new JButton("Variables");
+    static JButton aide = new JButton("?"), calculer, variable = new JButton("Variables"), charger = new JButton("Charger"), save=new JButton("Save"), paquet = new JButton("Paquets");
     static JLabel faitsLabel,reglesLabel, resultatLabel;
     static JCheckBox trace, verifierIncoherences;
+    static JComboBox<String> comboBox;
 
 
     public void paintComponent(Graphics g){
@@ -37,13 +40,14 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
     @Override
     void initialiser() {
-        faits = new JTextArea("");
+
+        
+        
         faits.setBackground(Color.white);
         add(faits);
         
         
 
-        regles = new JTextArea("");
         scrollPane2 = new JScrollPane(regles);
         add(scrollPane2);
         
@@ -59,6 +63,11 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
         resultatLabel = new JLabel("Résultats");
         add(resultatLabel);
+        
+
+        add(charger);
+
+        add(paquet);
  
         add(input);
         ActionListener[] actionListeners = input.getActionListeners();
@@ -132,7 +141,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
         add(variable);
-        
+        add(save);
         
 
         calculer = new JButton("Calculer");
@@ -140,6 +149,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         
         trace = new JCheckBox("trace");
         add(trace);
+        String[] options = {"Règle dans l'ordre","par le plus de prémisse", "par le fait le plus récent"};
+        comboBox = new JComboBox<>(options);
+        add(comboBox);
         
 
         verifierIncoherences = new JCheckBox("vérification des incohérences");
@@ -249,6 +261,25 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         chainagePaquet.setSize(w/7, h/10);
         chainagePaquet.setLocation(w/40, h/20*18);
         
+        
+        charger.setFont(texteFont);
+        charger.setSize(w/14, h/20);
+        charger.setLocation(w/100*18, h/40*33);
+
+        paquet.setFont(texteFont);
+        paquet.setSize(w/7, h/20);
+        paquet.setLocation(w/100*20, h/40*37);
+
+        save.setFont(texteFont);
+        save.setSize(w/14, h/20);
+        save.setLocation(w/100*22+w/14, h/40*33);
+
+        comboBox.setFont(texteFont);
+        comboBox.setSize(w/7, h/20);
+        comboBox.setLocation(w/5, h/40*29);
+        comboBox.setBackground(Color.red);
+
+
         aide.setFont(titreFont);
         aide.setSize(w/9, h/10);
         aide.setLocation(w/40*15, h/10*6);

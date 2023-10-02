@@ -34,6 +34,7 @@ public class MoteurZeroPlus extends Moteur{
     }
 
     public void executer(MoteurZeroPlus m){
+        
         try {
             if (m._verifierIncoherences)
                 m.verifierIncoherences();
@@ -52,6 +53,10 @@ public class MoteurZeroPlus extends Moteur{
         
         this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
 
+    }
+
+    public void setVariables(HashMap<String, Variable> _variables) {
+        this._variables = _variables;
     }
 
     public boolean estPredicat(String chaine) {

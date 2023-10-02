@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 
 public class PanneauVariable extends PanneauPersonnalise{
 
-    private static JLabel titre = new JLabel("Variables");
+    private static JLabel titre = new JLabel("Variables"), explications = new JLabel("Syntaxe : Nom de ma variable : val1; val2; val3"),exemple =  new JLabel("Exemple  Vitesse : lente; rapide;moyenne");
     private static JButton retour = new JButton("Retour");
     private static JTextArea variablesEntree = new JTextArea();
     private static JScrollPane scrollbar;
@@ -32,7 +32,9 @@ public class PanneauVariable extends PanneauPersonnalise{
                 Graphism.setPanel(new PanneauPrincipale());
             }
         });
-        
+
+        add(explications);
+        add(exemple);
         
         add(scrollbar);
         add(retour);
@@ -53,8 +55,16 @@ public class PanneauVariable extends PanneauPersonnalise{
         
 
         variablesEntree.setFont(new Font("Gabriela", Font.BOLD, 30));
-        scrollbar.setSize(w/5*4, h/2);
+        scrollbar.setSize(w/5*4, h/10*6);
         scrollbar.setLocation(w/10, h/10);
+
+        explications.setFont(new Font("Gabriela", Font.BOLD, 25));
+        explications.setSize(w/2, h/10);
+        explications.setLocation(w/4, h/10*7);
+
+        exemple.setFont(new Font("Gabriela", Font.BOLD, 25));
+        exemple.setSize(w/2, h/10);
+        exemple.setLocation(w/4, h/10*8);
     }
     
 }
