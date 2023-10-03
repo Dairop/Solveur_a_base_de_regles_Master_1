@@ -59,6 +59,7 @@ public class Moteur implements Runnable{
             System.out.println(msg);
         else{
             PanneauPrincipale.resultat.append("\n"+msg);
+            PanneauPrincipale.resultat.setCaretPosition(PanneauPrincipale.resultat.getDocument().getLength());
         }
     }
 
@@ -86,6 +87,7 @@ public class Moteur implements Runnable{
         // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un événement approprié)
         
         while (attenteReponseUtilisateur){
+            PanneauPrincipale.calculer.setVisible(false);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -93,12 +95,13 @@ public class Moteur implements Runnable{
             }
             
         }
+        PanneauPrincipale.calculer.setVisible(true);
         PanneauPrincipale.input.setBackground(Color.white);
+        String reponse = PanneauPrincipale.input.getText();
         PanneauPrincipale.input.setText("");
         PanneauPrincipale.input.setEnabled(false);
         PanneauPrincipale.input.setBorder(null);
-
-        return PanneauPrincipale.input.getText();
+        return reponse;
         }
     }
 

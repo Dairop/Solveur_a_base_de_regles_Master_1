@@ -219,6 +219,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         });
 
         calculer = new JButton("Calculer");
+        calculer.setBackground(Color.red);
         add(calculer);
         
         trace = new JCheckBox("trace");
@@ -391,7 +392,6 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         comboBox.setFont(texteFont);
         comboBox.setSize(w/7, h/20);
         comboBox.setLocation(w/5, h/40*29);
-        comboBox.setBackground(Color.red);
 
 
         aide.setFont(titreFont);
