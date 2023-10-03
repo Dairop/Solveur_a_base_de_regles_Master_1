@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,7 +81,29 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         charger.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Moteur.print("Coucou");
+                JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
+                fileChooser.setFileFilter(filter);
+                
+                int returnValue = fileChooser.showOpenDialog(null);
+                
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    String filePath = fileChooser.getSelectedFile().getPath();
+                    try {
+                        // Lire le contenu du fichier
+                        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                        String line;
+                        StringBuilder content = new StringBuilder();
+                        while ((line = reader.readLine()) != null) {
+                            content.append(line).append("\n");
+                        }
+                        reader.close();
+                        Fichier.chargerFichier(content.toString());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Erreur lors de la lecture du fichier.");
+                    }
+                }
             }
         });
 
