@@ -39,6 +39,7 @@ public class ChainageArriere implements Strategie{
         }
 
         //3eme cas, demander b
+        System.out.println(b);
         if (!dem){
             String reponse = Moteur.lireReponse("\n"+b.toString()+" est non défini, pouvez-vous nous aider ?\n0: Il est faux\n1: Il est vrai\n2: Je ne sais pas");
             dem = (reponse == "1");

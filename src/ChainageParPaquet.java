@@ -45,7 +45,7 @@ public class ChainageParPaquet implements Strategie{
                 for (int k = 0; k < r.taillePremice();k++){
                     if (!baseDeFaitTampon.contient(r.avoirPremiceParIndice(k))){
                         if (trace)
-                            Moteur.lireReponse(" On a la règle : +"r.toString()+" car : "+r.avoirPremiceParIndice(k).toString()+" qui n'est pas valide.\n");
+                            Moteur.lireReponse(" On a la règle : s car : "+r.avoirPremiceParIndice(k).toString()+" qui n'est pas valide.\n");
                         regleUtile = false;
                     }
                 }

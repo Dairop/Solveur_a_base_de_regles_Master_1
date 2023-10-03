@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,16 +19,18 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PanneauPrincipale extends PanneauPersonnalise{
     
     //composants graphiques
     static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
-    static JScrollPane scrollPane2, scrollPane3;
+    static JScrollPane scrollPane2, scrollPane3, scrollPane1;
     static JTextField input = new JTextField();
     static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
@@ -44,11 +49,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     @Override
     void initialiser() {
 
-        
-        
         faits.setBackground(Color.white);
-        add(faits);
-        
+        scrollPane1 = new JScrollPane(faits);
+        add(scrollPane1);        
         
 
         scrollPane2 = new JScrollPane(regles);
@@ -147,6 +150,39 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(save);
         
 
+        actionListeners = save.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            save.removeActionListener(listener);
+
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
+                fileChooser.setFileFilter(filter);
+                
+                int returnValue = fileChooser.showSaveDialog(null);
+                
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    String filePath = fileChooser.getSelectedFile().getPath();
+                    if (!filePath.toLowerCase().endsWith(".txt")) {
+                        filePath += ".txt"; // Assurez-vous que l'extension .txt est ajoutée
+                    }
+                    try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+                        writer.write(Fichier.sauvegardeEnString());
+
+                        writer.close();
+                        
+                        JOptionPane.showMessageDialog(null, "Données enregistrées avec succès.");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du fichier.");
+                    }
+                }
+            }
+        });
+
         calculer = new JButton("Calculer");
         add(calculer);
         
@@ -211,8 +247,6 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                     strategie = new ChainageParPaquet();
                 }
 
-
-
                 HashMap<String, Variable> variables = new HashMap<String, Variable>();
                 String[] texteBrut = PanneauVariable.variablesEntree.getText().replace(" ", "").split("\n");          
                 
@@ -256,15 +290,15 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
     @Override
     void refresh() {
-        final Font texteFont = new Font("Gabriela", Font.PLAIN,getWidth()/90);
+        final Font texteFont = new Font("Gabriela", Font.PLAIN,getWidth()/80);
         final Font titreFont = new Font("Gabriela", Font.BOLD,getHeight()/30);
         final int w = getWidth();
         final int h = getHeight();
 
 
         faits.setFont(texteFont);
-        faits.setSize(w/10*4, h/2);
-        faits.setLocation(w/20, h/20);
+        scrollPane1.setSize(w/10*4, h/2);
+        scrollPane1.setLocation(w/20, h/20);
         
         regles.setFont(texteFont);
         scrollPane2.setSize(w/40*19, h/2);
