@@ -16,8 +16,11 @@ public class ChainageParPaquet implements Strategie{
         while(encoreDesBlocks){
             ArrayList<String> blockAcompleter = new ArrayList<>();
             numeroBlock++;
+            System.out.println("Entree");
             String reponse = Moteur.lireReponse("Block numéro : "+numeroBlock + ". Mettez le nom des règles dans ce block séparés d'un ';'\nExemple : R1;R2;modusPonens;\nSi c'est le dernier block, à la fin du champ, mettez un ';' \nPar exemple : 'R1;'' OU 'r2;modus ponens;'\nSi ce n'est pas le dernier : 'R1;R2; ma règle R3' :");
             //si on a comme dernier caractères ; alors c'est le dernier blocs
+            
+            System.out.println("Attente");
             encoreDesBlocks = !(reponse.charAt(reponse.length()-1) == ';');
             String[] regles = reponse.split(";");
             for (int i = 0; i < regles.length;i++)
@@ -26,7 +29,7 @@ public class ChainageParPaquet implements Strategie{
             _blocs.add(blockAcompleter);
             
         }
-
+        System.out.println("Es");
         Moteur.print("\n\nOn a les blocs suivants : \n"+_blocs.toString());
         //on fais les calculs sur tous les blocs
         for (int i = 0;i < _blocs.size();i++){

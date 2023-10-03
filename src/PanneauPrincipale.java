@@ -162,6 +162,15 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         for (ActionListener listener : actionListeners) 
             calculer.removeActionListener(listener);
         
+        actionListeners = paquet.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            paquet.removeActionListener(listener);
+
+        paquet.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Graphism.setPanel(new PanneauPaquet());    
+            }
+        });
 
         calculer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -221,9 +230,13 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
                 }
 
-
-                MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
-                MoteurZeroPlus.executer(moteur);
+                if (strategie instanceof ChainageParPaquet){
+                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                    MoteurZeroPlus.executer(moteur);    
+                }else{
+                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                    MoteurZeroPlus.executer(moteur);
+                }
             }
         });
         
@@ -234,8 +247,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
     @Override
     void refresh() {
-        final Font texteFont = new Font("Gabriela", Font.PLAIN,20);
-        final Font titreFont = new Font("Gabriela", Font.BOLD,30);
+        final Font texteFont = new Font("Gabriela", Font.PLAIN,getWidth()/90);
+        final Font titreFont = new Font("Gabriela", Font.BOLD,getHeight()/30);
         final int w = getWidth();
         final int h = getHeight();
 

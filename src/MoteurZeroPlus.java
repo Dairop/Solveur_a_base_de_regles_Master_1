@@ -33,24 +33,31 @@ public class MoteurZeroPlus extends Moteur{
         else _variables = variables;
     }
 
-    public static void executer(MoteurZeroPlus m){
-        try {
-            if (m._verifierIncoherences)
-                m.verifierIncoherences();
+    @Override
+    public void run() {
+        
+         try {
+            if (_verifierIncoherences)
+                verifierIncoherences();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (m._strategie == null) {
-            if (m._trace) print("Aucune stratégie n'a été définie");
+        if (_strategie == null) {
+            if (_trace) print("Aucune stratégie n'a été définie");
             return;
         }
 
         //remplace les variables
-        m.remplacerVariables();
+        remplacerVariables();
         
-        m._strategie.executer(m._baseDeFaits, m._baseDeRegles, m._trace);
+        _strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
 
+    }
+
+    public static void executer(MoteurZeroPlus m){
+        new Thread(m).start();
+       
     }
 
     public void setVariables(HashMap<String, Variable> _variables) {
