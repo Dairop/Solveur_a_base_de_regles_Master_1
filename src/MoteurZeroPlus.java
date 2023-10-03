@@ -67,7 +67,7 @@ public class MoteurZeroPlus extends Moteur{
     public boolean estPredicat(String chaine) {
         // Utilisation d'une expression régulière pour vérifier le format abc(E, M, pf5)
         
-        String regex = "[A-Za-z0-9]+\\((!?[A-Za-z0-9]+,(\\s?)+)*!?[A-Za-z0-9]+\\)";
+        String regex = "([A-Za-z0-9]_?)+\\((!?([A-Za-z0-9]_?)+,(\\s?)+)*!?([A-Za-z0-9]_?)+\\)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(chaine);
         
