@@ -14,5 +14,10 @@ public class Fichier {
 
     public static void chargerFichier(String contenu){
         PanneauPrincipale.faits.setText(contenu.split("\nReglesSauvegarde:\n")[0]);
+        contenu = contenu.split("\nReglesSauvegarde:\n")[1];
+        PanneauPrincipale.regles.setText(contenu.split("\nVariables:\n")[0]);
+        contenu = contenu.split("\nVariables:\n")[1];
+        PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets : \n")[0]);
+        PanneauPaquet.paquets.setText(contenu.split("\nPaquets : \n")[1]);
     }
 }
