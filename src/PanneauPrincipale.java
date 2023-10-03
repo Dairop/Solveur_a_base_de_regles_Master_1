@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
@@ -230,8 +231,16 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
                 }
 
-                if (strategie instanceof ChainageParPaquet){
+                if (strategie instanceof ChainageParPaquet){    
+                    //Il faut mettre les paquets à jour
+                    ArrayList<ArrayList<String>> paquets = new ArrayList<>();
+                    String[] lignes = PanneauPaquet.paquets.getText().split("\n");
+                    for (int i = 0; i < lignes.length;i++)
+                        paquets.add(new ArrayList<>(Arrays.asList(lignes[i].split(";"))));
+                    
                     MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                    ChainageParPaquet strat = (ChainageParPaquet)strategie;
+                    strat.setBlocs(paquets);
                     MoteurZeroPlus.executer(moteur);    
                 }else{
                     MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());

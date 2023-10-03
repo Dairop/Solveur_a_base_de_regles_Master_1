@@ -5,32 +5,21 @@ public class ChainageParPaquet implements Strategie{
 
     ArrayList<ArrayList<String>> _blocs = new ArrayList<>();
 
+
+    public void setBlocs(ArrayList<ArrayList<String>> _blocs) {
+        this._blocs = _blocs;
+    }
+
     @Override
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace) {
         BaseDeFaits baseDeFaitTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
-        //on va remplir les blocs
-        boolean encoreDesBlocks = true;
-        int numeroBlock = 0;
-        while(encoreDesBlocks){
-            ArrayList<String> blockAcompleter = new ArrayList<>();
-            numeroBlock++;
-            System.out.println("Entree");
-            String reponse = Moteur.lireReponse("Block numéro : "+numeroBlock + ". Mettez le nom des règles dans ce block séparés d'un ';'\nExemple : R1;R2;modusPonens;\nSi c'est le dernier block, à la fin du champ, mettez un ';' \nPar exemple : 'R1;'' OU 'r2;modus ponens;'\nSi ce n'est pas le dernier : 'R1;R2; ma règle R3' :");
-            //si on a comme dernier caractères ; alors c'est le dernier blocs
-            
-            System.out.println("Attente");
-            encoreDesBlocks = !(reponse.charAt(reponse.length()-1) == ';');
-            String[] regles = reponse.split(";");
-            for (int i = 0; i < regles.length;i++)
-                blockAcompleter.add(regles[i].trim());
-
-            _blocs.add(blockAcompleter);
-            
+        if (_blocs.isEmpty()){
+            Moteur.print("Pas de paquets.");
+            return;
         }
-        System.out.println("Es");
-        Moteur.print("\n\nOn a les blocs suivants : \n"+_blocs.toString());
+
         //on fais les calculs sur tous les blocs
         for (int i = 0;i < _blocs.size();i++){
             for (int j = 0; j < _blocs.get(i).size();j++){
@@ -55,7 +44,8 @@ public class ChainageParPaquet implements Strategie{
                 boolean regleUtile = true;
                 for (int k = 0; k < r.taillePremice();k++){
                     if (!baseDeFaitTampon.contient(r.avoirPremiceParIndice(k))){
-                        Moteur.lireReponse(" On a : "+r.avoirPremiceParIndice(k).toString()+"qui marche pas.\n");
+                        if (trace)
+                            Moteur.lireReponse(" On a la règle : +"r.toString()+" car : "+r.avoirPremiceParIndice(k).toString()+" qui n'est pas valide.\n");
                         regleUtile = false;
                     }
                 }

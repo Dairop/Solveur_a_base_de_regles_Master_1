@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 
 public class PanneauVariable extends PanneauPersonnalise{
 
-    private static JLabel titre = new JLabel("Variables"), explications = new JLabel("Syntaxe : Nom de ma variable : val1; val2; val3"),exemple =  new JLabel("Exemple  Vitesse : lente; rapide;moyenne");
+    private static JLabel titre = new JLabel("Variables"), explications = new JLabel("1 ligne = 1 variable, Syntaxe : Nom de ma variable : val1; val2; val3"),exemple =  new JLabel("Exemple  Vitesse : lente; rapide;moyenne");
     private static JButton retour = new JButton("Retour");
     public static JTextArea variablesEntree = new JTextArea();
     private static JScrollPane scrollbar;

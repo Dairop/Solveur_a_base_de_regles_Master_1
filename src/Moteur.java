@@ -12,10 +12,7 @@ public class Moteur implements Runnable{
     protected Strategie _strategie = null;
     protected boolean _trace = true;
     protected boolean _verifierIncoherences = true;
-    protected ArrayList<ArrayList<String>> _paquets;
-
-
-   
+  
     public static boolean attenteReponseUtilisateur = false;
 
     protected static boolean enConsole = false;
@@ -25,10 +22,6 @@ public class Moteur implements Runnable{
     public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
         this._baseDeFaits = baseDeFaits;
         this._baseDeRegles = baseDeRegles;
-    }
-
-    public void setPaquets(ArrayList<ArrayList<String>> _paquets) {
-        this._paquets = _paquets;
     }
 
     public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie){
