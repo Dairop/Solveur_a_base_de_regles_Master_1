@@ -71,12 +71,23 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(resultatLabel);
         
 
+
         add(charger);
+        ActionListener[] actionListeners = charger.getActionListeners();
+        for (ActionListener listener : actionListeners) 
+            charger.removeActionListener(listener);
+        charger.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Moteur.print("Coucou");
+            }
+        });
+
 
         add(paquet);
  
         add(input);
-        ActionListener[] actionListeners = input.getActionListeners();
+        actionListeners = input.getActionListeners();
         for (ActionListener listener : actionListeners) 
             input.removeActionListener(listener);
         input.addActionListener(new ActionListener() {

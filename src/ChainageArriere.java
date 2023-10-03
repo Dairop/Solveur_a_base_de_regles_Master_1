@@ -12,6 +12,9 @@ public class ChainageArriere implements Strategie{
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
+        if (_objectif == null){
+            _objectif = new Element(Moteur.lireReponse("Question à poser"));
+        }
         boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace);
         if (result)   System.out.println( this._objectif.toString() + " a été vérifié, avec un retour positif");
         else          System.out.println( this._objectif.toString() + " n'a pas été résolu");
@@ -39,7 +42,6 @@ public class ChainageArriere implements Strategie{
         }
 
         //3eme cas, demander b
-        System.out.println(b);
         if (!dem){
             String reponse = Moteur.lireReponse("\n"+b.toString()+" est non défini, pouvez-vous nous aider ?\n0: Il est faux\n1: Il est vrai\n2: Je ne sais pas");
             dem = (reponse == "1");
