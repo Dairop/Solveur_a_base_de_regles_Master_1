@@ -36,14 +36,15 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     static JTextField input = new JTextField();
     static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
-    static JButton aide = new JButton("?"), calculer, variable = new JButton("Variables"), charger = new JButton("Charger"), save=new JButton("Save"), paquet = new JButton("Paquets");
+    static JButton aide = new JButton("?"), clear = new JButton("Nettoyer"),calculer, variable = new JButton("Variables"), charger = new JButton("Charger"), save=new JButton("Save"), paquet = new JButton("Paquets");
     static JLabel faitsLabel,reglesLabel, resultatLabel;
     static JCheckBox trace, verifierIncoherences;
     static JComboBox<String> comboBox;
+    private static Color backgroundColor = new Color(0,0,0, 0);
 
 
     public void paintComponent(Graphics g){
-        g.setColor(Color.lightGray);
+        g.setColor(new Color(200,200,200));
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
@@ -63,10 +64,12 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(faitsLabel);
 
 
+
         reglesLabel = new JLabel("Base de règles");
         add(reglesLabel);
         
         scrollPane3 = new JScrollPane(resultat);
+        resultat.setEditable(false);
         add(scrollPane3);
 
         resultatLabel = new JLabel("Résultats");
@@ -121,9 +124,22 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         
             }
         });
+
+
+        actionListeners = clear.getActionListeners();
+        for (ActionListener listener : actionListeners)
+            clear.removeActionListener(listener);
+        add(clear);
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultat.setText("");
+            }
+        });
         
 
         chainageAvant = new JRadioButton("Chainage avant");
+        chainageAvant.setBackground(backgroundColor);
         chainageAvant.setSelected(true);
         chainageAvant.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -134,6 +150,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(chainageAvant);
        
         chainageArriere = new JRadioButton("Chainage arrière");
+        chainageArriere.setBackground(backgroundColor);
         chainageArriere.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (chainageArriere.isSelected()) 
@@ -144,6 +161,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
 
         chainagePaquet = new JRadioButton("Chainage par paquets");
+        chainagePaquet.setBackground(backgroundColor);
         chainagePaquet.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (chainagePaquet.isSelected()) 
@@ -223,13 +241,17 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(calculer);
         
         trace = new JCheckBox("trace");
+        trace.setBackground(backgroundColor);
         add(trace);
         String[] options = {"Règle dans l'ordre","par le plus de prémisse", "par le fait le plus récent"};
         comboBox = new JComboBox<>(options);
         add(comboBox);
         
 
-        verifierIncoherences = new JCheckBox("vérification des incohérences");
+        verifierIncoherences = new JCheckBox("Incohérences");
+        verifierIncoherences.setSelected(true);
+        verifierIncoherences.setBackground(backgroundColor);
+
         add(verifierIncoherences);
         actionListeners = calculer.getActionListeners();
         for (ActionListener listener : actionListeners) 
@@ -273,8 +295,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                     }
                 }
 
-                MoteurZeroPlus.print("Faits extraits : " + faitsBuilder.toString());
-                MoteurZeroPlus.print("Règles extraits : " + reglesBuilder.toString());
+               // MoteurZeroPlus.print("Faits extraits : " + faitsBuilder.toString());
+                //MoteurZeroPlus.print("Règles extraits : " + reglesBuilder.toString());
 
                 Strategie strategie = new ChainageAvant();
                 if (Graphism.typeChainage == 1) {
@@ -360,6 +382,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         input.setFont(texteFont);
         input.setLocation(w/2, h/40*38);
 
+        clear.setFont(texteFont);
+        clear.setSize(w/7, h/25);
+        clear.setLocation(w/5*4,h/160*93);
+
         variable.setFont(texteFont);
         variable.setSize(w/7, h/10);
         variable.setLocation(w/5, h/20*12);
@@ -373,7 +399,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         chainageArriere.setLocation(w/40, h/20*15);
         
         chainagePaquet.setFont(texteFont);
-        chainagePaquet.setSize(w/7, h/10);
+        chainagePaquet.setSize(w/6, h/10);
         chainagePaquet.setLocation(w/40, h/20*18);
         
         

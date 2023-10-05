@@ -116,12 +116,10 @@ public class BaseDeRegles {
             }
             contextesDictionnaires.put(elementsQuiSontConsequents.get(i), tamponElementsCalcules);
         }
-        Moteur.print("Dico"  + contextesDictionnaires.toString());
-
+        
         //maintenant on va vérifier s'il y a des incohérences
 
         for (Element cle : contextesDictionnaires.keySet()) {
-            Moteur.print("Clé  : "+cle.toString());
             //ensuite on veut obtenir toutes les regles qui ont comme prémice l'élément du contextDictionnaire
             ArrayList<Regle> reglesQuiOntCommePremicesLelement = new ArrayList<>();
             for (int j = 0; j < _reglesListe.size();j++){
@@ -174,7 +172,7 @@ public class BaseDeRegles {
         
         if (newList.size() != _reglesListe.size()){
             _reglesListe = newList;
-            Moteur.print("On a modifié la base de règles pour enlever les doublons.On a donc : \n"+toString());
+            Moteur.print("On a modifié la base de règles pour enlever les doublons.\n");
         }
 
         
@@ -228,8 +226,7 @@ public class BaseDeRegles {
             Moteur.print(elementsVerifies.toString());
         }
 
-        Moteur.print("Nouvelle base de faits corrigée : "+toString());
-
+        
     }
 
     public Regle avoirRegleParNom(String string) {
