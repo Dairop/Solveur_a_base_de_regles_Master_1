@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.util.Scanner;
-import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
