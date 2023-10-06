@@ -16,18 +16,18 @@ public class ChainageArriere implements Strategie{
             _objectif = new Element(Moteur.lireReponse("Question à poser"));
         
         boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace);
-        if (result)   System.out.println( this._objectif.toString() + " a été vérifié, avec un retour positif");
-        else          System.out.println( this._objectif.toString() + " n'a pas été résolu");
+        if (result)   Moteur.print( this._objectif.toString() + " a été vérifié, avec un retour positif");
+        else          Moteur.print( this._objectif.toString() + " n'a pas été résolu");
     }
 
     public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace){
-        if (trace) System.out.println("Base de faits: "+baseDeFaits.toString());
+        if (trace) Moteur.print("Base de faits: "+baseDeFaits.toString());
         boolean dem = false;
         
         //1er cas
         if (baseDeFaits.contient(b)) {
             dem = true;
-            if (trace) System.out.println("Base de fait contient: "+b.toString());
+            if (trace) Moteur.print("Base de fait contient: "+b.toString());
         }
 
         //2nd cas, vérifier si b est conséquent d'une des règles de BR
@@ -37,7 +37,7 @@ public class ChainageArriere implements Strategie{
              if (r.consequentContient(b)){
                 //vérifier si les prémisses d'une règle avec b en conséquent sont connues
                 dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles);
-                if (dem && trace) System.out.println("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
+                if (dem && trace) Moteur.print("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
             }
         }
 

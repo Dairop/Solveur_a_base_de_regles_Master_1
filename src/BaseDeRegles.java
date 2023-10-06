@@ -93,7 +93,7 @@ public class BaseDeRegles {
                         }
                     }
 
-                    //on parcoure toutes les règles pour voir tous le contexte
+                    //on parcoure toutes les règles pour voir tout le contexte
                     for (int l = 0; l < reglesQuiOntCommeConsequentLelementNonCalcules.size();l++){
                         for (int m = 0; m < reglesQuiOntCommeConsequentLelementNonCalcules.get(l).taillePremice();m++){
                             Element premice = reglesQuiOntCommeConsequentLelementNonCalcules.get(l).avoirPremiceParIndice(m);
