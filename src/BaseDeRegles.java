@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class BaseDeRegles {
 
     private ArrayList<Regle> _reglesListe = new ArrayList<>();
-
+    
     public void ajouterRègle(Regle regle){
         _reglesListe.add(regle);
     }
