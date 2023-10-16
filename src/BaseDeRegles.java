@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class BaseDeRegles {
 
     private ArrayList<Regle> _reglesListe = new ArrayList<>();
-
+    
     public void ajouterRègle(Regle regle){
         _reglesListe.add(regle);
     }
@@ -95,7 +95,7 @@ public class BaseDeRegles {
                         }
                     }
 
-                    //on parcoure toutes les règles pour voir tous le contexte
+                    //on parcoure toutes les règles pour voir tout le contexte
                     for (int l = 0; l < reglesQuiOntCommeConsequentLelementNonCalcules.size();l++){
                         for (int m = 0; m < reglesQuiOntCommeConsequentLelementNonCalcules.get(l).taillePremice();m++){
                             Element premice = reglesQuiOntCommeConsequentLelementNonCalcules.get(l).avoirPremiceParIndice(m);

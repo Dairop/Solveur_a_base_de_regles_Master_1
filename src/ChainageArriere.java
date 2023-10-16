@@ -2,12 +2,14 @@ import java.util.ArrayList;
 
 public class ChainageArriere implements Strategie{
     Element _objectif;
+    private int _nbInf;
 
     public void setObjectif(Element e){
         this._objectif = e;
     }
 
     public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace, Tri tri){
+        _nbInf = 0;
 
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
@@ -23,11 +25,12 @@ public class ChainageArriere implements Strategie{
     public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace, Tri tri){
         if (trace) System.out.println("Base de faits: "+baseDeFaits.toString());
         boolean dem = false;
+        _nbInf++;
         
         //1er cas
         if (baseDeFaits.contient(b)) {
             dem = true;
-            if (trace) System.out.println("Base de fait contient: "+b.toString());
+            if (trace) Moteur.print("Base de fait contient: "+b.toString());
         }
 
         baseDeRegles = tri.trier(baseDeRegles, baseDeFaits);
@@ -36,6 +39,7 @@ public class ChainageArriere implements Strategie{
             Regle r = baseDeRegles.avoirRegleParIndice(i);
             //verifier si b est en consequent
              if (r.consequentContient(b)){
+                
                 //vérifier si les prémisses d'une règle avec b en conséquent sont connues
                 dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles, tri);
                 if (dem && trace) System.out.println("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
@@ -49,7 +53,7 @@ public class ChainageArriere implements Strategie{
         }
 
         if (dem){
-            baseDeFaits.ajouterFait(b);
+            baseDeFaits.ajouterFait(new Element(b.nom(), b.estVrai(), _nbInf));
         }
 
 
