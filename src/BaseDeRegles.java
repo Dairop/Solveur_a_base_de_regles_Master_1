@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class BaseDeRegles {
@@ -173,9 +175,12 @@ public class BaseDeRegles {
         if (newList.size() != _reglesListe.size()){
             _reglesListe = newList;
             Moteur.print("On a modifié la base de règles pour enlever les doublons.\n");
-        }
+        }    
+    }
 
-        
+    public void trierPlusDePremices(){
+        Comparator<Regle> comparateur = Comparator.comparingInt(Regle::getValeur);
+        Collections.sort(_reglesListe, comparateur);
     }
 
     private void verifierNomsDouble() throws Exception {

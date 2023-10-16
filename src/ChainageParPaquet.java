@@ -11,7 +11,7 @@ public class ChainageParPaquet implements Strategie{
     }
 
     @Override
-    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace) {
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace, Tri tri) {
         BaseDeFaits baseDeFaitTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
@@ -42,6 +42,7 @@ public class ChainageParPaquet implements Strategie{
 
                 //ici on va vérifier si la base de faits vérifie les prémices de la règle
                 boolean regleUtile = true;
+                baseDeReglesTampon = tri.trier(baseDeReglesTampon, baseDeFaitTampon);
                 for (int k = 0; k < r.taillePremice();k++){
                     if (!baseDeFaitTampon.contient(r.avoirPremiceParIndice(k))){
                         if (trace)

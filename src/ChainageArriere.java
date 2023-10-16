@@ -7,7 +7,7 @@ public class ChainageArriere implements Strategie{
         this._objectif = e;
     }
 
-    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace){
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace, Tri tri){
 
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
@@ -15,12 +15,12 @@ public class ChainageArriere implements Strategie{
         if (_objectif == null)
             _objectif = new Element(Moteur.lireReponse("Question à poser"));
         
-        boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace);
+        boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace, tri);
         if (result)   System.out.println( this._objectif.toString() + " a été vérifié, avec un retour positif");
         else          System.out.println( this._objectif.toString() + " n'a pas été résolu");
     }
 
-    public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace){
+    public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace, Tri tri){
         if (trace) System.out.println("Base de faits: "+baseDeFaits.toString());
         boolean dem = false;
         
@@ -30,13 +30,14 @@ public class ChainageArriere implements Strategie{
             if (trace) System.out.println("Base de fait contient: "+b.toString());
         }
 
+        baseDeRegles = tri.trier(baseDeRegles, baseDeFaits);
         //2nd cas, vérifier si b est conséquent d'une des règles de BR
         for (int i = 0; i < baseDeRegles.taille() && !dem; i++) {
             Regle r = baseDeRegles.avoirRegleParIndice(i);
             //verifier si b est en consequent
              if (r.consequentContient(b)){
                 //vérifier si les prémisses d'une règle avec b en conséquent sont connues
-                dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles);
+                dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles, tri);
                 if (dem && trace) System.out.println("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
             }
         }
@@ -57,11 +58,11 @@ public class ChainageArriere implements Strategie{
 
 
 
-    public boolean verif(ArrayList<Element> B, BaseDeFaits BF, BaseDeRegles BR){
+    public boolean verif(ArrayList<Element> B, BaseDeFaits BF, BaseDeRegles BR, Tri tri){
         boolean ver = true;
 
         for (int i = 0; i < B.size() && ver; i++){
-            ver = executerRecursif(BF, BR, B.get(i), ver);
+            ver = executerRecursif(BF, BR, B.get(i), ver, tri);
         }
         
         return ver;

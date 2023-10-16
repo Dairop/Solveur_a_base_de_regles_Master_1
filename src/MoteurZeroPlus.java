@@ -4,31 +4,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MoteurZeroPlus extends Moteur{
+
     ArrayList<Predicat> _predicats = new ArrayList<Predicat>();
     HashMap<String, Variable> _variables;
 
-    public MoteurZeroPlus(){
-        _variables = new HashMap<String, Variable>();
-    }
-
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, HashMap<String, Variable> variables) {
-        super(baseDeFaits, baseDeRegles);
-        if (variables == null) _variables = new HashMap<String, Variable>();
-        else _variables = variables;
-    }
-
+    
     public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
-            HashMap<String, Variable> variables){
-                
-        super(baseDeFaits, baseDeRegles, strategie);
-        if (variables == null) _variables = new HashMap<String, Variable>();
-        else _variables = variables;    
-    }
+            HashMap<String, Variable> variables, boolean trace, boolean verifierIncoherences, Tri tri){
 
-    public MoteurZeroPlus(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, 
-            HashMap<String, Variable> variables, boolean trace, boolean verifierIncoherences){
-
-        super(baseDeFaits, baseDeRegles, strategie, trace, verifierIncoherences);
+        super(baseDeFaits, baseDeRegles, strategie, trace, verifierIncoherences, tri);
         if (variables == null) _variables = new HashMap<String, Variable>();
         else _variables = variables;
     }
@@ -51,7 +35,7 @@ public class MoteurZeroPlus extends Moteur{
         //remplace les variables
         remplacerVariables();
         
-        _strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
+        _strategie.executer(_baseDeFaits, _baseDeRegles, _trace, _methodeDeTrie);
 
     }
 

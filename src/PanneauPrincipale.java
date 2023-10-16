@@ -323,6 +323,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
                 }
 
+                Tri tri = new TriDansOrdre();
+                if (comboBox.getSelectedIndex() == 1)
+                    tri = new TriPlusDePremisse();
+                
                 if (strategie instanceof ChainageParPaquet){    
                     //Il faut mettre les paquets à jour
                     ArrayList<ArrayList<String>> paquets = new ArrayList<>();
@@ -330,12 +334,13 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                     for (int i = 0; i < lignes.length;i++)
                         paquets.add(new ArrayList<>(Arrays.asList(lignes[i].split(";"))));
                     
-                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected(), tri);
                     ChainageParPaquet strat = (ChainageParPaquet)strategie;
                     strat.setBlocs(paquets);
-                    MoteurZeroPlus.executer(moteur);    
+                    MoteurZeroPlus.executer(moteur);
+                   
                 }else{
-                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected());
+                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected(), tri);
                     MoteurZeroPlus.executer(moteur);
                 }
             }

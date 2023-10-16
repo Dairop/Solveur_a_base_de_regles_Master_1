@@ -10,31 +10,20 @@ public class Moteur implements Runnable{
     protected BaseDeRegles _baseDeRegles = new BaseDeRegles();
     protected Strategie _strategie = null;
     protected boolean _trace = true;
+    protected Tri _methodeDeTrie;
     protected boolean _verifierIncoherences = true;
   
     public static boolean attenteReponseUtilisateur = false;
 
     protected static boolean enConsole = false;
-    
-    public Moteur(){}
 
-    public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles){
-        this._baseDeFaits = baseDeFaits;
-        this._baseDeRegles = baseDeRegles;
-    }
-
-    public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie){
-        this._baseDeFaits = baseDeFaits;
-        this._baseDeRegles = baseDeRegles;
-        this._strategie = strategie;
-    }
-
-    public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace, boolean verifierIncoherences){
+    public Moteur(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Strategie strategie, boolean trace, boolean verifierIncoherences, Tri trie){
         this._baseDeFaits = baseDeFaits;
         this._baseDeRegles = baseDeRegles;
         this._strategie = strategie;
         this._verifierIncoherences = verifierIncoherences;
         this._trace = trace;
+        this._methodeDeTrie = trie;
     }
 
     public static void executer(Moteur m){
@@ -114,7 +103,7 @@ public class Moteur implements Runnable{
             e.printStackTrace();
         }
         if (this._strategie == null) return;
-        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace);
+        this._strategie.executer(_baseDeFaits, _baseDeRegles, _trace, _methodeDeTrie);
     }
 
 

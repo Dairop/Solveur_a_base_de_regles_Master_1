@@ -45,6 +45,10 @@ public class Regle {
         return _consequent.taille();
     }
 
+    public int getValeur() {
+        return _premice.taille();
+    }
+
     public Element avoirConsequentParIndice(int indice){
         return _consequent.avoirElementIndice(indice);
     }

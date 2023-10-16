@@ -1,7 +1,7 @@
 public class ChainageAvant implements Strategie{
     
 
-    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace){
+    public void executer(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, boolean trace, Tri tri){
 
         Chronometre.start();
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
@@ -17,6 +17,7 @@ public class ChainageAvant implements Strategie{
             inf = false;
 
             for (int i = 0; i < baseDeReglesEnTampon.taille(); i++) {
+                baseDeReglesEnTampon = tri.trier(baseDeReglesEnTampon, baseDeFaitsEnTampon);
                 dec = true;
                 Regle regle = baseDeReglesEnTampon.avoirRegleParIndice(i);
 
