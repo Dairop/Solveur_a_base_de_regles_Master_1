@@ -148,7 +148,7 @@ public class BaseDeRegles {
                 //ici on va vérifier que l'on est pas dans les prémices : A ET !A -> B
                 //c'est-à-dire un élément et sa négation
                 for (int l = 0; l < premicesAvecContexte.size();l++){
-                    Element e = new Element(premicesAvecContexte.get(l).nom(),!premicesAvecContexte.get(l).estVrai());
+                    Element e = new Element(premicesAvecContexte.get(l).nom(),!premicesAvecContexte.get(l).estVrai(), 0);
                     if (premicesAvecContexte.contains(e)){
                         Moteur.print("On a une erreur incohérence dans la base de règle : "+  premicesAvecContexte.toString());
                     }else if (reglesQuiOntCommePremicesLelement.get(k).avoirConsequents().contient(e)){
@@ -181,6 +181,8 @@ public class BaseDeRegles {
     public void trierPlusDePremices(){
         Comparator<Regle> comparateur = Comparator.comparingInt(Regle::getValeur);
         Collections.sort(_reglesListe, comparateur);
+        Collections.reverse(_reglesListe);
+
     }
 
     private void verifierNomsDouble() throws Exception {
@@ -240,6 +242,13 @@ public class BaseDeRegles {
                 return _reglesListe.get(i);
         }
         return null;
+    }
+
+    public void trierPlusRecent(BaseDeFaits bf) {
+        Comparator<Regle> comparateur = Comparator.comparingInt(Regle::getDecouvertTempsPremice);
+        Collections.sort(_reglesListe, comparateur);
+        Collections.reverse(_reglesListe);
+
     }
 
 

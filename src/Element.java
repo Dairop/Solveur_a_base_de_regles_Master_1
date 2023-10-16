@@ -3,18 +3,19 @@ import java.util.Objects;
 public class Element {
     private String _nom;
     private Boolean _estVrai;
+    private int _decouvertTemps;//0 correspond à la découverte à partir de la base de faits, et > 0 : correspond à la découverte à l'itération n...
 
     public Element(String nom){
         this._nom = nom.trim();
         this._estVrai = true;
-
+        _decouvertTemps = 0;
         if (this._nom.charAt(0) == '!'){
             this._estVrai = false;
             _nom = nom.substring(1).trim();
         }
     }
 
-    public Element(String nom, Boolean estVrai){
+    public Element(String nom, Boolean estVrai, int iteration){
         this._nom = nom;
         this._estVrai = estVrai;
     }
@@ -37,7 +38,7 @@ public class Element {
     
     //création d'une copie indépendante
     public Element clone(){
-        return new Element(_nom, _estVrai);
+        return new Element(_nom, _estVrai, _decouvertTemps);
     }
 
     @Override

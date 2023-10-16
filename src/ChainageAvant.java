@@ -37,7 +37,9 @@ public class ChainageAvant implements Strategie{
                     // Ajoutez le résultat de la règle à la base de faits
                     for (int k = 0; k < regle.tailleConsequent(); k++) {
                         if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k))){
-                            baseDeFaitsEnTampon.ajouterFait(regle.avoirConsequentParIndice(k));
+                            Element e = new Element(regle.avoirConsequentParIndice(k).nom(), regle.avoirConsequentParIndice(k).estVrai(), nbInf);
+                            baseDeFaitsEnTampon.ajouterFait(e);
+                            regle.setDecouvertTempsPremice(nbInf);
                             if (trace){
                                 MoteurZeroPlus.print("\n--------- Nombre d'inférences : " +nbInf);
                                 MoteurZeroPlus.print("\nOn a : "+regle.avoirPremices().toString()+" donc on utilise la règle : \n"+regle.toString()+" et on obtient : \n"+regle.avoirConsequents().toString()+" \nNouvelle base de faits : \n"+baseDeFaitsEnTampon.toString());

@@ -5,7 +5,6 @@ public class ChainageParPaquet implements Strategie{
 
     ArrayList<ArrayList<String>> _blocs = new ArrayList<>();
 
-
     public void setBlocs(ArrayList<ArrayList<String>> _blocs) {
         this._blocs = _blocs;
     }
@@ -56,7 +55,9 @@ public class ChainageParPaquet implements Strategie{
                     String message = "La règle est utilisable : "+r.toString()+"\n On rajoute donc les conséquents : ";
                     for (int k = 0; k < r.tailleConsequent();k++){
                         if (!baseDeFaitTampon.contient(r.avoirConsequentParIndice(k))){
+                            r.setDecouvertTempsPremice(i);
                             message+=" ; "+r.avoirConsequentParIndice(k).toString();
+                            baseDeFaitTampon.ajouterFait(new Element(r.avoirConsequentParIndice(k).nom(), r.avoirConsequentParIndice(k).estVrai(), i));
                             baseDeFaitTampon.ajouterFait(r.avoirConsequentParIndice(k).clone());
                         }
                     }

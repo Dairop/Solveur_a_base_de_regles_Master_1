@@ -326,7 +326,9 @@ public class PanneauPrincipale extends PanneauPersonnalise{
                 Tri tri = new TriDansOrdre();
                 if (comboBox.getSelectedIndex() == 1)
                     tri = new TriPlusDePremisse();
-                
+                else if (comboBox.getSelectedIndex() == 2)
+                    tri = new TriParPlusRecent();
+
                 if (strategie instanceof ChainageParPaquet){    
                     //Il faut mettre les paquets à jour
                     ArrayList<ArrayList<String>> paquets = new ArrayList<>();

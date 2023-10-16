@@ -148,7 +148,7 @@ public class BaseDeFaits {
             throw new Exception("Caractères interdits dans les symboles / mots");
         else  {
             for (int i = 0; i < _base.size();i++){
-                _base.set(i, new Element(_base.get(i).nom().replace("Et", "").replace("!", "").replace("->", ""), _base.get(i).estVrai()));
+                _base.set(i, new Element(_base.get(i).nom().replace("Et", "").replace("!", "").replace("->", ""), _base.get(i).estVrai(),0));
             }
         }
 

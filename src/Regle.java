@@ -5,11 +5,17 @@ public class Regle {
     private String _nom;
     private Premisse _consequent;
     private Premisse _premice;
+    private int _decouvertTempsPremice;
 
     public Regle(String nom, Premisse premice, Premisse consequent){
         this._nom = nom;
         this._premice = premice;
         this._consequent = consequent;
+        _decouvertTempsPremice  = 0;
+    }
+
+    public void setDecouvertTempsPremice(int _decouvertTempsPremice) {
+        this._decouvertTempsPremice = _decouvertTempsPremice;
     }
 
     //Mini-parser
@@ -17,6 +23,7 @@ public class Regle {
         _nom = string.split(":")[0].trim();
         _premice = new Premisse(string.split(":")[1].split("->")[0].trim());
         _consequent = new Premisse(string.split(":")[1].split("->")[1].trim());
+        _decouvertTempsPremice = 0;
     }
 
     public int taillePremice(){
@@ -69,6 +76,10 @@ public class Regle {
 
     public ArrayList<Element> avoirPremicesListe(){
         return this._premice.listeElements();
+    }
+
+    public int getDecouvertTempsPremice() {
+        return _decouvertTempsPremice;
     }
 
     public ArrayList<Element> avoirConsequentsListe(){

@@ -1,8 +1,8 @@
-public class TriPlusDePremisse extends Tri{
+public class TriParPlusRecent extends Tri{
 
+    @Override
     public BaseDeRegles trier(BaseDeRegles br, BaseDeFaits bf) {
-        br.trierPlusDePremices();
+        br.trierPlusRecent(bf);
         return br;
     }
-    
 }
