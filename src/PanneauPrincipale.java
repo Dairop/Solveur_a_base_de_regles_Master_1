@@ -33,7 +33,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
     static JScrollPane scrollPane2, scrollPane3, scrollPane1;
     static JTextField input = new JTextField();
-    static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("");
+    static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("Pour avoir le modèle 1, il suffit de charger le fichier \"moteur1.txt\"");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
     static JButtonCustom aide = new JButtonCustom("?"), clear = new JButtonCustom("Nettoyer"),calculer, variable = new JButtonCustom("Variables"), charger = new JButtonCustom("Charger"), save=new JButtonCustom("Save"), paquet = new JButtonCustom("Paquets");
     static JLabel faitsLabel,reglesLabel, resultatLabel;

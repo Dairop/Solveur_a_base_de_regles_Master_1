@@ -26,7 +26,7 @@ public class ChainageParPaquet implements Strategie{
                 
                 //Si aucune règle avec ce nom, on laisse l'utilisateur choisir
                 if (r == null){
-                    String reponse = Moteur.lireReponse("La règle "+_blocs.get(i).get(j) +" n'existe pas.\n1:Passer la règle\n2:Renommer la règle\n3:Arrêter le programme");
+                    String reponse = Moteur.lireReponse("La règle \""+_blocs.get(i).get(j) +"\" n'existe pas.\n1:Passer la règle\n2:Renommer la règle\n3:Arrêter le programme");
                     if (reponse.contains("1"))
                         continue;
                     else if (reponse.contains("2")){
@@ -45,7 +45,7 @@ public class ChainageParPaquet implements Strategie{
                 for (int k = 0; k < r.taillePremice();k++){
                     if (!baseDeFaitTampon.contient(r.avoirPremiceParIndice(k))){
                         if (trace)
-                            Moteur.lireReponse(" On a la règle : s car : "+r.avoirPremiceParIndice(k).toString()+" qui n'est pas valide.\n");
+                            Moteur.print(" On a la règle "+r.nom()+" car :"+r.avoirPremiceParIndice(k).toString()+" n'est pas valide.\n");
                         regleUtile = false;
                     }
                 }
@@ -68,7 +68,7 @@ public class ChainageParPaquet implements Strategie{
             }
         }
         
-        Moteur.print("Chainage par paquets réussi avec les paquets : "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString());
+        Moteur.print("Chainage par paquets réussi avec les paquets :\n "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString());
     }
 
 

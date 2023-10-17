@@ -9,7 +9,7 @@ public class Element {
         this._nom = nom.trim();
         this._estVrai = true;
         _decouvertTemps = 0;
-        if (this._nom.charAt(0) == '!'){
+        if (nom.length() > 1&&  this._nom.charAt(0) == '!'){
             this._estVrai = false;
             _nom = nom.substring(1).trim();
         }

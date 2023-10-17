@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 public class PanneauRegle extends PanneauPersonnalise{
 
     JLabel titre = new JLabel("Aide");
-    JTextArea aide = new JTextArea("Base de faits : Un fait par ligne on peut avoir par exemple sur une ligne :\n\"fievre(elevee)\" ou \"!A\" indiquant que le fait A est faux avec '!' devant\nBase de règles, une règle par ligne sachant que une règle est : \n[nom : premice(s) -> consequent(s)] avec par exemple:\n\"R1:A ET !B ET C -> S ET !G\" ou \"reègle test : A -> B\".\n\nPour plus d'informations, voir la documentation technique\n\nSinon le survol des éléments est possible pour plus d'informations.");
+    JTextArea aide = new JTextArea("Base de faits : Un fait par ligne on peut avoir par exemple sur une ligne :\n\"fievre(elevee)\" ou \"!A\" indiquant que le fait A est faux avec '!' devant\n\nBase de règles, une règle par ligne sachant que une règle est : \n[nom : premice(s) -> consequent(s)] avec par exemple:\n\"R1:A ET !B ET C -> S ET !G\" ou \"reègle test : A -> B\".\n\nPour plus d'informations, voir la documentation technique\n\nSinon le survol des éléments est possible pour plus d'informations.");
     JButtonCustom retour = new JButtonCustom("Retour");
     JScrollPane scroll = new JScrollPane(aide);
 

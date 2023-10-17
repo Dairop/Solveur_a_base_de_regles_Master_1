@@ -54,7 +54,7 @@ public class ChainageAvant implements Strategie{
             }
         }      
         Chronometre.stop();
-        MoteurZeroPlus.print("Résultat : Temps d'exécution : "+Chronometre.time()+" ms / Nombres d'inférences : "+nbInf);
+        MoteurZeroPlus.print("Résultat : Temps d'exécution : "+Chronometre.time()+" ms / Nombres d'inférences : "+nbInf+", \nOn a la base de faits : ");
         MoteurZeroPlus.print(baseDeFaitsEnTampon.toString());
     }
 }
