@@ -5,7 +5,6 @@ public class App implements Runnable{
         new Thread(new App()).start();
     }
 
-
     @Override
     public void run() {
     }

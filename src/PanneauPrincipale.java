@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -36,15 +35,14 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     static JTextField input = new JTextField();
     static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("");
     static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
-    static JButton aide = new JButton("?"), clear = new JButton("Nettoyer"),calculer, variable = new JButton("Variables"), charger = new JButton("Charger"), save=new JButton("Save"), paquet = new JButton("Paquets");
+    static JButtonCustom aide = new JButtonCustom("?"), clear = new JButtonCustom("Nettoyer"),calculer, variable = new JButtonCustom("Variables"), charger = new JButtonCustom("Charger"), save=new JButtonCustom("Save"), paquet = new JButtonCustom("Paquets");
     static JLabel faitsLabel,reglesLabel, resultatLabel;
     static JCheckBox trace, verifierIncoherences;
     static JComboBox<String> comboBox;
-    private static Color backgroundColor = new Color(0,0,0, 0);
 
 
     public void paintComponent(Graphics g){
-        g.setColor(new Color(200,200,200));
+        g.setColor(Graphism.couleurFond);
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
@@ -52,11 +50,12 @@ public class PanneauPrincipale extends PanneauPersonnalise{
     @Override
     void initialiser() {
 
-        faits.setBackground(Color.white);
+        faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
         scrollPane1 = new JScrollPane(faits);
         add(scrollPane1);        
         
 
+        regles.setToolTipText("Une règle par ligne et avec le format 'nom : prémice1 Et prémice2 -> conséquent1 ET conséquent2' par exemple : 'R1: A-> B ET !C' ou 'ma règle : !E ET !A -> C'");
         scrollPane2 = new JScrollPane(regles);
         add(scrollPane2);
         
@@ -67,7 +66,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
 
         reglesLabel = new JLabel("Base de règles");
         add(reglesLabel);
-        
+
+        resultat.setToolTipText("Résultat des différentes demandes");
         scrollPane3 = new JScrollPane(resultat);
         resultat.setEditable(false);
         add(scrollPane3);
@@ -76,7 +76,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(resultatLabel);
         
 
-
+        charger.setToolTipText("Permet de récupérer le système expert enregistré dans un fichier.");
         add(charger);
         ActionListener[] actionListeners = charger.getActionListeners();
         for (ActionListener listener : actionListeners) 
@@ -110,9 +110,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
 
-
+        paquet.setToolTipText("Définir les paquets, avec l'ordre des règles à l'intérieur étant basé sur la stratégie de conflits");
         add(paquet);
  
+        input.setToolTipText("Utilisé pour résoudres les problèmes, répondre aux questions...");
         add(input);
         actionListeners = input.getActionListeners();
         for (ActionListener listener : actionListeners) 
@@ -125,7 +126,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
 
-
+        clear.setToolTipText("Permet d'effacer tout le contenu du résultat pour y voir clair");
         actionListeners = clear.getActionListeners();
         for (ActionListener listener : actionListeners)
             clear.removeActionListener(listener);
@@ -137,9 +138,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
         
-
+        
         chainageAvant = new JRadioButton("Chainage avant");
-        chainageAvant.setBackground(backgroundColor);
+        chainageAvant.setToolTipText("Stratégie qui permet d'extraire tout ce qui est possible d'avoir depuis la base de connaissance.");
+        chainageAvant.setBackground(Graphism.couleurFond);
         chainageAvant.setSelected(true);
         chainageAvant.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -150,7 +152,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         add(chainageAvant);
        
         chainageArriere = new JRadioButton("Chainage arrière");
-        chainageArriere.setBackground(backgroundColor);
+        chainageArriere.setToolTipText("Stratégie pour savoir si une certaine chose demandée par l'expert est vrai.");
+        chainageArriere.setBackground(Graphism.couleurFond);
         chainageArriere.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (chainageArriere.isSelected()) 
@@ -159,9 +162,10 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         });
         add(chainageArriere);
 
-
+        
         chainagePaquet = new JRadioButton("Chainage par paquets");
-        chainagePaquet.setBackground(backgroundColor);
+        chainagePaquet.setToolTipText("Stratégie qui permet d'appliquer des règles par paquets dans un ordre défini.");
+        chainagePaquet.setBackground(Graphism.couleurFond);
         chainagePaquet.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (chainagePaquet.isSelected()) 
@@ -177,7 +181,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         actionListeners = aide.getActionListeners();
         for (ActionListener listener : actionListeners) 
             aide.removeActionListener(listener);
-        aide = new JButton("?");
+        aide = new JButtonCustom("?");
+        aide.setToolTipText("Obtenir de l'aide");
         aide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -191,8 +196,8 @@ public class PanneauPrincipale extends PanneauPersonnalise{
         for (ActionListener listener : actionListeners) 
             variable.removeActionListener(listener);
         
-        variable = new JButton("Variables");
-
+        variable = new JButtonCustom("Variables");
+        variable.setToolTipText("Permet de définir les variables et ses valeurs possibles");
         variable.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -200,6 +205,7 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
         add(variable);
+        save.setToolTipText("Permet de sauvegarder dans un fichier la session actuelle.");
         add(save);
         
 
@@ -236,21 +242,27 @@ public class PanneauPrincipale extends PanneauPersonnalise{
             }
         });
 
-        calculer = new JButton("Calculer");
+        
+        calculer = new JButtonCustom("Calculer");
+        calculer.setToolTipText("Donne le résultat de la stratégie choisie avec la base de connaissances.");
         calculer.setBackground(Color.red);
         add(calculer);
         
         trace = new JCheckBox("trace");
-        trace.setBackground(backgroundColor);
+        trace.setToolTipText("Permet d'avoir le cheminement et les informations pour permettre de prouver les faits.");
+        trace.setBackground(Graphism.couleurFond);
         add(trace);
         String[] options = {"Règle dans l'ordre","par le plus de prémisse", "par le fait le plus récent"};
         comboBox = new JComboBox<>(options);
+        comboBox.setBackground(Graphism.couleurFond);
+        comboBox.setToolTipText("Choix de la règle en cas de conflit");
         add(comboBox);
         
 
         verifierIncoherences = new JCheckBox("Incohérences");
         verifierIncoherences.setSelected(true);
-        verifierIncoherences.setBackground(backgroundColor);
+        verifierIncoherences.setToolTipText("Permet de détecter les incohérences et de réagir en fonction.");
+        verifierIncoherences.setBackground(Graphism.couleurFond);
 
         add(verifierIncoherences);
         actionListeners = calculer.getActionListeners();
