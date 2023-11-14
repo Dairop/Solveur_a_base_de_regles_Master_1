@@ -28,7 +28,7 @@ public class MoteurZeroPlus extends Moteur{
         }
 
         if (_strategie == null) {
-            if (_trace) print("Aucune stratÃ©gie n'a Ã©tÃ© dÃ©finie");
+            if (_trace) print("Aucune stratégie n'a été définie");
             return;
         }
 
@@ -49,7 +49,7 @@ public class MoteurZeroPlus extends Moteur{
     }
 
     public boolean estPredicat(String chaine) {
-        // Utilisation d'une expression rÃ©guliÃ¨re pour vÃ©rifier le format abc(E, M, pf5)
+        // Utilisation d'une expression régulière pour vérifier le format abc(E, M, pf5)
         
         String regex = "([A-Za-z0-9]_?)+\\((!?([A-Za-z0-9]_?)+,(\\s?)+)*!?([A-Za-z0-9]_?)+\\)";
         Pattern pattern = Pattern.compile(regex);
@@ -69,7 +69,7 @@ public class MoteurZeroPlus extends Moteur{
     }
 
 
-    //genere des valeurs possibles aleatoires temporairement, Ã  remplacer dÃ¨s que possible
+    //genere des valeurs possibles aleatoires temporairement, Ã  remplacer dès que possible
     public void valeursPossiblesAleatoires(ArrayList<String> array){
         for (int i = 0; i < 3; i++){
             array.add(stringAleatoire(5));
@@ -78,12 +78,12 @@ public class MoteurZeroPlus extends Moteur{
 
 
     public void remplacerVariables(){
-        //if (this._trace) print("DÃ©but de l'analyse des rÃ¨gles afin de remplacer les variables ...");
+        //if (this._trace) print("Début de l'analyse des règles afin de remplacer les variables ...");
 
         //_predicats.clear();
         
-        //liste ordonnÃ©e de toutes les variables trouvÃ©es dans nos rÃ¨gles
-        //Si certaines ne sont pas dÃ©finies dans this._variables, on demandera Ã  l'utilisateur de les dÃ©finir
+        //liste ordonnée de toutes les variables trouvées dans nos règles
+        //Si certaines ne sont pas définies dans this._variables, on demandera Ã  l'utilisateur de les définir
         ArrayList<String> listeVariablesTrouvees = new ArrayList<String>();
 
         ArrayList<ArrayList<String>> valeursPossiblesVariables = new ArrayList<ArrayList<String>>();
@@ -94,12 +94,12 @@ public class MoteurZeroPlus extends Moteur{
             //if (this._trace) print("  Analyse la regle "+r.toString()+" ...");
 
 
-            //recuperer tous les Elements de la rÃ¨gle et regarder si certains sont des Predicats
+            //recuperer tous les Elements de la règle et regarder si certains sont des Predicats
             ArrayList<Element> elementsDeR = new ArrayList<Element>(r.avoirPremicesListe());
             elementsDeR.addAll(r.avoirConsequentsListe());
 
             for (int p_i = 0; p_i < elementsDeR.size(); p_i++){
-                //cherche s'il y a des parenthÃ¨ses dans l'element     
+                //cherche s'il y a des parenthèses dans l'element     
                 String pr = elementsDeR.get(p_i).toString().replaceAll("\\s", "");  
                 
                 //if (this._trace) print("\n    Analyse de: '"+pr+"'");
@@ -107,7 +107,7 @@ public class MoteurZeroPlus extends Moteur{
                 if (estPredicat(pr)){
                     String[] parametres = pr.substring(pr.indexOf("(")+1, pr.indexOf(")")).split(",");
 
-                    //if (this._trace) print("        Predicat trouvÃ©\n");
+                    //if (this._trace) print("        Predicat trouvé\n");
                     
                     /*
                     _predicats.add(new 
@@ -117,7 +117,7 @@ public class MoteurZeroPlus extends Moteur{
                     */
 
                     for (String param: parametres) {
-                        //si le paramÃ¨tre commence par une majuscule, alors c'est une variable
+                        //si le paramètre commence par une majuscule, alors c'est une variable
                         if (param.charAt(0) >= 65 && param.charAt(0) <= 90){
 
                             //if (this._trace) print("Nouvelle variable: "+param);
@@ -128,8 +128,8 @@ public class MoteurZeroPlus extends Moteur{
                             if (this._variables.containsKey(param)){
                                 vals = this._variables.get(param)._valeursPossibles;
                             } else {
-                                // erreur, variable non dÃ©finiÃ©. demander Ã  l'utilisateur
-                                //if (this._trace) print("Variable "+param+" non dÃ©finie");
+                                // erreur, variable non définié. demander Ã  l'utilisateur
+                                //if (this._trace) print("Variable "+param+" non définie");
                                 vals = new ArrayList<String>();
                                 valeursPossiblesAleatoires(vals);
                             }
@@ -137,7 +137,7 @@ public class MoteurZeroPlus extends Moteur{
                         }
                     }
                 } else {
-                    //if (this._trace) print("        Aucun prÃ©dicat trouvÃ©\n");
+                    //if (this._trace) print("        Aucun prédicat trouvé\n");
                 }              
             }
 
@@ -156,7 +156,7 @@ public class MoteurZeroPlus extends Moteur{
         }
     }
 
-    //renvoie le nombre de regles supprimÃ©es afin de ne pas perdre le compte dans la boucle principale
+    //renvoie le nombre de regles supprimées afin de ne pas perdre le compte dans la boucle principale
     public int remplacerVariablesUneRegle( Regle r, ArrayList<String> listeVariables, 
                 ArrayList<ArrayList<String>> valeursPossiblesVariables){
         if (listeVariables.size() == 0) return 0;
@@ -169,7 +169,7 @@ public class MoteurZeroPlus extends Moteur{
 
 
         for (int i = 0; i < valeursPossiblesVariables.get(0).size(); i++){
-            //copie de la regle d'origine avec les occurences de la variable remplacÃ©es
+            //copie de la regle d'origine avec les occurences de la variable remplacées
             String stringNouvelleRegle = r.toString().replaceAll("\\b" + varRemplacee + "\\b", valeursPossiblesVariables.get(0).get(i));
             stringNouvelleRegle = stringNouvelleRegle.replaceFirst(r.nom() + " : ", "");
             String nomNouvelleRegle = stringAleatoire(6);
@@ -182,7 +182,7 @@ public class MoteurZeroPlus extends Moteur{
             );
 
         
-            this._baseDeRegles.ajouterRÃ¨gle(nouvelleRegle);
+            this._baseDeRegles.ajouterRegle(nouvelleRegle);
         }
 
         listeVariables.remove(0);

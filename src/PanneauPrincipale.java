@@ -27,434 +27,429 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class PanneauPrincipale extends PanneauPersonnalise{
-    
-    //composants graphiques
-    static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
-    static JScrollPane scrollPane2, scrollPane3, scrollPane1;
-    static JTextField input = new JTextField();
-    static JTextArea faits = new JTextArea(),regles = new JTextArea(), resultat = new JTextArea("Pour avoir le mod√®le 1, il suffit de charger le fichier \"moteur1.txt\"");
-    static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
-    static JButtonCustom aide = new JButtonCustom("?"), clear = new JButtonCustom("Nettoyer"),calculer, variable = new JButtonCustom("Variables"), charger = new JButtonCustom("Charger"), save=new JButtonCustom("Save"), paquet = new JButtonCustom("Paquets");
-    static JLabel faitsLabel,reglesLabel, resultatLabel;
-    static JCheckBox trace, verifierIncoherences;
-    static JComboBox<String> comboBox;
+@SuppressWarnings("serial")
+public class PanneauPrincipale extends PanneauPersonnalise {
 
+	// composants graphiques
+	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
+	static JScrollPane scrollPane2, scrollPane3, scrollPane1;
+	static JTextField input = new JTextField();
+	static JTextArea faits = new JTextArea(), regles = new JTextArea(),
+			resultat = new JTextArea("");
+	static JRadioButton chainageArriere, chainageAvant, chainagePaquet;
+	static JButtonCustom aide = new JButtonCustom("?"), clear = new JButtonCustom("Nettoyer"), calculer,
+			variable = new JButtonCustom("Variables"), charger = new JButtonCustom("Charger"),
+			save = new JButtonCustom("Sauver"), paquet = new JButtonCustom("Paquets");
+	static JLabel faitsLabel, reglesLabel, resultatLabel;
+	static JCheckBox trace, verifierIncoherences;
+	static JComboBox<String> comboBox;
 
-    public void paintComponent(Graphics g){
-        g.setColor(Graphism.couleurFond);
-        g.fillRect(0, 0, getWidth(), getHeight());
-    }
+	public void paintComponent(Graphics g) {
+		g.setColor(Graphism.couleurFond);
+		g.fillRect(0, 0, getWidth(), getHeight());
+	}
 
+	@Override
+	void initialiser() {
 
-    @Override
-    void initialiser() {
+		faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
+		scrollPane1 = new JScrollPane(faits);
+		add(scrollPane1);
 
-        faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
-        scrollPane1 = new JScrollPane(faits);
-        add(scrollPane1);        
-        
+		regles.setToolTipText(
+				"Une rËgle par ligne et avec le format 'nom : prÈmice1 Et prÈmice2 -> consÈquent1 ET consÈquent2' par exemple : 'R1: A-> B ET !C' ou 'ma rËgle : !E ET !A -> C'");
+		scrollPane2 = new JScrollPane(regles);
+		add(scrollPane2);
 
-        regles.setToolTipText("Une r√®gle par ligne et avec le format 'nom : pr√©mice1 Et pr√©mice2 -> cons√©quent1 ET cons√©quent2' par exemple : 'R1: A-> B ET !C' ou 'ma r√®gle : !E ET !A -> C'");
-        scrollPane2 = new JScrollPane(regles);
-        add(scrollPane2);
-        
-        faitsLabel = new JLabel("Base de faits");
-        add(faitsLabel);
+		faitsLabel = new JLabel("Base de fait(s)");
+		if (MoteurZeroPlus.moteur1)
+			faitsLabel.setText("Observation(s)");
+		add(faitsLabel);
 
+		reglesLabel = new JLabel("Base de rËgles");
+		add(reglesLabel);
 
+		resultat.setToolTipText("RÈsultat des diffÈrentes demandes");
+		scrollPane3 = new JScrollPane(resultat);
+		resultat.setEditable(false);
+		add(scrollPane3);
 
-        reglesLabel = new JLabel("Base de r√®gles");
-        add(reglesLabel);
+		resultatLabel = new JLabel("RÈsultats");
+		add(resultatLabel);
 
-        resultat.setToolTipText("R√©sultat des diff√©rentes demandes");
-        scrollPane3 = new JScrollPane(resultat);
-        resultat.setEditable(false);
-        add(scrollPane3);
+		charger.setToolTipText("Permet de rÈcupÈrer le systËme expert enregistrÈ dans un fichier.");
+		add(charger);
+		ActionListener[] actionListeners = charger.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			charger.removeActionListener(listener);
+		charger.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
+				fileChooser.setFileFilter(filter);
 
-        resultatLabel = new JLabel("R√©sultats");
-        add(resultatLabel);
-        
+				int returnValue = fileChooser.showOpenDialog(null);
 
-        charger.setToolTipText("Permet de r√©cup√©rer le syst√®me expert enregistr√© dans un fichier.");
-        add(charger);
-        ActionListener[] actionListeners = charger.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            charger.removeActionListener(listener);
-        charger.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
-                fileChooser.setFileFilter(filter);
-                
-                int returnValue = fileChooser.showOpenDialog(null);
-                
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    String filePath = fileChooser.getSelectedFile().getPath();
-                    try {
-                        // Lire le contenu du fichier
-                        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-                        String line;
-                        StringBuilder content = new StringBuilder();
-                        while ((line = reader.readLine()) != null) {
-                            content.append(line).append("\n");
-                        }
-                        reader.close();
-                        Fichier.chargerFichier(content.toString());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Erreur lors de la lecture du fichier.");
-                    }
-                }
-            }
-        });
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					String filePath = fileChooser.getSelectedFile().getPath();
+					try {
+						// Lire le contenu du fichier
+						BufferedReader reader = new BufferedReader(new FileReader(filePath));
+						String line;
+						StringBuilder content = new StringBuilder();
+						while ((line = reader.readLine()) != null) {
+							content.append(line).append("\n");
+						}
+						reader.close();
+						Fichier.chargerFichier(content.toString());
+					} catch (IOException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erreur lors de la lecture du fichier.");
+					}
+				}
+			}
+		});
 
-        paquet.setToolTipText("D√©finir les paquets, avec l'ordre des r√®gles √† l'int√©rieur √©tant bas√© sur la strat√©gie de conflits");
-        add(paquet);
- 
-        input.setToolTipText("Utilis√© pour r√©soudres les probl√®mes, r√©pondre aux questions...");
-        add(input);
-        actionListeners = input.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            input.removeActionListener(listener);
-        input.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Moteur.attenteReponseUtilisateur = false;
-        
-            }
-        });
+		paquet.setToolTipText(
+				"DÈfinir les paquets, avec l'ordre des rËgles √† l'intÈrieur Ètant basÈ sur la stratÈgie de conflits");
+		add(paquet);
 
-        clear.setToolTipText("Permet d'effacer tout le contenu du r√©sultat pour y voir clair");
-        actionListeners = clear.getActionListeners();
-        for (ActionListener listener : actionListeners)
-            clear.removeActionListener(listener);
-        add(clear);
-        clear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultat.setText("");
-            }
-        });
-        
-        
-        chainageAvant = new JRadioButton("Chainage avant");
-        chainageAvant.setToolTipText("Strat√©gie qui permet d'extraire tout ce qui est possible d'avoir depuis la base de connaissance.");
-        chainageAvant.setBackground(Graphism.couleurFond);
-        chainageAvant.setSelected(true);
-        chainageAvant.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (chainageAvant.isSelected()) 
-                    Graphism.typeChainage = 0;
-            }
-        });
-        add(chainageAvant);
-       
-        chainageArriere = new JRadioButton("Chainage arri√®re");
-        chainageArriere.setToolTipText("Strat√©gie pour savoir si une certaine chose demand√©e par l'expert est vrai.");
-        chainageArriere.setBackground(Graphism.couleurFond);
-        chainageArriere.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (chainageArriere.isSelected()) 
-                    Graphism.typeChainage = 1;
-            }
-        });
-        add(chainageArriere);
+		input.setToolTipText("UtilisÈ pour rÈsoudres les problËmes, rÈpondre aux questions...");
+		add(input);
+		actionListeners = input.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			input.removeActionListener(listener);
+		input.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Moteur.attenteReponseUtilisateur = false;
 
-        
-        chainagePaquet = new JRadioButton("Chainage par paquets");
-        chainagePaquet.setToolTipText("Strat√©gie qui permet d'appliquer des r√®gles par paquets dans un ordre d√©fini.");
-        chainagePaquet.setBackground(Graphism.couleurFond);
-        chainagePaquet.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (chainagePaquet.isSelected()) 
-                    Graphism.typeChainage = 2;
-            }
-        });
-        add(chainagePaquet);
+			}
+		});
 
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(chainageArriere);
-        buttonGroup.add(chainagePaquet);
-        buttonGroup.add(chainageAvant);
-        actionListeners = aide.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            aide.removeActionListener(listener);
-        aide = new JButtonCustom("?");
-        aide.setToolTipText("Obtenir de l'aide");
-        aide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Graphism.setPanel(new PanneauRegle());
-            }
-        });
-        add(aide);
+		clear.setToolTipText("Permet d'effacer tout le contenu du rÈsultat pour y voir clair");
+		actionListeners = clear.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			clear.removeActionListener(listener);
+		add(clear);
+		clear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultat.setText("");
+			}
+		});
 
+		chainageAvant = new JRadioButton("Chainage avant");
+		chainageAvant.setToolTipText(
+				"StratÈgie qui permet d'extraire tout ce qui est possible d'avoir depuis la base de connaissance.");
+		chainageAvant.setBackground(Graphism.couleurFond);
+		chainageAvant.setSelected(true);
+		chainageAvant.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (chainageAvant.isSelected())
+					Graphism.typeChainage = 0;
+			}
+		});
+		add(chainageAvant);
 
-        actionListeners = variable.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            variable.removeActionListener(listener);
-        
-        variable = new JButtonCustom("Variables");
-        variable.setToolTipText("Permet de d√©finir les variables et ses valeurs possibles");
-        variable.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Graphism.setPanel(new PanneauVariable());
-            }
-        });
-        add(variable);
-        save.setToolTipText("Permet de sauvegarder dans un fichier la session actuelle.");
-        add(save);
-        
+		chainageArriere = new JRadioButton("Chainage arriËre");
+		chainageArriere.setToolTipText("StratÈgie pour savoir si une certaine chose demandÈe par l'expert est vrai.");
+		chainageArriere.setBackground(Graphism.couleurFond);
+		chainageArriere.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (chainageArriere.isSelected())
+					Graphism.typeChainage = 1;
+			}
+		});
+		add(chainageArriere);
 
-        actionListeners = save.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            save.removeActionListener(listener);
+		chainagePaquet = new JRadioButton("Chainage par paquets");
+		chainagePaquet.setToolTipText("StratÈgie qui permet d'appliquer des rËgles par paquets dans un ordre dÈfini.");
+		chainagePaquet.setBackground(Graphism.couleurFond);
+		chainagePaquet.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (chainagePaquet.isSelected())
+					Graphism.typeChainage = 2;
+			}
+		});
+		add(chainagePaquet);
 
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
-                fileChooser.setFileFilter(filter);
-                
-                int returnValue = fileChooser.showSaveDialog(null);
-                
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    String filePath = fileChooser.getSelectedFile().getPath();
-                    if (!filePath.toLowerCase().endsWith(".txt")) {
-                        filePath += ".txt"; // Assurez-vous que l'extension .txt est ajout√©e
-                    }
-                    try {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-                        writer.write(Fichier.sauvegardeEnString());
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(chainageArriere);
+		buttonGroup.add(chainagePaquet);
+		buttonGroup.add(chainageAvant);
+		actionListeners = aide.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			aide.removeActionListener(listener);
+		aide = new JButtonCustom("?");
+		aide.setToolTipText("Obtenir de l'aide");
+		aide.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Graphism.setPanel(new PanneauRegle());
+			}
+		});
+		add(aide);
 
-                        writer.close();
-                        
-                        JOptionPane.showMessageDialog(null, "Donn√©es enregistr√©es avec succ√®s.");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du fichier.");
-                    }
-                }
-            }
-        });
+		actionListeners = variable.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			variable.removeActionListener(listener);
 
-        
-        calculer = new JButtonCustom("Calculer");
-        calculer.setToolTipText("Donne le r√©sultat de la strat√©gie choisie avec la base de connaissances.");
-        calculer.setBackground(Color.red);
-        add(calculer);
-        
-        trace = new JCheckBox("trace");
-        trace.setToolTipText("Permet d'avoir le cheminement et les informations pour permettre de prouver les faits.");
-        trace.setBackground(Graphism.couleurFond);
-        add(trace);
-        String[] options = {"R√®gle dans l'ordre","par le plus de pr√©misse", "par le fait le plus r√©cent"};
-        comboBox = new JComboBox<>(options);
-        comboBox.setBackground(Graphism.couleurFond);
-        comboBox.setToolTipText("Choix de la r√®gle en cas de conflit");
-        add(comboBox);
-        
+		variable = new JButtonCustom("Variables");
+		variable.setToolTipText("Permet de dÈfinir les variables et ses valeurs possibles");
+		variable.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Graphism.setPanel(new PanneauVariable());
+			}
+		});
+		add(variable);
+		save.setToolTipText("Permet de sauvegarder dans un fichier la session actuelle.");
+		add(save);
 
-        verifierIncoherences = new JCheckBox("Incoh√©rences");
-        verifierIncoherences.setSelected(true);
-        verifierIncoherences.setToolTipText("Permet de d√©tecter les incoh√©rences et de r√©agir en fonction.");
-        verifierIncoherences.setBackground(Graphism.couleurFond);
+		actionListeners = save.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			save.removeActionListener(listener);
 
-        add(verifierIncoherences);
-        actionListeners = calculer.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            calculer.removeActionListener(listener);
-        
-        actionListeners = paquet.getActionListeners();
-        for (ActionListener listener : actionListeners) 
-            paquet.removeActionListener(listener);
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers texte (.txt)", "txt");
+				fileChooser.setFileFilter(filter);
 
-        paquet.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Graphism.setPanel(new PanneauPaquet());    
-            }
-        });
+				int returnValue = fileChooser.showSaveDialog(null);
 
-        calculer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                BaseDeFaits bf = new BaseDeFaits();
-                String text = faits.getText();
-                String[] lines = text.split("\\r?\\n");
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					String filePath = fileChooser.getSelectedFile().getPath();
+					if (!filePath.toLowerCase().endsWith(".txt")) {
+						filePath += ".txt"; // Assurez-vous que l'extension .txt est ajoutÈe
+					}
+					try {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+						writer.write(Fichier.sauvegardeEnString());
 
-                // Utilisation de StringBuilder pour concat√©ner les faits
-                StringBuilder faitsBuilder = new StringBuilder();
-                for (String line : lines) {
-                    if (!line.isEmpty()) {
-                        bf.ajouterFait(new Element(line));
-                        faitsBuilder.append(line).append("\n");
-                    }
-                }
+						writer.close();
 
-                BaseDeRegles br = new BaseDeRegles();
-                text = regles.getText();
-                lines = text.split("\\r?\\n");
+						JOptionPane.showMessageDialog(null, "DonnÈes enregistrÈes avec succËs.");
+					} catch (IOException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du fichier.");
+					}
+				}
+			}
+		});
 
-                // Utilisation de StringBuilder pour concat√©ner les r√®gles
-                StringBuilder reglesBuilder = new StringBuilder();
-                for (String line : lines) {
-                    if (!line.isEmpty()) {
-                        br.ajouterR√®gle(new Regle(line));
-                        reglesBuilder.append(line).append("\n");
-                    }
-                }
+		calculer = new JButtonCustom("Calculer");
+		calculer.setToolTipText("Donne le rÈsultat de la stratÈgie choisie avec la base de connaissances.");
+		calculer.setBackground(Color.red);
+		add(calculer);
 
-               // MoteurZeroPlus.print("Faits extraits : " + faitsBuilder.toString());
-                //MoteurZeroPlus.print("R√®gles extraits : " + reglesBuilder.toString());
+		trace = new JCheckBox("trace");
+		trace.setToolTipText("Permet d'avoir le cheminement et les informations pour permettre de prouver les faits.");
+		trace.setBackground(Graphism.couleurFond);
+		add(trace);
+		String[] options = { "RËgle dans l'ordre", "par le plus de prÈmisse", "par le fait le plus rÈcent" };
+		comboBox = new JComboBox<>(options);
+		comboBox.setBackground(Graphism.couleurFond);
+		comboBox.setToolTipText("Choix de la rËgle en cas de conflit");
+		add(comboBox);
 
-                Strategie strategie = new ChainageAvant();
-                if (Graphism.typeChainage == 1) {
-                    strategie = new ChainageArriere();
-                } else if (Graphism.typeChainage == 2) {
-                    strategie = new ChainageParPaquet();
-                }
+		verifierIncoherences = new JCheckBox("IncohÈrences");
+		verifierIncoherences.setSelected(true);
+		verifierIncoherences.setToolTipText("Permet de dÈtecter les incohÈrences et de rÈagir en fonction.");
+		verifierIncoherences.setBackground(Graphism.couleurFond);
 
-                HashMap<String, Variable> variables = new HashMap<String, Variable>();
-                String[] texteBrut = PanneauVariable.variablesEntree.getText().replace(" ", "").split("\n");          
-                
-                //conversion du texte brut en variables
-                for (int i = 0; i < texteBrut.length; i++){
-                    String[] nomPuisRegle = texteBrut[i].split(":");
-                    if (nomPuisRegle.length == 2){
-                        ArrayList<String> valeursPossibles = new ArrayList<String>();
-                        String[] vps = nomPuisRegle[1].split(";");
-                        for (String vp : vps) {
-                            valeursPossibles.add(vp);
-                        }
+		add(verifierIncoherences);
+		actionListeners = calculer.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			calculer.removeActionListener(listener);
 
-                        variables.put(nomPuisRegle[0], new Variable(nomPuisRegle[0], valeursPossibles));
-                    }
+		actionListeners = paquet.getActionListeners();
+		for (ActionListener listener : actionListeners)
+			paquet.removeActionListener(listener);
 
-                }
+		paquet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Graphism.setPanel(new PanneauPaquet());
+			}
+		});
 
-                Tri tri = new TriDansOrdre();
-                if (comboBox.getSelectedIndex() == 1)
-                    tri = new TriPlusDePremisse();
-                else if (comboBox.getSelectedIndex() == 2)
-                    tri = new TriParPlusRecent();
+		calculer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BaseDeFaits bf = new BaseDeFaits();
+				String text = faits.getText();
+				String[] lines = text.split("\\r?\\n");
 
-                if (strategie instanceof ChainageParPaquet){    
-                    //Il faut mettre les paquets √† jour
-                    ArrayList<ArrayList<String>> paquets = new ArrayList<>();
-                    String[] lignes = PanneauPaquet.paquets.getText().split("\n");
-                    for (int i = 0; i < lignes.length;i++)
-                        paquets.add(new ArrayList<>(Arrays.asList(lignes[i].split(";"))));
-                    
-                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected(), tri);
-                    ChainageParPaquet strat = (ChainageParPaquet)strategie;
-                    strat.setBlocs(paquets);
-                    MoteurZeroPlus.executer(moteur);
-                   
-                }else{
-                    MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(), verifierIncoherences.isSelected(), tri);
-                    MoteurZeroPlus.executer(moteur);
-                }
-            }
-        });
-        
-        repaint();
-        
-    }
+				// Utilisation de StringBuilder pour concatÈner les faits
+				StringBuilder faitsBuilder = new StringBuilder();
+				for (String line : lines) {
+					if (!line.isEmpty()) {
+						bf.ajouterFait(new Element(line));
+						faitsBuilder.append(line).append("\n");
+					}
+				}
 
+				BaseDeRegles br = new BaseDeRegles();
+				text = regles.getText();
+				lines = text.split("\\r?\\n");
 
-    @Override
-    void refresh() {
-        final Font texteFont = new Font("Gabriela", Font.PLAIN,getWidth()/80);
-        final Font titreFont = new Font("Gabriela", Font.BOLD,getHeight()/30);
-        final int w = getWidth();
-        final int h = getHeight();
+				// Utilisation de StringBuilder pour concatÈner les rËgles
+				StringBuilder reglesBuilder = new StringBuilder();
+				for (String line : lines) {
+					if (!line.isEmpty()) {
+						br.ajouterRegle(new Regle(line));
+						reglesBuilder.append(line).append("\n");
+					}
+				}
 
+				// MoteurZeroPlus.print("Faits extraits : " + faitsBuilder.toString());
+				// MoteurZeroPlus.print("RËgles extraits : " + reglesBuilder.toString());
 
-        faits.setFont(texteFont);
-        scrollPane1.setSize(w/10*4, h/2);
-        scrollPane1.setLocation(w/20, h/20);
-        
-        regles.setFont(texteFont);
-        scrollPane2.setSize(w/40*19, h/2);
-        scrollPane2.setLocation(w/2, h/20);
+				Strategie strategie = new ChainageAvant();
+				if (Graphism.typeChainage == 1) {
+					strategie = new ChainageArriere();
+				} else if (Graphism.typeChainage == 2) {
+					strategie = new ChainageParPaquet();
+				}
 
-        faitsLabel.setSize(w/3, h/20);
-        faitsLabel.setFont(titreFont);
-        faitsLabel.setLocation(w/20, 0);
+				HashMap<String, Variable> variables = new HashMap<String, Variable>();
+				String[] texteBrut = PanneauVariable.variablesEntree.getText().replace(" ", "").split("\n");
 
-        reglesLabel.setSize(w/3, h/20);
-        reglesLabel.setFont(titreFont);
-        reglesLabel.setLocation(w/2, 0);
-        
-        scrollPane3.setSize(w/40*19, h/3);
-        resultat.setFont(texteFont);
-        scrollPane3.setLocation(w/2, h/20*12);
-        
-        resultatLabel.setSize(w/3, h/20);
-        resultatLabel.setFont(titreFont);
-        resultatLabel.setLocation(w/2, h/20*11);
-        
-        input.setSize(w/40*19, h/20);
-        input.setFont(texteFont);
-        input.setLocation(w/2, h/40*38);
+				// conversion du texte brut en variables
+				for (int i = 0; i < texteBrut.length; i++) {
+					String[] nomPuisRegle = texteBrut[i].split(":");
+					if (nomPuisRegle.length == 2) {
+						ArrayList<String> valeursPossibles = new ArrayList<String>();
+						String[] vps = nomPuisRegle[1].split(";");
+						for (String vp : vps) {
+							valeursPossibles.add(vp);
+						}
 
-        clear.setFont(texteFont);
-        clear.setSize(w/7, h/25);
-        clear.setLocation(w/5*4,h/160*93);
+						variables.put(nomPuisRegle[0], new Variable(nomPuisRegle[0], valeursPossibles));
+					}
 
-        variable.setFont(texteFont);
-        variable.setSize(w/7, h/10);
-        variable.setLocation(w/5, h/20*12);
-        
-        chainageAvant.setFont(texteFont);
-        chainageAvant.setSize(w/7, h/10);
-        chainageAvant.setLocation(w/40, h/20*12);
-        
-        chainageArriere.setFont(texteFont);
-        chainageArriere.setSize(w/7, h/10);
-        chainageArriere.setLocation(w/40, h/20*15);
-        
-        chainagePaquet.setFont(texteFont);
-        chainagePaquet.setSize(w/6, h/10);
-        chainagePaquet.setLocation(w/40, h/20*18);
-        
-        
-        charger.setFont(texteFont);
-        charger.setSize(w/14, h/20);
-        charger.setLocation(w/100*18, h/40*33);
+				}
 
-        paquet.setFont(texteFont);
-        paquet.setSize(w/7, h/20);
-        paquet.setLocation(w/100*20, h/40*37);
+				Tri tri = new TriDansOrdre();
+				if (comboBox.getSelectedIndex() == 1)
+					tri = new TriPlusDePremisse();
+				else if (comboBox.getSelectedIndex() == 2)
+					tri = new TriParPlusRecent();
 
-        save.setFont(texteFont);
-        save.setSize(w/14, h/20);
-        save.setLocation(w/100*22+w/14, h/40*33);
+				if (strategie instanceof ChainageParPaquet) {
+					// Il faut mettre les paquets √† jour
+					ArrayList<ArrayList<String>> paquets = new ArrayList<>();
+					String[] lignes = PanneauPaquet.paquets.getText().split("\n");
+					for (int i = 0; i < lignes.length; i++)
+						paquets.add(new ArrayList<>(Arrays.asList(lignes[i].split(";"))));
 
-        comboBox.setFont(texteFont);
-        comboBox.setSize(w/7, h/20);
-        comboBox.setLocation(w/5, h/40*29);
+					MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(),
+							verifierIncoherences.isSelected(), tri);
+					ChainageParPaquet strat = (ChainageParPaquet) strategie;
+					strat.setBlocs(paquets);
+					MoteurZeroPlus.executer(moteur);
 
+				} else {
+					MoteurZeroPlus moteur = new MoteurZeroPlus(bf, br, strategie, variables, trace.isSelected(),
+							verifierIncoherences.isSelected(), tri);
+					MoteurZeroPlus.executer(moteur);
+				}
+			}
+		});
 
-        aide.setFont(titreFont);
-        aide.setSize(w/9, h/10);
-        aide.setLocation(w/40*15, h/10*6);
-        
-        calculer.setFont(titreFont);
-        calculer.setSize(w/9, h/10);
-        calculer.setLocation(w/40*15, h/10*9);
-        
-        trace.setFont(texteFont);
-        trace.setSize(w/18,  h/16);
-        trace.setLocation(w/40*15+w/36, h/40*33);
-        
-        verifierIncoherences.setFont(texteFont);
-        verifierIncoherences.setSize(w/9,  h/16);
-        verifierIncoherences.setLocation(w/40*15, h/40*29);
-        
-    }
+		repaint();
+
+	}
+
+	@Override
+	void refresh() {
+		final Font texteFont = new Font("Gabriela", Font.PLAIN, getWidth() / 80);
+		final Font titreFont = new Font("Gabriela", Font.BOLD, getHeight() / 30);
+		final int w = getWidth();
+		final int h = getHeight();
+
+		faits.setFont(texteFont);
+		scrollPane1.setSize(w / 10 * 4, h / 2);
+		scrollPane1.setLocation(w / 20, h / 20);
+
+		regles.setFont(texteFont);
+		scrollPane2.setSize(w / 40 * 19, h / 2);
+		scrollPane2.setLocation(w / 2, h / 20);
+
+		faitsLabel.setSize(w / 3, h / 20);
+		faitsLabel.setFont(titreFont);
+		faitsLabel.setLocation(w / 20, 0);
+
+		reglesLabel.setSize(w / 3, h / 20);
+		reglesLabel.setFont(titreFont);
+		reglesLabel.setLocation(w / 2, 0);
+
+		scrollPane3.setSize(w / 40 * 19, h / 3);
+		resultat.setFont(texteFont);
+		scrollPane3.setLocation(w / 2, h / 20 * 12);
+
+		resultatLabel.setSize(w / 3, h / 20);
+		resultatLabel.setFont(titreFont);
+		resultatLabel.setLocation(w / 2, h / 20 * 11);
+
+		input.setSize(w / 40 * 19, h / 20);
+		input.setFont(texteFont);
+		input.setLocation(w / 2, h / 40 * 38);
+
+		clear.setFont(texteFont);
+		clear.setSize(w / 7, h / 35);
+		clear.setLocation(w / 5 * 4, h / 160 * 91);
+
+		variable.setFont(texteFont);
+		variable.setSize(w / 7, h / 10);
+		variable.setLocation(w / 5, h / 20 * 12);
+
+		chainageAvant.setFont(texteFont);
+		chainageAvant.setSize(w / 7, h / 10);
+		chainageAvant.setLocation(w / 40, h / 20 * 12);
+
+		chainageArriere.setFont(texteFont);
+		chainageArriere.setSize(w / 7, h / 10);
+		chainageArriere.setLocation(w / 40, h / 20 * 15);
+
+		chainagePaquet.setFont(texteFont);
+		chainagePaquet.setSize(w / 6, h / 10);
+		chainagePaquet.setLocation(w / 40, h / 20 * 18);
+
+		charger.setFont(texteFont);
+		charger.setSize(w / 14, h / 20);
+		charger.setLocation(w / 100 * 18, h / 40 * 33);
+
+		paquet.setFont(texteFont);
+		paquet.setSize(w / 7, h / 20);
+		paquet.setLocation(w / 100 * 20, h / 40 * 37);
+
+		save.setFont(texteFont);
+		save.setSize(w / 14, h / 20);
+		save.setLocation(w / 100 * 22 + w / 14, h / 40 * 33);
+
+		comboBox.setFont(texteFont);
+		comboBox.setSize(w / 7, h / 20);
+		comboBox.setLocation(w / 5, h / 40 * 29);
+
+		aide.setFont(titreFont);
+		aide.setSize(w / 9, h / 10);
+		aide.setLocation(w / 40 * 15, h / 10 * 6);
+
+		calculer.setFont(titreFont);
+		calculer.setSize(w / 9, h / 10);
+		calculer.setLocation(w / 40 * 15, h / 10 * 9);
+
+		trace.setFont(texteFont);
+		trace.setSize(w / 18, h / 16);
+		trace.setLocation(w / 40 * 15 + w / 36, h / 40 * 33);
+
+		verifierIncoherences.setFont(texteFont);
+		verifierIncoherences.setSize(w / 9, h / 16);
+		verifierIncoherences.setLocation(w / 40 * 15, h / 40 * 29);
+
+	}
 
 }
