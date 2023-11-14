@@ -71,9 +71,9 @@ public class BaseDeFaits {
     }
 
 
-    //on vÃ©rifie si on a pas A et !A
+    //on vérifie si on a pas A et !A
     private void verifierPresenceVraiFaux() throws Exception {
-        //on considÃ¨re qu'avant on a enlevÃ© les doublons
+        //on considère qu'avant on a enlevé les doublons
         ArrayList<Element> listesNomsDejaFaits = new ArrayList<>();
         ArrayList<Element> listesPb = new ArrayList<>();
         boolean appartient = false;
@@ -95,14 +95,14 @@ public class BaseDeFaits {
         if (listesPb.isEmpty())
             return;
 
-        String msg = "Erreur valeurs incohÃ©rentes, Ã  la fois : ";
+        String msg = "Erreur valeurs incohérentes, Ã  la fois : ";
         for (int i = 0; i < listesPb.size();i++){
             msg+=listesPb.get(i).toString()+" et !" +listesPb.get(i).toString()+"; ";
         }
         msg+="\n1: ArrÃªter le programme\n2: Supprimer tous ses faits\n3: Choisir le fait Ã  garder";
         String reponse = Moteur.lireReponse(msg);
         if (reponse.contains("1"))
-            throw new Exception("Valeurs incohÃ©rentes : Vrai/Faux en mÃªme temps dans la base des faits");
+            throw new Exception("Valeurs incohérentes : Vrai/Faux en mÃªme temps dans la base des faits");
         else if (reponse.contains("2")){
             _base = listesNomsDejaFaits;
         }else{
@@ -126,7 +126,7 @@ public class BaseDeFaits {
         Moteur.print("Nouvelle base de faits : "+toString());
     }
 
-    //on regarde si les mots clÃ©s/symboles ne sont pas dans le nom
+    //on regarde si les mots clés/symboles ne sont pas dans le nom
     private void verifierNoms() throws Exception {
         ArrayList<Element> listesInterdites = new ArrayList<>();
         for (int i = 0; i < _base.size();i++)
@@ -139,13 +139,13 @@ public class BaseDeFaits {
         if (listesInterdites.isEmpty())
             return;
 
-        String msg = "ProblÃ¨me mots clÃ©s / symboles interdits dans des noms d'Ã©lÃ©ments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les Ã©lÃ©ments de problÃ¨mes : ";
+        String msg = "Problème mots clés / symboles interdits dans des noms d'éléments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les éléments de problèmes : ";
         for (int i = 0; i < listesInterdites.size();i++)
             msg+=listesInterdites.get(i).nom()+" / ";
         msg +="1 : arrÃªter le programme\n2: Enlever ces symboles/noms interdits";
 
         if (Moteur.lireReponse(msg).contains("1"))
-            throw new Exception("CaractÃ¨res interdits dans les symboles / mots");
+            throw new Exception("Caractères interdits dans les symboles / mots");
         else  {
             for (int i = 0; i < _base.size();i++){
                 _base.set(i, new Element(_base.get(i).nom().replace("Et", "").replace("!", "").replace("->", ""), _base.get(i).estVrai(),0));
@@ -169,7 +169,7 @@ public class BaseDeFaits {
 
         if (doublons.size() == 0)return;
 
-        String msg = "Attention doublon(s) dÃ©tectÃ©(s) dans la base de faits : \n";
+        String msg = "Attention doublon(s) détecté(s) dans la base de faits : \n";
         for (int i = 0; i < doublons.size();i++){
             msg+=" / "+doublons.get(i).toString();
         }

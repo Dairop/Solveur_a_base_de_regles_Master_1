@@ -24,14 +24,14 @@ public class ChainageParPaquet implements Strategie{
             for (int j = 0; j < _blocs.get(i).size();j++){
                 Regle r = baseDeReglesTampon.avoirRegleParNom(_blocs.get(i).get(j));
                 
-                //Si aucune rÃ¨gle avec ce nom, on laisse l'utilisateur choisir
+                //Si aucune règle avec ce nom, on laisse l'utilisateur choisir
                 if (r == null){
-                    String reponse = Moteur.lireReponse("La rÃ¨gle \""+_blocs.get(i).get(j) +"\" n'existe pas.\n1:Passer la rÃ¨gle\n2:Renommer la rÃ¨gle\n3:ArrÃªter le programme");
+                    String reponse = Moteur.lireReponse("La règle \""+_blocs.get(i).get(j) +"\" n'existe pas.\n1:Passer la règle\n2:Renommer la règle\n3:ArrÃªter le programme");
                     if (reponse.contains("1"))
                         continue;
                     else if (reponse.contains("2")){
                         while(baseDeReglesTampon.avoirRegleParNom(reponse) == null)
-                            reponse = Moteur.lireReponse("\n\nLa rÃ¨gle de nom : '"+_blocs.get(i).get(j)+"' n'existe pas.\n.On a la base de rÃ¨gles : "+baseDeReglesTampon.toString()+"\nChoisir la rÃ¨gle (nom) :").trim();
+                            reponse = Moteur.lireReponse("\n\nLa règle de nom : '"+_blocs.get(i).get(j)+"' n'existe pas.\n.On a la base de règles : "+baseDeReglesTampon.toString()+"\nChoisir la règle (nom) :").trim();
                         _blocs.get(i).set(j, reponse);
                     }else
                         return;
@@ -39,20 +39,20 @@ public class ChainageParPaquet implements Strategie{
                 }
                 r = baseDeReglesTampon.avoirRegleParNom(_blocs.get(i).get(j));
 
-                //ici on va vÃ©rifier si la base de faits vÃ©rifie les prÃ©mices de la rÃ¨gle
+                //ici on va vérifier si la base de faits vérifie les prémices de la règle
                 boolean regleUtile = true;
                 baseDeReglesTampon = tri.trier(baseDeReglesTampon, baseDeFaitTampon);
                 for (int k = 0; k < r.taillePremice();k++){
                     if (!baseDeFaitTampon.contient(r.avoirPremiceParIndice(k))){
                         if (trace)
-                            Moteur.print(" On a la rÃ¨gle "+r.nom()+" car :"+r.avoirPremiceParIndice(k).toString()+" n'est pas valide.\n");
+                            Moteur.print(" On a la règle "+r.nom()+" car :"+r.avoirPremiceParIndice(k).toString()+" n'est pas valide.\n");
                         regleUtile = false;
                     }
                 }
 
-                //si la rÃ¨gle peut etre utilisÃ© on ajoute toutes ses consÃ©quents Ã  la base de faits
+                //si la règle peut etre utilisé on ajoute toutes ses conséquents Ã  la base de faits
                 if (regleUtile){
-                    String message = "La rÃ¨gle est utilisable : "+r.toString()+"\n On rajoute donc les consÃ©quents : ";
+                    String message = "La règle est utilisable : "+r.toString()+"\n On rajoute donc les conséquents : ";
                     for (int k = 0; k < r.tailleConsequent();k++){
                         if (!baseDeFaitTampon.contient(r.avoirConsequentParIndice(k))){
                             r.setDecouvertTempsPremice(i);
@@ -68,7 +68,7 @@ public class ChainageParPaquet implements Strategie{
             }
         }
         
-        Moteur.print("Chainage par paquets rÃ©ussi avec les paquets :\n "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString());
+        Moteur.print("Chainage par paquets réussi avec les paquets :\n "+_blocs.toString()+"\nNouvelle base de faits : \n"+baseDeFaitTampon.toString());
     }
 
 

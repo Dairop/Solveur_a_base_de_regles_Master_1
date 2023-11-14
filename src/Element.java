@@ -3,7 +3,7 @@ import java.util.Objects;
 public class Element {
     private String _nom;
     private Boolean _estVrai;
-    private int _decouvertTemps;//0 correspond à la découverte à partir de la base de faits, et > 0 : correspond à la découverte à l'itération n...
+    private int _decouvertTemps;//0 correspond à la d�couverte à partir de la base de faits, et > 0 : correspond à la d�couverte à l'it�ration n...
 
     public Element(String nom){
         this._nom = nom.trim();
@@ -36,7 +36,7 @@ public class Element {
         return _nom.equals(element._nom) && _estVrai == element._estVrai;
     }
     
-    //création d'une copie indépendante
+    //cr�ation d'une copie ind�pendante
     public Element clone(){
         return new Element(_nom, _estVrai, _decouvertTemps);
     }

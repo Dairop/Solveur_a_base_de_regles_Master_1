@@ -7,7 +7,7 @@ public class BaseDeRegles {
 
     private ArrayList<Regle> _reglesListe = new ArrayList<>();
     
-    public void ajouterRÃ¨gle(Regle regle){
+    public void ajouterRegle(Regle regle){
         _reglesListe.add(regle);
     }
     
@@ -30,14 +30,14 @@ public class BaseDeRegles {
     public static BaseDeRegles copy(BaseDeRegles baseDeRegles) {
         BaseDeRegles nouvelleBase = new BaseDeRegles();
         for (int i = 0; i < baseDeRegles.taille();i++)
-            nouvelleBase.ajouterRÃ¨gle(baseDeRegles.avoirRegleParIndice(i).clone());
+            nouvelleBase.ajouterRegle(baseDeRegles.avoirRegleParIndice(i).clone());
         return nouvelleBase;
     }
 
     public BaseDeRegles clone(){
         BaseDeRegles nouvelle = new BaseDeRegles();
         for (int i = 0; i < _reglesListe.size();i++)
-            nouvelle.ajouterRÃ¨gle(_reglesListe.get(i).clone());
+            nouvelle.ajouterRegle(_reglesListe.get(i).clone());
 
         return nouvelle;
     }
@@ -54,25 +54,26 @@ public class BaseDeRegles {
         verifierDoublons();
         verifierNomsDouble();
         
-        //ici on va tester les incohÃ©rences structurelles
+        
+        //ici on va tester les incohérences structurelles
         
         /*
-            Ici, on va prendre tous les contextes d'un Ã©lÃ©ment en consÃ©quence d'une rÃ¨gle
+            Ici, on va prendre tous les contextes d'un élément en conséquence d'une regle
             
         */
-        int niveau = 10;
+        int niveau = 100;
         ArrayList<Element> elementsQuiSontConsequents = new ArrayList<>();
 
-        //ici on rÃ©cupÃ¨re tous les Ã©lÃ©ments qui sont en consÃ©quents
+        //ici on récupere tous les éléments qui sont en conséquents
         for (int i = 0; i < _reglesListe.size();i++){
             for (int j = 0; j < _reglesListe.get(i).tailleConsequent();j++)
                 if (!elementsQuiSontConsequents.contains(_reglesListe.get(i).avoirConsequentParIndice(j)))
                     elementsQuiSontConsequents.add(_reglesListe.get(i).avoirConsequentParIndice(j));
         }
 
-        
+        boolean incoherent = false;
 
-        //ici on fait un dictionnaire avec les Ã©lÃ©emnts de Ã©lÃ©mentsQuiSontConsÃ©quents associÃ©s Ã  leur 
+        //ici on fait un dictionnaire avec les éléemnts de élémentsQuiSontConséquents associés Ã  leur 
         HashMap<Element, ArrayList<Element>> contextesDictionnaires = new HashMap<>();
 
         for (int i = 0; i < elementsQuiSontConsequents.size();i++){
@@ -83,9 +84,9 @@ public class BaseDeRegles {
             tamponElementsNonCalcules.add(elementsQuiSontConsequents.get(i));
             for (int j = 0; j < niveau;j++){
                 ArrayList<Element> tamponCalculProchainNiveau = new ArrayList<>();
-                //calcul du contexte des Ã©lÃ©ments de tampons non calculÃ©s
+                //calcul du contexte des éléments de tampons non calculés
                 for (int k = 0; k < tamponElementsNonCalcules.size();k++){
-                    //on parcoure les rÃ¨gles pour trouver celles qui ont comme consÃ©quent l'Ã©lÃ©ment
+                    //on parcoure les regles pour trouver celles qui ont comme conséquent l'élément
                     ArrayList<Regle> reglesQuiOntCommeConsequentLelementNonCalcules = new ArrayList<>();
                     for (int l = 0; l < _reglesListe.size();l++){
                         for (int m = 0; m < _reglesListe.get(l).tailleConsequent();m++){
@@ -95,7 +96,7 @@ public class BaseDeRegles {
                         }
                     }
 
-                    //on parcoure toutes les rÃ¨gles pour voir tout le contexte
+                    //on parcoure toutes les regles pour voir tout le contexte
                     for (int l = 0; l < reglesQuiOntCommeConsequentLelementNonCalcules.size();l++){
                         for (int m = 0; m < reglesQuiOntCommeConsequentLelementNonCalcules.get(l).taillePremice();m++){
                             Element premice = reglesQuiOntCommeConsequentLelementNonCalcules.get(l).avoirPremiceParIndice(m);
@@ -107,7 +108,7 @@ public class BaseDeRegles {
                     }
                 }
 
-                //ajout des Ã©lÃ©ments qui viennent d'Ãªtre calculÃ©s : 
+                //ajout des éléments qui viennent d'Ãªtre calculés : 
                 for (int k = 0; k < tamponElementsNonCalcules.size();k++)
                     tamponElementsCalcules.add(tamponElementsNonCalcules.get(k));
                 
@@ -119,23 +120,18 @@ public class BaseDeRegles {
             contextesDictionnaires.put(elementsQuiSontConsequents.get(i), tamponElementsCalcules);
         }
         
-        //maintenant on va vÃ©rifier s'il y a des incohÃ©rences
+        //maintenant on va vérifier s'il y a des incohérences
 
         for (Element cle : contextesDictionnaires.keySet()) {
-            //ensuite on veut obtenir toutes les regles qui ont comme prÃ©mice l'Ã©lÃ©ment du contextDictionnaire
-            ArrayList<Regle> reglesQuiOntCommePremicesLelement = new ArrayList<>();
-            for (int j = 0; j < _reglesListe.size();j++){
-                for (int k = 0; k < _reglesListe.get(j).taillePremice();k++){
-                    if (_reglesListe.get(j).avoirPremiceParIndice(k).equals(cle))
-                        reglesQuiOntCommePremicesLelement.add(_reglesListe.get(j));
-                }
-            }
-
-            //ensuite on va transformer les rÃ¨gles 
+           
+            //ensuite on veut obtenir toutes les regles qui ont comme prémice l'élément du contextDictionnaire
+            ArrayList<Regle> reglesQuiOntCommePremicesLelement = new ArrayList<>(_reglesListe);
+            
+            //ensuite on va transformer les regles 
             for (int k = 0; k < reglesQuiOntCommePremicesLelement.size();k++){
                 ArrayList<Element> premicesAvecContexte = new ArrayList<>();
                 
-                //on remplit le premicesAvecContexte avec les prÃ©mices de base
+                //on remplit le premicesAvecContexte avec les prémices de base
                 for (int l = 0; l < reglesQuiOntCommePremicesLelement.get(k).taillePremice();l++){
                     premicesAvecContexte.add(reglesQuiOntCommePremicesLelement.get(k).avoirPremiceParIndice(l));
                 }
@@ -144,15 +140,14 @@ public class BaseDeRegles {
                 for (int l = 0; l < tamponDictionnaire.size();l++)
                     premicesAvecContexte.add(tamponDictionnaire.get(l));
 
-
-                //ici on va vÃ©rifier que l'on est pas dans les prÃ©mices : A ET !A -> B
-                //c'est-Ã -dire un Ã©lÃ©ment et sa nÃ©gation
+                //ici on va vérifier que l'on est pas dans les prémices : A ET !A -> B
+                //c'est-Ã -dire un élément et sa négation
                 for (int l = 0; l < premicesAvecContexte.size();l++){
                     Element e = new Element(premicesAvecContexte.get(l).nom(),!premicesAvecContexte.get(l).estVrai(), 0);
-                    if (premicesAvecContexte.contains(e)){
-                        Moteur.print("On a une erreur incohÃ©rence dans la base de rÃ¨gle : "+  premicesAvecContexte.toString());
-                    }else if (reglesQuiOntCommePremicesLelement.get(k).avoirConsequents().contient(e)){
-                        Moteur.print("On a une erreur incohÃ©rence dans la base de rÃ¨gle : "+  premicesAvecContexte.toString());
+                    if (premicesAvecContexte.contains(e) || reglesQuiOntCommePremicesLelement.get(k).avoirConsequents().contient(e)){
+                        Moteur.print("On a une incohérence dans la base de regle car on a un élément et sa négation possible en faits:\n "+  premicesAvecContexte.toString());
+                        incoherent = true;
+                        break;
                     }
                     
                 }
@@ -160,7 +155,12 @@ public class BaseDeRegles {
 
 
         }
-
+        if (incoherent){
+        String reponse = Moteur.lireReponse("\n1 : Arreter le calcul et on laisse l'expert modifier la base de regle\n2 : Executer quand mÃªme car cette situation est prévue.");
+            if (reponse.contains("1"))
+                System.exit(0);
+        }
+        
     }
 
     private void verifierDoublons() {
@@ -174,7 +174,7 @@ public class BaseDeRegles {
         
         if (newList.size() != _reglesListe.size()){
             _reglesListe = newList;
-            Moteur.print("On a modifiÃ© la base de rÃ¨gles pour enlever les doublons.\n");
+            Moteur.print("On a modifié la base de regles pour enlever les doublons.\n");
         }    
     }
 
@@ -198,13 +198,13 @@ public class BaseDeRegles {
 
         if (erreursRegles.isEmpty())
             return;
-        String message = "Il y a des noms doublÃ©s dans les rÃ¨gles : ";
+        String message = "Il y a des noms doublés dans les regles : ";
         for (int i = 0; i < erreursRegles.size();i++)
             message+="; \n;"+erreursRegles.get(i).toString();
-        message+="\n1 : Pour arrÃªter le programme\n2 : Pour renommer les rÃ¨gles automatiquement\n3 : Renommer manuellement";
+        message+="\n1 : Pour arrÃªter le programme\n2 : Pour renommer les regles automatiquement\n3 : Renommer manuellement";
         String reponse = Moteur.lireReponse(message);
         if (reponse.contains("1"))
-            throw new Exception("Programme interrompu car des rÃ¨gles ont les mÃªmes noms.");
+            throw new Exception("Programme interrompu car des regles ont les mÃªmes noms.");
         else if (reponse.contains("2")){
             int nb = 0;
             for (int i = 0;i < erreursRegles.size();i++){
@@ -220,17 +220,16 @@ public class BaseDeRegles {
             }
         }else {
             for (int i = 0;i < erreursRegles.size();i++){
-                message = "Renommage de la rÃ¨gle : "+erreursRegles.toString()+" \nNouveau nom :"; 
+                message = "Renommage de la regle : "+erreursRegles.toString()+" \nNouveau nom :"; 
                 String nouveauNom = Moteur.lireReponse(message);
 
                 while (elementsVerifies.contains(nouveauNom)){
-                    nouveauNom = Moteur.lireReponse("Nom dÃ©jÃ  pris, il en faut un autre : ");
+                    nouveauNom = Moteur.lireReponse("Nom déjÃ  pris, il en faut un autre : ");
                 }
                 erreursRegles.get(i).setNom(nouveauNom);
                 elementsVerifies.add(nouveauNom);
             }
 
-            Moteur.print(elementsVerifies.toString());
         }
 
         
