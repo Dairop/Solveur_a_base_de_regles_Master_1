@@ -18,7 +18,7 @@ public class Graphism implements Runnable {
 	static final Color couleurTextBouton = Color.white;
 	static final Color couleurFond = Color.lightGray;
 
-	// �l�ment graphique
+	// élément graphique
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
 	private static PanneauPersonnalise panel = new PanneauPrincipale();
 

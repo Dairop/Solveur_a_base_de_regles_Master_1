@@ -15,11 +15,11 @@ public class ChainageArriere implements Strategie{
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
         if (_objectif == null)
-            _objectif = new Element(Moteur.lireReponse("Question à  poser : \nEntrez directement le fait (par exemple 'A' ou 'malDeTete')\nEt validez avec entrée: "));
+            _objectif = new Element(Moteur.lireReponse("Question Ã  poser : \nEntrez directement le fait (par exemple 'A' ou 'malDeTete')\nEt validez avec entrÃ©e: "));
         
         boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace, tri);
-        if (result)   Moteur.print( this._objectif.toString() + " a été vérifié, avec un retour positif");
-        else          Moteur.print( this._objectif.toString() + " n'a pas été résolu");
+        if (result)   Moteur.print( this._objectif.toString() + " a Ã©tÃ© vÃ©rifiÃ©, avec un retour positif");
+        else          Moteur.print( this._objectif.toString() + " n'a pas Ã©tÃ© rÃ©solu");
     }
 
     public boolean executerRecursif(BaseDeFaits baseDeFaits, BaseDeRegles baseDeRegles, Element b, boolean trace, Tri tri){
@@ -34,21 +34,21 @@ public class ChainageArriere implements Strategie{
         }
 
         baseDeRegles = tri.trier(baseDeRegles, baseDeFaits);
-        //2nd cas, vérifier si b est conséquent d'une des règles de BR
+        //2nd cas, vÃ©rifier si b est consÃ©quent d'une des regles de BR
         for (int i = 0; i < baseDeRegles.taille() && !dem; i++) {
             Regle r = baseDeRegles.avoirRegleParIndice(i);
             //verifier si b est en consequent
              if (r.consequentContient(b)){
                 
-                //vérifier si les prémisses d'une règle avec b en conséquent sont connues
+                //vÃ©rifier si les prÃ©misses d'une regle avec b en consÃ©quent sont connues
                 dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles, tri);
-                if (dem && trace) Moteur.print("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
+                if (dem && trace) Moteur.print("La regle "+r.toString()+" contient "+b.toString()+" en consÃ©quent et ses prÃ©mices sont vÃ©rifiÃ©s");
             }
         }
 
         //3eme cas, demander b
         if (!dem){
-            String reponse = Moteur.lireReponse("\n"+b.toString()+" est non défini, pouvez-vous nous aider ?\n0: Il est faux\n1: Il est vrai\n2: Je ne sais pas");
+            String reponse = Moteur.lireReponse("\n"+b.toString()+" est non dÃ©fini, pouvez-vous nous aider ?\n0: Il est faux\n1: Il est vrai\n2: Je ne sais pas");
             dem = (reponse.contains("1"));
         }
 

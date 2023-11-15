@@ -57,7 +57,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		add(scrollPane1);
 
 		regles.setToolTipText(
-				"Une règle par ligne et avec le format 'nom : prémice1 Et prémice2 -> conséquent1 ET conséquent2' par exemple : 'R1: A-> B ET !C' ou 'ma règle : !E ET !A -> C'");
+				"Une rÃ¨gle par ligne et avec le format 'nom : prÃ©mice1 Et prÃ©mice2 -> consÃ©quent1 ET consÃ©quent2' par exemple : 'R1: A-> B ET !C' ou 'ma rÃ¨gle : !E ET !A -> C'");
 		scrollPane2 = new JScrollPane(regles);
 		add(scrollPane2);
 
@@ -66,18 +66,18 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 			faitsLabel.setText("Observation(s)");
 		add(faitsLabel);
 
-		reglesLabel = new JLabel("Base de règles");
+		reglesLabel = new JLabel("Base de rÃ©gles");
 		add(reglesLabel);
 
-		resultat.setToolTipText("Résultat des différentes demandes");
+		resultat.setToolTipText("RÃ©sultat des diffÃ©rentes demandes");
 		scrollPane3 = new JScrollPane(resultat);
 		resultat.setEditable(false);
 		add(scrollPane3);
 
-		resultatLabel = new JLabel("Résultats");
+		resultatLabel = new JLabel("RÃ©sultats");
 		add(resultatLabel);
 
-		charger.setToolTipText("Permet de récupérer le système expert enregistré dans un fichier.");
+		charger.setToolTipText("Permet de rÃ©cupÃ©rer le systÃ¨me expert enregistrÃ© dans un fichier.");
 		add(charger);
 		ActionListener[] actionListeners = charger.getActionListeners();
 		for (ActionListener listener : actionListeners)
@@ -112,10 +112,10 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		});
 
 		paquet.setToolTipText(
-				"Définir les paquets, avec l'ordre des règles Ã  l'intérieur étant basé sur la stratégie de conflits");
+				"DÃ©finir les paquets, avec l'ordre des rÃ¨gles Ã  l'intÃ©rieur Ã©tant basÃ© sur la stratÃ©gie de conflits");
 		add(paquet);
 
-		input.setToolTipText("Utilisé pour résoudres les problèmes, répondre aux questions...");
+		input.setToolTipText("UtilisÃ© pour rÃ©soudre les problÃ¨mes, rÃ©pondre aux questions...");
 		add(input);
 		actionListeners = input.getActionListeners();
 		for (ActionListener listener : actionListeners)
@@ -128,7 +128,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 			}
 		});
 
-		clear.setToolTipText("Permet d'effacer tout le contenu du résultat pour y voir clair");
+		clear.setToolTipText("Permet d'effacer tout le contenu du rÃ©sultat pour y voir clair");
 		actionListeners = clear.getActionListeners();
 		for (ActionListener listener : actionListeners)
 			clear.removeActionListener(listener);
@@ -142,7 +142,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 
 		chainageAvant = new JRadioButton("Chainage avant");
 		chainageAvant.setToolTipText(
-				"Stratégie qui permet d'extraire tout ce qui est possible d'avoir depuis la base de connaissance.");
+				"StratÃ©gie qui permet d'extraire tout ce qui est possible d'avoir depuis la base de connaissance.");
 		chainageAvant.setBackground(Graphism.couleurFond);
 		chainageAvant.setSelected(true);
 		chainageAvant.addItemListener(new ItemListener() {
@@ -153,8 +153,8 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		});
 		add(chainageAvant);
 
-		chainageArriere = new JRadioButton("Chainage arrière");
-		chainageArriere.setToolTipText("Stratégie pour savoir si une certaine chose demandée par l'expert est vrai.");
+		chainageArriere = new JRadioButton("Chainage arriÃ¨re");
+		chainageArriere.setToolTipText("StratÃ©gie pour savoir si une certaine chose demandÃ©e par l'expert est vrai.");
 		chainageArriere.setBackground(Graphism.couleurFond);
 		chainageArriere.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -165,7 +165,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		add(chainageArriere);
 
 		chainagePaquet = new JRadioButton("Chainage par paquets");
-		chainagePaquet.setToolTipText("Stratégie qui permet d'appliquer des règles par paquets dans un ordre défini.");
+		chainagePaquet.setToolTipText("StratÃ©gie qui permet d'appliquer des rÃ¨gles par paquets dans un ordre dÃ©fini.");
 		chainagePaquet.setBackground(Graphism.couleurFond);
 		chainagePaquet.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -197,7 +197,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 			variable.removeActionListener(listener);
 
 		variable = new JButtonCustom("Variables");
-		variable.setToolTipText("Permet de définir les variables et ses valeurs possibles");
+		variable.setToolTipText("Permet de dÃ©finir les variables et ses valeurs possibles");
 		variable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,7 +224,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					String filePath = fileChooser.getSelectedFile().getPath();
 					if (!filePath.toLowerCase().endsWith(".txt")) {
-						filePath += ".txt"; // Assurez-vous que l'extension .txt est ajoutée
+						filePath += ".txt"; // Assurez-vous que l'extension .txt est ajoutÃ©e
 					}
 					try {
 						BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
@@ -232,7 +232,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 
 						writer.close();
 
-						JOptionPane.showMessageDialog(null, "Données enregistrées avec succès.");
+						JOptionPane.showMessageDialog(null, "DonnÃ©es enregistrÃ©es avec succÃ¨s.");
 					} catch (IOException ex) {
 						ex.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du fichier.");
@@ -242,7 +242,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		});
 
 		calculer = new JButtonCustom("Calculer");
-		calculer.setToolTipText("Donne le résultat de la stratégie choisie avec la base de connaissances.");
+		calculer.setToolTipText("Donne le rÃ©sultat de la stratÃ©gie choisie avec la base de connaissances.");
 		calculer.setBackground(Color.red);
 		add(calculer);
 
@@ -250,15 +250,15 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		trace.setToolTipText("Permet d'avoir le cheminement et les informations pour permettre de prouver les faits.");
 		trace.setBackground(Graphism.couleurFond);
 		add(trace);
-		String[] options = { "Règle dans l'ordre", "par le plus de prémisse", "par le fait le plus récent" };
+		String[] options = { "RÃ¨gle dans l'ordre", "par le plus de prÃ©misse", "par le fait le plus rÃ©cent" };
 		comboBox = new JComboBox<>(options);
 		comboBox.setBackground(Graphism.couleurFond);
-		comboBox.setToolTipText("Choix de la règle en cas de conflit");
+		comboBox.setToolTipText("Choix de la rÃ¨gle en cas de conflit");
 		add(comboBox);
 
-		verifierIncoherences = new JCheckBox("Incohérences");
+		verifierIncoherences = new JCheckBox("IncohÃ©rences");
 		verifierIncoherences.setSelected(true);
-		verifierIncoherences.setToolTipText("Permet de détecter les incohérences et de réagir en fonction.");
+		verifierIncoherences.setToolTipText("Permet de dÃ©tecter les incohÃ©rences et de rÃ©agir en fonction.");
 		verifierIncoherences.setBackground(Graphism.couleurFond);
 
 		add(verifierIncoherences);
@@ -282,7 +282,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 				String text = faits.getText();
 				String[] lines = text.split("\\r?\\n");
 
-				// Utilisation de StringBuilder pour concaténer les faits
+				// Utilisation de StringBuilder pour concatÃ©ner les faits
 				StringBuilder faitsBuilder = new StringBuilder();
 				for (String line : lines) {
 					if (!line.isEmpty()) {
@@ -295,7 +295,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 				text = regles.getText();
 				lines = text.split("\\r?\\n");
 
-				// Utilisation de StringBuilder pour concaténer les règles
+				// Utilisation de StringBuilder pour concatÃ©ner les rÃ¨gles
 				StringBuilder reglesBuilder = new StringBuilder();
 				for (String line : lines) {
 					if (!line.isEmpty()) {
@@ -305,7 +305,7 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 				}
 
 				// MoteurZeroPlus.print("Faits extraits : " + faitsBuilder.toString());
-				// MoteurZeroPlus.print("Règles extraits : " + reglesBuilder.toString());
+				// MoteurZeroPlus.print("RÃ¨gles extraits : " + reglesBuilder.toString());
 
 				Strategie strategie = new ChainageAvant();
 				if (Graphism.typeChainage == 1) {

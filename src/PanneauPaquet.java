@@ -10,8 +10,8 @@ import javax.swing.JTextArea;
 public class PanneauPaquet extends PanneauPersonnalise{
 
     private static JButtonCustom retour = new JButtonCustom("Retour / sauvegarder");
-    private static JLabel label = new JLabel("Définitions des paquets"), reglesLabel = new JLabel("Base de règles");
-    private static JTextArea labelExplications = new JTextArea("Dans le panneau de gauche, on a un paquet = une ligne.\nPour créer un paquet, il faut le nom des règles, on aura donc pour un paquet : \nnom1;regle2;modus ponens\n Il faut donc que les noms des règles soient séparés par un ';'");
+    private static JLabel label = new JLabel("DÃ©finitions des paquets"), reglesLabel = new JLabel("Base de rÃ¨gles");
+    private static JTextArea labelExplications = new JTextArea("Dans le panneau de gauche, on a un paquet = une ligne.\nPour crÃ©er un paquet, il faut le nom des rÃ¨gles, on aura donc pour un paquet : \nnom1;regle2;modus ponens\n Il faut donc que les noms des rÃ¨gles soient sÃ©parÃ©s par un ';'");
     public static JTextArea paquets = new JTextArea();
     private static JScrollPane scroll = new JScrollPane(), scroll2 = new JScrollPane();
 

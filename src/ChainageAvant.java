@@ -11,7 +11,7 @@ public class ChainageAvant implements Strategie {
 		boolean dec = true;
 
 		while (inf) {
-			// Réinitialisez inf Ã  false au début de chaque itération
+			// RÃ©initialisez inf Ã  false au dÃ©but de chaque itÃ©ration
 			inf = false;
 
 			for (int i = 0; i < baseDeReglesEnTampon.taille(); i++) {
@@ -21,18 +21,18 @@ public class ChainageAvant implements Strategie {
 
 				for (int j = 0; j < regle.taillePremice(); j++) {
 					Element premice = regle.avoirPremiceParIndice(j);
-					// Vérification si la prémisse est satisfaite
+					// VÃ©rification si la prÃ©misse est satisfaite
 					if (!baseDeFaitsEnTampon.contient(premice)
 							|| (baseDeFaitsEnTampon.contient(premice) && baseDeFaitsEnTampon
 									.avoirValeurFait(premice.nom()) != regle.avoirValeurPremice(premice.nom()))) {
-						dec = false; // La prémisse n'est pas satisfaite, la règle ne peut pas Ãªtre exécutée
+						dec = false; // La prÃ©misse n'est pas satisfaite, la rÃ©gle ne peut pas Ãªtre exÃ©cutÃ©e
 						break;
 					}
 
 				}
-				// Si toutes les prémises sont satisfaites, exécutez la règle
+				// Si toutes les prÃ©mises sont satisfaites, exÃ©cutez la rÃ©gle
 				if (dec) {
-					// Ajoutez le résultat de la règle Ã  la base de faits
+					// Ajoutez le rÃ©sultat de la rÃ©gle Ã  la base de faits
 					for (int k = 0; k < regle.tailleConsequent(); k++) {
 						if (!baseDeFaitsEnTampon.contient(regle.avoirConsequentParIndice(k))) {
 							Element e = new Element(regle.avoirConsequentParIndice(k).nom(),
@@ -40,9 +40,9 @@ public class ChainageAvant implements Strategie {
 							baseDeFaitsEnTampon.ajouterFait(e);
 							regle.setDecouvertTempsPremice(nbInf);
 							if (trace) {
-								MoteurZeroPlus.print("\n--------- Nombre d'inférences : " + nbInf);
+								MoteurZeroPlus.print("\n--------- Nombre d'infÃ©rences : " + nbInf);
 								MoteurZeroPlus.print("\nOn a : " + regle.avoirPremices().toString()
-										+ " donc on utilise la règle : \n" + regle.toString() + " et on obtient : \n"
+										+ " donc on utilise la rÃ©gle : \n" + regle.toString() + " et on obtient : \n"
 										+ regle.avoirConsequents().toString() + " \nNouvelle base de faits : \n"
 										+ baseDeFaitsEnTampon.toString());
 							}
@@ -50,8 +50,8 @@ public class ChainageAvant implements Strategie {
 						baseDeReglesEnTampon.enleverRegle(regle.nom());
 					}
 
-					inf = true; // Indique qu'au moins une règle a été exécutée Ã  cette itération
-					nbInf++; // Incrémente le compteur de règles exécutées
+					inf = true; // Indique qu'au moins une regle a Ã©tÃ© exÃ©cutÃ©e Ã  cette itÃ©ration
+					nbInf++; // IncrÃ©mente le compteur de regles exÃ©cutÃ©es
 				}
 			}
 		}
@@ -59,8 +59,8 @@ public class ChainageAvant implements Strategie {
 		if (MoteurZeroPlus.moteur1)
 			MoteurZeroPlus.print("Le patient a donc les observations et les (non-)maladies possibles : ");
 		else
-			MoteurZeroPlus.print("Résultat : Temps d'exécution : " + Chronometre.time()
-					+ " ms / Nombres d'inférences : " + nbInf + ", \nOn a la base de faits : ");
+			MoteurZeroPlus.print("RÃ©sultat : Temps d'exÃ©cution : " + Chronometre.time()
+					+ " ms / Nombres d'infÃ©rences : " + nbInf + ", \nOn a la base de faits : ");
 		MoteurZeroPlus.print(baseDeFaitsEnTampon.toString());
 	}
 }

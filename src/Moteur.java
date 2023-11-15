@@ -69,11 +69,11 @@ public class Moteur implements Runnable{
                 PanneauPrincipale.input.setBorder(new CompoundBorder(new LineBorder(Color.black, 4), new EmptyBorder(10, 10, 10, 10)));
             });
             Moteur.print(msg);
-        // Activez l'attente de réponse
+        // Activez l'attente de rÃ©ponse
         attenteReponseUtilisateur = true;
         
 
-        // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un événement approprié)
+        // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un Ã©venement appropriÃ©)
         
         while (attenteReponseUtilisateur){
             PanneauPrincipale.calculer.setVisible(false);

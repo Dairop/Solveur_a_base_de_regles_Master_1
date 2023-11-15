@@ -36,17 +36,17 @@ public class Premisse {
     public boolean equals(Object o){
         Premisse p = (Premisse)o;
         if (_elementListe.size() != p._elementListe.size()) 
-            return false; // Si les listes n'ont pas la mÃªme taille, elles ne peuvent pas Ãªtre égales
+            return false; // Si les listes n'ont pas la mÃªme taille, elles ne peuvent pas Ãªtre Ã©gales
     
-        // Créez des copies des listes pour les manipuler sans affecter les originales
+        // CrÃ©ez des copies des listes pour les manipuler sans affecter les originales
         List<Element> copieListe1 = new ArrayList<>(_elementListe);
         List<Element> copieListe2 = new ArrayList<>(p._elementListe);
 
-        // Triez les copies des listes pour aligner les éléments
+        // Triez les copies des listes pour aligner les Ã©lÃ©ments
         Collections.sort(copieListe1, Comparator.comparing(Element::hashCode)); // Tri par valeur, ajustez-le selon vos besoins
         Collections.sort(copieListe2, Comparator.comparing(Element::hashCode)); // Tri par valeur, ajustez-le selon vos besoins
 
-        // Comparez les listes triées
+        // Comparez les listes triÃ©es
         return copieListe1.equals(copieListe2);
     }
 
