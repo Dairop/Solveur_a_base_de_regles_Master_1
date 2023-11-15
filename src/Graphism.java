@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Graphism implements Runnable {
 
@@ -16,7 +18,7 @@ public class Graphism implements Runnable {
 	static final Color couleurTextBouton = Color.white;
 	static final Color couleurFond = Color.lightGray;
 
-	// �l�ment graphique
+	// �l�ment graphique
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
 	private static PanneauPersonnalise panel = new PanneauPrincipale();
 
@@ -39,6 +41,11 @@ public class Graphism implements Runnable {
 		if (MoteurZeroPlus.moteur1) {
 			String contenu = "";
 			String cheminDuFichier = Fichier.getUrlCourante() + "Moteur1.txt";
+			File f = new File(cheminDuFichier);
+			if (!f.exists()){
+				JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
+				System.exit(0);
+			}
 			try {
 				FileReader fileReader = new FileReader(cheminDuFichier);
 				BufferedReader bufferedReader = new BufferedReader(fileReader);

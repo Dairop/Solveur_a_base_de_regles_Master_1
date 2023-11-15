@@ -31,7 +31,7 @@ public class Fichier {
 				}
 			}
 		} catch (Exception e) {
-			Moteur.print("Fichier non supporté ou introuvable");
+			Moteur.print("Fichier non supportï¿½ ou introuvable");
 		}
 	}
 	
