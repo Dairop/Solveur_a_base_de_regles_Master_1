@@ -36,8 +36,9 @@ public class Fichier {
 	}
 	
 	public static String getUrlCourante() {
+		System.out.println("\n\n"+urlCourante+"\n\n");
 		if (!urlCourante.substring(urlCourante.length()-4).equals(".jar"))
-			return urlCourante+"../Ress/";
+			return urlCourante+"";
 		else 
 			return urlCourante.substring(0, urlCourante.lastIndexOf("/"))+"/Ress/";
 	}
