@@ -1,68 +1,95 @@
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-public class Graphism implements Runnable{
+public class Graphism implements Runnable {
 
-    static int typeChainage = 0;
-    static boolean changementPanel = true;
+	static int typeChainage = 0;
+	static boolean changementPanel = true;
 
-    //interface
-    static final Color couleurBouton = new Color(100,100,100);
-    static final Color couleurTextBouton = Color.white;
-    static final Color couleurFond = Color.lightGray;
+	// interface
+	static final Color couleurBouton = new Color(100, 100, 100);
+	static final Color couleurTextBouton = Color.white;
+	static final Color couleurFond = Color.lightGray;
 
-    //élément graphique
-    static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
-    private static PanneauPersonnalise panel = new PanneauPrincipale();
+	// élément graphique
+	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
+	private static PanneauPersonnalise panel = new PanneauPrincipale();
 
+	static void initialiser() {
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fenetre.setLocationRelativeTo(null);
+		fenetre.setVisible(true);
 
-    static void initialiser(){
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setLocationRelativeTo(null);
-        fenetre.setVisible(true);
+		fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		fenetre.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		panel.setLayout(null);
 
-        fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        fenetre.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-        panel.setLayout(null);
+		fenetre.setContentPane(panel);
+		panel.initialiser();
 
-        fenetre.setContentPane(panel);
-        panel.initialiser();
-        
-    }
+	}
 
-    
-    @Override
-    public void run() {
-        initialiser();
-        changementPanel = false;
-        while (true && !changementPanel){
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            panel.refresh();
-            panel.repaint();
-            
-        }
-        
-    }
+	@Override
+	public void run() {
+		if (MoteurZeroPlus.moteur1) {
+			String contenu = "";
+			String cheminDuFichier = Fichier.getUrlCourante() + "Moteur1.txt";
+			File f = new File(cheminDuFichier);
+			if (!f.exists()){
+				JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
+				System.exit(0);
+			}
+			try {
+				FileReader fileReader = new FileReader(cheminDuFichier);
+				BufferedReader bufferedReader = new BufferedReader(fileReader);
+				String ligne;
+				while ((ligne = bufferedReader.readLine()) != null) {
+					contenu += ligne + "\n";
+				}
 
-    public static void lancer() {
-        new Thread(new Graphism()).start();
-    }
+				bufferedReader.close();
+				fileReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Fichier.chargerFichier(contenu);
+		}
+		initialiser();
+		changementPanel = false;
+		while (true && !changementPanel) {
+			try {
+				Thread.sleep(30);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			panel.refresh();
+			panel.repaint();
 
-    public static void setPanel(PanneauPersonnalise newPanel) {
-        changementPanel = true;
-    
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        panel = newPanel;
-        
-        lancer();
-    }
+		}
+
+	}
+
+	public static void lancer() {
+		new Thread(new Graphism()).start();
+	}
+
+	public static void setPanel(PanneauPersonnalise newPanel) {
+		changementPanel = true;
+
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		panel = newPanel;
+
+		lancer();
+	}
 }

@@ -49,7 +49,7 @@ public class MoteurZeroPlus extends Moteur{
     }
 
     public boolean estPredicat(String chaine) {
-        // Utilisation d'une expression régulière pour vérifier le format abc(E, M, pf5)
+        // Utilisation d'une expression réguliere pour vérifier le format abc(E, M, pf5)
         
         String regex = "([A-Za-z0-9]_?)+\\((!?([A-Za-z0-9]_?)+,(\\s?)+)*!?([A-Za-z0-9]_?)+\\)";
         Pattern pattern = Pattern.compile(regex);
@@ -69,7 +69,7 @@ public class MoteurZeroPlus extends Moteur{
     }
 
 
-    //genere des valeurs possibles aleatoires temporairement, à remplacer dès que possible
+    //genere des valeurs possibles aleatoires temporairement, à remplacer des que possible
     public void valeursPossiblesAleatoires(ArrayList<String> array){
         for (int i = 0; i < 3; i++){
             array.add(stringAleatoire(5));
@@ -82,7 +82,7 @@ public class MoteurZeroPlus extends Moteur{
 
         //_predicats.clear();
         
-        //liste ordonnée de toutes les variables trouvées dans nos règles
+        //liste ordonnée de toutes les variables trouvées dans nos regles
         //Si certaines ne sont pas définies dans this._variables, on demandera à l'utilisateur de les définir
         ArrayList<String> listeVariablesTrouvees = new ArrayList<String>();
 
@@ -94,12 +94,12 @@ public class MoteurZeroPlus extends Moteur{
             if (this._trace) print("  Analyse la regle "+r.toString()+" ...");
 
 
-            //recuperer tous les Elements de la règle et regarder si certains sont des Predicats
+            //recuperer tous les Elements de la regle et regarder si certains sont des Predicats
             ArrayList<Element> elementsDeR = new ArrayList<Element>(r.avoirPremicesListe());
             elementsDeR.addAll(r.avoirConsequentsListe());
 
             for (int p_i = 0; p_i < elementsDeR.size(); p_i++){
-                //cherche s'il y a des parenthèses dans l'element     
+                //cherche s'il y a des parentheses dans l'element     
                 String pr = elementsDeR.get(p_i).toString().replaceAll("\\s", "");  
                 
                 if (this._trace) print("\n    Analyse de: '"+pr+"'");
@@ -117,7 +117,7 @@ public class MoteurZeroPlus extends Moteur{
                     */
 
                     for (String param: parametres) {
-                        //si le paramètre commence par une majuscule, alors c'est une variable
+                        //si le paramétre commence par une majuscule, alors c'est une variable
                         if (param.charAt(0) >= 65 && param.charAt(0) <= 90){
 
                             if (this._trace) print("Nouvelle variable: "+param);
@@ -201,7 +201,7 @@ public class MoteurZeroPlus extends Moteur{
             );
 
         
-            this._baseDeRegles.ajouterRègle(nouvelleRegle);
+            this._baseDeRegles.ajouterRegle(nouvelleRegle);
         }
 
         listeVariables.remove(0);

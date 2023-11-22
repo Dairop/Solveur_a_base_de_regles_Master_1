@@ -13,6 +13,7 @@ public class Moteur implements Runnable{
     protected Tri _methodeDeTrie;
     protected boolean _verifierIncoherences = true;
   
+    public static boolean moteur1 = false;
     public static boolean attenteReponseUtilisateur = false;
 
     protected static boolean enConsole = false;
@@ -72,7 +73,7 @@ public class Moteur implements Runnable{
         attenteReponseUtilisateur = true;
         
 
-        // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un événement approprié)
+        // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un évenement approprié)
         
         while (attenteReponseUtilisateur){
             PanneauPrincipale.calculer.setVisible(false);

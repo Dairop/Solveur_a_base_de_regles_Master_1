@@ -24,7 +24,7 @@ public class ChainageParPaquet implements Strategie{
             for (int j = 0; j < _blocs.get(i).size();j++){
                 Regle r = baseDeReglesTampon.avoirRegleParNom(_blocs.get(i).get(j));
                 
-                //Si aucune règle avec ce nom, on laisse l'utilisateur choisir
+                //Si aucune regle avec ce nom, on laisse l'utilisateur choisir
                 if (r == null){
                     String reponse = Moteur.lireReponse("La règle \""+_blocs.get(i).get(j) +"\" n'existe pas.\n1:Passer la règle\n2:Renommer la règle\n3:Arrêter le programme");
                     if (reponse.contains("1"))
@@ -50,7 +50,7 @@ public class ChainageParPaquet implements Strategie{
                     }
                 }
 
-                //si la règle peut etre utilisé on ajoute toutes ses conséquents à la base de faits
+                //si la regle peut etre utilisé on ajoute toutes ses conséquents à la base de faits
                 if (regleUtile){
                     String message = "La règle est utilisable : "+r.toString()+"\n On rajoute donc les conséquents : ";
                     for (int k = 0; k < r.tailleConsequent();k++){

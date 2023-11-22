@@ -34,13 +34,13 @@ public class ChainageArriere implements Strategie{
         }
 
         baseDeRegles = tri.trier(baseDeRegles, baseDeFaits);
-        //2nd cas, vérifier si b est conséquent d'une des règles de BR
+        //2nd cas, vérifier si b est conséquent d'une des regles de BR
         for (int i = 0; i < baseDeRegles.taille() && !dem; i++) {
             Regle r = baseDeRegles.avoirRegleParIndice(i);
             //verifier si b est en consequent
              if (r.consequentContient(b)){
                 
-                //vérifier si les prémisses d'une règle avec b en conséquent sont connues
+                //vérifier si les prémisses d'une regle avec b en conséquent sont connues
                 dem = verif(r.avoirPremicesListe(), baseDeFaits, baseDeRegles, tri);
                 if (dem && trace) Moteur.print("La regle "+r.toString()+" contient "+b.toString()+" en conséquent et ses prémices sont vérifiés");
             }

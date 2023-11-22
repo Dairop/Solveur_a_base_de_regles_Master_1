@@ -139,7 +139,7 @@ public class BaseDeFaits {
         if (listesInterdites.isEmpty())
             return;
 
-        String msg = "Problème mots clés / symboles interdits dans des noms d'éléments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les éléments de problèmes : ";
+        String msg = "Probléme mots clés / symboles interdits dans des noms d'éléments de la base de faits.\n Il ne faut pas de '!', de 'ET' ou de '->' : Les éléments de problèmes : ";
         for (int i = 0; i < listesInterdites.size();i++)
             msg+=listesInterdites.get(i).nom()+" / ";
         msg +="1 : arrêter le programme\n2: Enlever ces symboles/noms interdits";
