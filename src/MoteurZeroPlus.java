@@ -20,7 +20,7 @@ public class MoteurZeroPlus extends Moteur{
     @Override
     public void run() {
         
-         try {
+        try {
             if (_verifierIncoherences)
                 verifierIncoherences();
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class MoteurZeroPlus extends Moteur{
 
 
     public void remplacerVariables(){
-        //if (this._trace) print("Début de l'analyse des règles afin de remplacer les variables ...");
+        if (this._trace) print("Début de l'analyse des règles afin de remplacer les variables ...");
 
         //_predicats.clear();
         
@@ -91,7 +91,7 @@ public class MoteurZeroPlus extends Moteur{
         int i = 0;
         while (i < this._baseDeRegles.taille()){
             Regle r = this._baseDeRegles.avoirRegleParIndice(i);
-            //if (this._trace) print("  Analyse la regle "+r.toString()+" ...");
+            if (this._trace) print("  Analyse la regle "+r.toString()+" ...");
 
 
             //recuperer tous les Elements de la règle et regarder si certains sont des Predicats
@@ -102,12 +102,12 @@ public class MoteurZeroPlus extends Moteur{
                 //cherche s'il y a des parenthèses dans l'element     
                 String pr = elementsDeR.get(p_i).toString().replaceAll("\\s", "");  
                 
-                //if (this._trace) print("\n    Analyse de: '"+pr+"'");
+                if (this._trace) print("\n    Analyse de: '"+pr+"'");
 
                 if (estPredicat(pr)){
                     String[] parametres = pr.substring(pr.indexOf("(")+1, pr.indexOf(")")).split(",");
 
-                    //if (this._trace) print("        Predicat trouvé\n");
+                    if (this._trace) print("        Predicat trouvé\n");
                     
                     /*
                     _predicats.add(new 
@@ -120,7 +120,7 @@ public class MoteurZeroPlus extends Moteur{
                         //si le paramètre commence par une majuscule, alors c'est une variable
                         if (param.charAt(0) >= 65 && param.charAt(0) <= 90){
 
-                            //if (this._trace) print("Nouvelle variable: "+param);
+                            if (this._trace) print("Nouvelle variable: "+param);
                             
                             listeVariablesTrouvees.add(param);
 
@@ -129,7 +129,7 @@ public class MoteurZeroPlus extends Moteur{
                                 vals = this._variables.get(param)._valeursPossibles;
                             } else {
                                 // erreur, variable non définié. demander à l'utilisateur
-                                //if (this._trace) print("Variable "+param+" non définie");
+                                if (this._trace) print("Variable "+param+" non définie");
                                 vals = new ArrayList<String>();
                                 valeursPossiblesAleatoires(vals);
                             }
@@ -137,7 +137,26 @@ public class MoteurZeroPlus extends Moteur{
                         }
                     }
                 } else {
-                    //if (this._trace) print("        Aucun prédicat trouvé\n");
+                    if (this._trace) print("        Aucun prédicat trouvé\n");
+
+                    String name = elementsDeR.get(p_i).toString();
+
+                    if (name.charAt(0) >= 65 && name.charAt(0) <= 90){
+                        if (this._trace) print("Nouvelle variable: "+name);
+                        
+                        listeVariablesTrouvees.add(name);
+
+                        ArrayList<String> vals;
+                        if (this._variables.containsKey(name)){
+                            vals = this._variables.get(name)._valeursPossibles;
+                        } else {
+                            // erreur, variable non définié. demander à l'utilisateur
+                            if (this._trace) print("Variable "+name+" non définie");
+                            vals = new ArrayList<String>();
+                            valeursPossiblesAleatoires(vals);
+                        }
+                        valeursPossiblesVariables.add(vals);
+                    }
                 }              
             }
 
@@ -151,8 +170,8 @@ public class MoteurZeroPlus extends Moteur{
 
         //afficher les nouvelles regles
         if (this._trace) {
-            //print("nouvelles regles: ");
-            //for (i = 0; i < this._baseDeRegles.taille(); i++) print("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
+            print("nouvelles regles: ");
+            for (i = 0; i < this._baseDeRegles.taille(); i++) print("  "+this._baseDeRegles.avoirRegleParIndice(i).toString());
         }
     }
 
@@ -174,7 +193,7 @@ public class MoteurZeroPlus extends Moteur{
             stringNouvelleRegle = stringNouvelleRegle.replaceFirst(r.nom() + " : ", "");
             String nomNouvelleRegle = stringAleatoire(6);
 
-            //if (this._trace) print("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
+            if (this._trace) print("    Nouvelle combinaison:   " + nomNouvelleRegle + " : "+ stringNouvelleRegle);
 
             Regle nouvelleRegle = new Regle(
                 //nouvelle regle avec un nouveau nom
@@ -192,6 +211,8 @@ public class MoteurZeroPlus extends Moteur{
 
         return 1;
     }
+
+
 
 
 }
