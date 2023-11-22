@@ -1,8 +1,5 @@
-fatigue_moyenne
-toux
-etat_confus
 fievre_moderee
-douleur( TypeDouleur, jambes )
+douleur(douleur_elevee, jambes)
 ReglesSauvegarde:
 R1: douleur(elevee, PartiesDuCorps) ET fievre -> infection_sur(PartiesDuCorps) ET maux_de_tete
 R2: respiration_haletante ET douleur(legere_douleur, bassin) -> appendicite
