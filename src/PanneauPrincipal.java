@@ -87,7 +87,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 		add(resultatLabel);
 
 		charger.setToolTipText("Permet de récupérer le système expert enregistré dans un fichier.");
-		add(charger);
+		if (!MoteurZeroPlus.moteur1)add(charger);
 		ActionListener[] actionListeners = charger.getActionListeners();
 		for (ActionListener listener : actionListeners)
 			charger.removeActionListener(listener);
@@ -122,7 +122,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 
 		paquet.setToolTipText(
 				"Définir les paquets, avec l'ordre des règles à l'intérieur étant basé sur la stratégie de conflits");
-		add(paquet);
+		if (!MoteurZeroPlus.moteur1)add(paquet);
 
 		input.setToolTipText("Utilisé pour résoudre les problèmes, répondre aux questions...");
 		add(input);
@@ -213,9 +213,9 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 				Graphism.setPanel(new PanneauVariable());
 			}
 		});
-		add(variable);
+		if (!MoteurZeroPlus.moteur1)add(variable);
 		save.setToolTipText("Permet de sauvegarder dans un fichier la session actuelle.");
-		add(save);
+		if (!MoteurZeroPlus.moteur1)add(save);
 
 		actionListeners = save.getActionListeners();
 		for (ActionListener listener : actionListeners)
