@@ -33,4 +33,4 @@ TypeFatigue: fatigue_faible; fatigue_moyenne; fatigue_elevee
 Etat: etat_inconscient; etat_confus; etat_normal
 TypeDouleur: aucune_douleur; legere_douleur; douleur_elevee
 PartiesDuCorps: tete; ventre; bras; bassin; jambes; extremites; tout_le_corps
-Paquets : 
+Paquets:

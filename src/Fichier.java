@@ -24,17 +24,15 @@ public class Fichier {
 			PanneauPrincipal.regles.setText(contenu.split("\nVariables:\n")[0]);
 			contenu = contenu.split("\nVariables:\n")[1];
 
-			if (contenu.split("\nPaquets : \n").length == 0) {
+			if (contenu.split("\nPaquets:\n").length == 0) {
 				PanneauVariable.variablesEntree.setText("");
 				PanneauPaquet.paquets.setText("");
 			} else {
 				if (contenu.split("\nPaquets : \n").length > 1) {
-					System.out.println("VARIABLE LU");
 					System.out.println(contenu.split("\nPaquets : \n")[0]);
 					PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets : \n")[0]);
 					PanneauPaquet.paquets.setText(contenu.split("\nPaquets : \n")[1]);
-				}else 
-				System.out.println("");
+				}
 			}
 		} catch (Exception e) {
 			Moteur.print("Fichier non supporté ou introuvable");
