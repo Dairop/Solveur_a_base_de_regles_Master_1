@@ -399,7 +399,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 			scrollPane1.setLocation(w / 20, h / 20);
 		}
 		regles.setFont(texteFont);
-		scrollPane2.setSize(w / 40 * 19, h / 2);
+		scrollPane2.setSize(w / 40 * 19, (int) (h / 2.1f));
 		scrollPane2.setLocation(w / 2, h / 20);
 
 		faitsLabel.setSize(w / 3, h / 20);
@@ -424,7 +424,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 
 		clear.setFont(texteFont);
 		clear.setSize(w / 7, h / 35);
-		clear.setLocation(w / 5 * 4, h / 160 * 91);
+		clear.setLocation(w / 5 * 4, (int) (((float)h / 160) * 89));
 
 		variable.setFont(texteFont);
 		variable.setSize(w / 7, h / 10);
