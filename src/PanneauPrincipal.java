@@ -28,7 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
-public class PanneauPrincipale extends PanneauPersonnalise {
+public class PanneauPrincipal extends PanneauPersonnalise {
 
 	// composants graphiques
 	static ArrayList<JCheckBox> observations = new ArrayList<>();

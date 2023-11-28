@@ -20,7 +20,7 @@ public class Graphism implements Runnable {
 
 	// élément graphique
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
-	private static PanneauPersonnalise panel = new PanneauPrincipale();
+	private static PanneauPersonnalise panel = new PanneauPrincipal();
 
 	static void initialiser() {
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

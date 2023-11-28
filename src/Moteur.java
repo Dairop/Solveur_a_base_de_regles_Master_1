@@ -47,8 +47,8 @@ public class Moteur implements Runnable{
         if (enConsole)
             System.out.println(msg);
         else{
-            PanneauPrincipale.resultat.append("\n"+msg);
-            PanneauPrincipale.resultat.setCaretPosition(PanneauPrincipale.resultat.getDocument().getLength());
+            PanneauPrincipal.resultat.append("\n"+msg);
+            PanneauPrincipal.resultat.setCaretPosition(PanneauPrincipal.resultat.getDocument().getLength());
         }
     }
 
@@ -62,11 +62,11 @@ public class Moteur implements Runnable{
         }
         else{
             SwingUtilities.invokeLater(() -> {
-                PanneauPrincipale.input.setBackground(new Color(255,0,125));
-                PanneauPrincipale.input.setText("");
-                PanneauPrincipale.input.requestFocus();
-                PanneauPrincipale.input.setEnabled(true);
-                PanneauPrincipale.input.setBorder(new CompoundBorder(new LineBorder(Color.black, 4), new EmptyBorder(10, 10, 10, 10)));
+                PanneauPrincipal.input.setBackground(new Color(255,0,125));
+                PanneauPrincipal.input.setText("");
+                PanneauPrincipal.input.requestFocus();
+                PanneauPrincipal.input.setEnabled(true);
+                PanneauPrincipal.input.setBorder(new CompoundBorder(new LineBorder(Color.black, 4), new EmptyBorder(10, 10, 10, 10)));
             });
             Moteur.print(msg);
         // Activez l'attente de réponse
@@ -76,7 +76,7 @@ public class Moteur implements Runnable{
         // Attendez que l'utilisateur appuie sur un bouton (ou utilisez un évenement approprié)
         
         while (attenteReponseUtilisateur){
-            PanneauPrincipale.calculer.setVisible(false);
+            PanneauPrincipal.calculer.setVisible(false);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -84,12 +84,12 @@ public class Moteur implements Runnable{
             }
             
         }
-        PanneauPrincipale.calculer.setVisible(true);
-        PanneauPrincipale.input.setBackground(Color.white);
-        String reponse = PanneauPrincipale.input.getText();
-        PanneauPrincipale.input.setText("");
-        PanneauPrincipale.input.setEnabled(false);
-        PanneauPrincipale.input.setBorder(null);
+        PanneauPrincipal.calculer.setVisible(true);
+        PanneauPrincipal.input.setBackground(Color.white);
+        String reponse = PanneauPrincipal.input.getText();
+        PanneauPrincipal.input.setText("");
+        PanneauPrincipal.input.setEnabled(false);
+        PanneauPrincipal.input.setBorder(null);
         return reponse;
         }
     }
