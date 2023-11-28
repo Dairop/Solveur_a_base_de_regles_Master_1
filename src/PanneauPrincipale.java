@@ -31,6 +31,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class PanneauPrincipale extends PanneauPersonnalise {
 
 	// composants graphiques
+	static ArrayList<JCheckBox> observations = new ArrayList<>();
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
 	static JScrollPane scrollPane2, scrollPane3, scrollPane1;
 	static JTextField input = new JTextField();
@@ -51,22 +52,30 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 
 	@Override
 	void initialiser() {
-
-		faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
-		scrollPane1 = new JScrollPane(faits);
-		add(scrollPane1);
-
+		if (MoteurZeroPlus.moteur1){
+			String[] observationsStrings = {"fievre(faible)", "mal-de-gorge", "toux", "diarrhee"};
+			for (int i = 0; i < observationsStrings.length;i++){
+				observations.add(new JCheckBox(observationsStrings[i]));
+				add(observations.get(i));
+			}
+		}else{
+			faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
+			scrollPane1 = new JScrollPane(faits);
+			add(scrollPane1);
+		}
 		regles.setToolTipText(
 				"Une règle par ligne et avec le format 'nom : prémice1 Et prémice2 -> conséquent1 ET conséquent2' par exemple : 'R1: A-> B ET !C' ou 'ma règle : !E ET !A -> C'");
 		scrollPane2 = new JScrollPane(regles);
-		add(scrollPane2);
+		
+		if (!MoteurZeroPlus.moteur1)add(scrollPane2);
 
 		faitsLabel = new JLabel("Base de fait(s)");
 		if (MoteurZeroPlus.moteur1)
 			faitsLabel.setText("Observation(s)");
 		add(faitsLabel);
-
-		reglesLabel = new JLabel("Base de régles");
+		
+		reglesLabel = new JLabel("Base de règles");
+		if (!MoteurZeroPlus.moteur1)
 		add(reglesLabel);
 
 		resultat.setToolTipText("Résultat des différentes demandes");
@@ -370,10 +379,18 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 		final int w = getWidth();
 		final int h = getHeight();
 
-		faits.setFont(texteFont);
-		scrollPane1.setSize(w / 10 * 4, h / 2);
-		scrollPane1.setLocation(w / 20, h / 20);
 
+		if (MoteurZeroPlus.moteur1){
+			for (int i = 0; i < observations.size();i++){
+				observations.get(i).setFont(texteFont);
+				observations.get(i).setSize(w/10, h/15);
+				observations.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
+			}
+		}else{
+			faits.setFont(texteFont);
+			scrollPane1.setSize(w / 10 * 4, h / 2);
+			scrollPane1.setLocation(w / 20, h / 20);
+		}
 		regles.setFont(texteFont);
 		scrollPane2.setSize(w / 40 * 19, h / 2);
 		scrollPane2.setLocation(w / 2, h / 20);
