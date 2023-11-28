@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,9 +15,9 @@ public class Graphism implements Runnable {
 	static boolean changementPanel = true;
 
 	// interface
-	static final Color couleurBouton = new Color(100, 100, 100);
+	static final Color couleurBouton = new Color(119, 144, 198);
 	static final Color couleurTextBouton = Color.white;
-	static final Color couleurFond = Color.lightGray;
+	static final Color couleurFond = Color.white;
 
 	// élément graphique
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
@@ -27,8 +28,10 @@ public class Graphism implements Runnable {
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setVisible(true);
 
+		fenetre.setSize(1920/5, 1080/5); // ne pas supprimer, correspond à la taille actuelle lorsqu'on commence un redimensionnement 
 		fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		fenetre.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		fenetre.setMinimumSize(new Dimension(1920/5, 1080/5));
 		panel.setLayout(null);
 
 		fenetre.setContentPane(panel);
