@@ -10,7 +10,10 @@ public class Fichier {
 		result += "\nVariables:\n";
 		result += PanneauVariable.variablesEntree.getText();
 		result += "\nPaquets : \n";
-		result += PanneauPaquet.paquets.getText();
+		if (PanneauPaquet.paquets.getText().equals(""))
+			result+="Aucun paquet";
+		else
+			result += PanneauPaquet.paquets.getText();
 		return result;
 	}
 
@@ -25,9 +28,10 @@ public class Fichier {
 				PanneauVariable.variablesEntree.setText("");
 				PanneauPaquet.paquets.setText("");
 			} else {
-				if (contenu.split("\nPaquets:\n").length >= 1) {
-					PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets:\n")[0]);
-					PanneauPaquet.paquets.setText(contenu.split("\nPaquets:\n")[1]);
+				if (contenu.split("\nPaquets : \n").length > 1) {
+					System.out.println(contenu.split("\nPaquets : \n")[0]);
+					PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets : \n")[0]);
+					PanneauPaquet.paquets.setText(contenu.split("\nPaquets : \n")[1]);
 				}
 			}
 		} catch (Exception e) {

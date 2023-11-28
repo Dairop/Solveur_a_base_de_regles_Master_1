@@ -172,10 +172,9 @@ public class BaseDeRegles {
             }
         }
         
-        if (newList.size() != _reglesListe.size()){
+        if (newList.size() != _reglesListe.size())
             _reglesListe = newList;
-            Moteur.print("On a modifié la base de regles pour enlever les doublons.\n");
-        }    
+        
     }
 
     public void trierPlusDePremices(){

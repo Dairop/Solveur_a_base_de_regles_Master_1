@@ -60,4 +60,5 @@ Fatigue: faible; moyenne; elevee
 Etat: Inconscient; confus; normal
 Douleur: aucune; legere; elevee
 
-Paquets : 
+Paquets :
+Aucun Paquet
