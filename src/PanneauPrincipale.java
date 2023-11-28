@@ -291,12 +291,19 @@ public class PanneauPrincipale extends PanneauPersonnalise {
 				String text = faits.getText();
 				String[] lines = text.split("\\r?\\n");
 
-				// Utilisation de StringBuilder pour concaténer les faits
-				StringBuilder faitsBuilder = new StringBuilder();
-				for (String line : lines) {
-					if (!line.isEmpty()) {
-						bf.ajouterFait(new Element(line));
-						faitsBuilder.append(line).append("\n");
+
+				if (MoteurZeroPlus.moteur1){
+					for (int i = 0; i < observations.size();i++)
+						if (observations.get(i).isSelected())
+							bf.ajouterFait(new Element(observations.get(i).getText()));
+				}else{
+					// Utilisation de StringBuilder pour concaténer les faits
+					StringBuilder faitsBuilder = new StringBuilder();
+					for (String line : lines) {
+						if (!line.isEmpty()) {
+							bf.ajouterFait(new Element(line));
+							faitsBuilder.append(line).append("\n");
+						}
 					}
 				}
 
