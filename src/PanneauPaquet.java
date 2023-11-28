@@ -30,7 +30,7 @@ public class PanneauPaquet extends PanneauPersonnalise{
         add(labelExplications);
 
 
-        scroll2 = new JScrollPane(PanneauPrincipale.regles);
+        scroll2 = new JScrollPane(PanneauPrincipal.regles);
         add(scroll2);
 
 
@@ -43,7 +43,7 @@ public class PanneauPaquet extends PanneauPersonnalise{
 
         retour.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Graphism.setPanel(new PanneauPrincipale());    
+                Graphism.setPanel(new PanneauPrincipal());    
             }
         });
         repaint();

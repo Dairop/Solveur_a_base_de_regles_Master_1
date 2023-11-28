@@ -29,7 +29,7 @@ public class PanneauVariable extends PanneauPersonnalise{
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Graphism.setPanel(new PanneauPrincipale());
+                Graphism.setPanel(new PanneauPrincipal());
             }
         });
 
