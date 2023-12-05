@@ -41,10 +41,14 @@ public class Graphism implements Runnable {
 
 	}
 
+	//empêche de faire le chargement 2 fois
+	private static boolean charge = false;
+
 	@Override
 	public void run() {
-		if (MoteurZeroPlus.moteur1) {
+		if (MoteurZeroPlus.moteur1 && !charge) {
 			String contenu = "";
+			charge = true;
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Il faut sélectionner le fichier Moteur1.txt qui est placé à côté du .jar");
 			
