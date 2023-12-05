@@ -57,7 +57,7 @@ public class ChainageAvant implements Strategie {
 		}
 		Chronometre.stop();
 		if (MoteurZeroPlus.moteur1)
-			MoteurZeroPlus.print("Le patient a donc les observations et les (non-)maladies possibles : ");
+			MoteurZeroPlus.print("Le patient est possiblement confronté aux observations / maladies :");
 		else
 			MoteurZeroPlus.print("Résultat : Temps d'exécution : " + Chronometre.time()
 					+ " ms / Nombres d'inférences : " + nbInf + ", \nOn a la base de faits : ");

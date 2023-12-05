@@ -26,12 +26,20 @@ public class BaseDeFaits {
     }
 
     public String toString(){
-        String str = "[";
-        for (int i = 0; i < _base.size(); i++){
-            str += "["+_base.get(i).toString()+"]";
-            if (i < _base.size()-1) str += ", ";
+        String str = "";
+            
+        if (MoteurZeroPlus.moteur1){
+            for (int i = 0; i < _base.size(); i++){
+                str += " - "+_base.get(i).toString()+"\n";
+            }
+        }else{
+            str="[";
+            for (int i = 0; i < _base.size(); i++){
+                str += "["+_base.get(i).toString()+"]";
+                if (i < _base.size()-1) str += ", ";
+            }
+            str += "]";
         }
-        str += "]";
         return str;
     }
 

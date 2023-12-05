@@ -14,11 +14,17 @@ public class ChainageArriere implements Strategie{
         BaseDeFaits baseDeFaitsEnTampon = BaseDeFaits.copy(baseDeFaits);
         BaseDeRegles baseDeReglesTampon = BaseDeRegles.copy(baseDeRegles);
 
-        if (_objectif == null)
-            _objectif = new Element(Moteur.lireReponse("Question à poser : \nEntrez directement le fait (par exemple 'A' ou 'malDeTete')\nEt validez avec entrée: "));
-        
+        if (_objectif == null){
+            if (MoteurZeroPlus.moteur1)
+                _objectif = new Element(Moteur.lireReponse("\nEntrez directement l'observation ou la maladie cherchée par exemple 'toux' ou 'fievre(elevee)'.\nEt validez avec entrée: "));
+            else
+                _objectif = new Element(Moteur.lireReponse("Question à poser : \nEntrez directement le fait (par exemple 'A' ou 'malDeTete')\nEt validez avec entrée: "));
+        }
         boolean result = executerRecursif(baseDeFaitsEnTampon, baseDeReglesTampon, _objectif, trace, tri);
-        if (result)   Moteur.print( this._objectif.toString() + " a été vérifié, avec un retour positif");
+        if (result)   {
+            if (MoteurZeroPlus.moteur1) Moteur.print("Le patient a bien "+ this._objectif.toString());
+            else Moteur.print( this._objectif.toString() + " a été vérifié, avec un retour positif");
+        }
         else          Moteur.print( this._objectif.toString() + " n'a pas été résolu");
     }
 
