@@ -9,7 +9,7 @@ public class Fichier {
 		result += PanneauPrincipal.regles.getText();
 		result += "\nVariables:\n";
 		result += PanneauVariable.variablesEntree.getText();
-		result += "\nPaquets : \n";
+		result += "\nPaquets:\n";
 		if (PanneauPaquet.paquets.getText().equals(""))
 			result+="Aucun paquet";
 		else
@@ -28,13 +28,14 @@ public class Fichier {
 				PanneauVariable.variablesEntree.setText("");
 				PanneauPaquet.paquets.setText("");
 			} else {
-				if (contenu.split("\nPaquets : \n").length > 1) {
-					System.out.println(contenu.split("\nPaquets : \n")[0]);
-					PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets : \n")[0]);
-					PanneauPaquet.paquets.setText(contenu.split("\nPaquets : \n")[1]);
+				if (contenu.split("\nPaquets:\n").length > 1) {
+					System.out.println(contenu.split("\nPaquets:\n")[0]);
+					PanneauVariable.variablesEntree.setText(contenu.split("\nPaquets:\n")[0]);
+					PanneauPaquet.paquets.setText(contenu.split("\nPaquets:\n")[1]);
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Moteur.print("Fichier non supporté ou introuvable");
 		}
 	}

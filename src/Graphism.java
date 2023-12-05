@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Graphism implements Runnable {
 
@@ -43,26 +45,45 @@ public class Graphism implements Runnable {
 	public void run() {
 		if (MoteurZeroPlus.moteur1) {
 			String contenu = "";
-			String cheminDuFichier = Fichier.getUrlCourante() + "Moteur1.txt";
-			File f = new File(cheminDuFichier);
-			if (!f.exists()){
-				JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Il faut sélectionner le fichier Moteur1.txt qui est placé à côté du .jar");
+			
+			FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Text files (*.txt)", "txt");
+			fileChooser.addChoosableFileFilter(txtFilter);
+			fileChooser.setFileFilter(txtFilter);
+
+			int result = fileChooser.showOpenDialog(null);
+
+			if (result == JFileChooser.APPROVE_OPTION) {
+				// L'utilisateur a choisi un fichier
+				File selectedFile = fileChooser.getSelectedFile();
+				String selectedPath = selectedFile.getAbsolutePath();
+				String cheminDuFichier = selectedPath;
+				File f = new File(cheminDuFichier);
+				if (!f.exists()){
+					JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
+					System.exit(0);
+				}
+				try {
+					FileReader fileReader = new FileReader(cheminDuFichier);
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String ligne;
+					while ((ligne = bufferedReader.readLine()) != null) {
+						contenu += ligne + "\n";
+					}
+
+					bufferedReader.close();
+					fileReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Fichier.chargerFichier(contenu);
+			}else{
+
+				JOptionPane.showMessageDialog(null,"Vous n'avez pas valider le fichier donc le programme s'arrête.");
 				System.exit(0);
 			}
-			try {
-				FileReader fileReader = new FileReader(cheminDuFichier);
-				BufferedReader bufferedReader = new BufferedReader(fileReader);
-				String ligne;
-				while ((ligne = bufferedReader.readLine()) != null) {
-					contenu += ligne + "\n";
-				}
-
-				bufferedReader.close();
-				fileReader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Fichier.chargerFichier(contenu);
+			
 		}
 		initialiser();
 		changementPanel = false;
