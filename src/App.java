@@ -26,6 +26,8 @@ public class App implements Runnable {
 			Graphism.lancer();
 			new Thread(new App()).start();
 		}
+
+		//lancer
 	}
 
 	@Override
