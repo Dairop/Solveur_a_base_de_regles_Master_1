@@ -34,6 +34,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 	// composants graphiques
 	static ArrayList<JCheckBox> observations = new ArrayList<>();
 	static ArrayList<JComboBox<String>> observationsConstantesVariables = new ArrayList<>();
+	static ArrayList<DouleurGraphic> douleur = new ArrayList<>();
 
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
 	static JScrollPane scrollPane2, scrollPane3, scrollPane1;
@@ -66,6 +67,13 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 			for (int i = 0; i < observationsConstantesStrings.length;i++){
 				observationsConstantesVariables.add(new JComboBox(observationsConstantesStrings[i]));
 				add(observationsConstantesVariables.get(i));
+			}
+
+			for (int i = 0; i < 4;i++){
+				douleur.add(new DouleurGraphic());
+				add(douleur.get(i).choixDouleur);
+				add(douleur.get(i).choixPartiesCorps);
+				add(douleur.get(i).label);
 			}
 		}else{
 			faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
@@ -413,6 +421,15 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 				observationsConstantesVariables.get(i).setSize(w/7, h/15);
 				observationsConstantesVariables.get(i).setLocation(w/5+(i%8)*w/6, h/5+i/8*h/10);
 			}
+			for (int i = 0; i < douleur.size();i++){
+				douleur.get(i).setFont(texteFont);
+				douleur.get(i).label.setFont(titreFont);
+				douleur.get(i).setSize(w/7,h/12);
+				douleur.get(i).label.setLocation(w/20+(i%2)*(w/2),h/10*3+(i/2)*h/8);
+				douleur.get(i).choixDouleur.setLocation(w/6+(i%2)*(w/2),h/10*3+(i/2)*h/8);
+				douleur.get(i).choixPartiesCorps.setLocation(w/3+(i%2)*(w/2),h/10*3+(i/2)*h/8);
+			}
+
 		}else{
 			faits.setFont(texteFont);
 			scrollPane1.setSize(w / 10 * 4, h / 2);
