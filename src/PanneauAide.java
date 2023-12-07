@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 public class PanneauAide extends PanneauPersonnalise{
 
     JLabel titre = new JLabel("Aide");
-    JTextArea aide = new JTextArea("Base de faits : Un fait par ligne on peut avoir par exemple sur une ligne :\n\"fievre(elevee)\" ou \"!A\" indiquant que le fait A est faux avec '!' devant\n\nBase de régles, une régle par ligne sachant que une régle est : \n[nom : premice(s) -> consequent(s)] avec par exemple:\n\"R1:A ET !B ET C -> S ET !G\" ou \"reégle test : A -> B\".\n\nPour plus d'informations, voir la documentation technique\n\nSinon le survol des éléments est possible pour plus d'informations.");
+    JTextArea aide = new JTextArea("Base de faits : \nNous avons un fait par ligne. \nEg:\n\"fievre(elevee)\"  ou  \"!a\" indiquant que nous savons 'a' à faux.\n\nBase de règles: \nUne règle par ligne. \nEg: \nnom : premisse(s) -> consequent(s)\ntel que\nR1 : A ET !B ET C -> S ET !G\nou \nrègle test : A -> B\n\nPour plus d'informations, voir la documentation technique\n\nLe survol des éléments est possible pour plus d'informations.");
     JButtonCustom retour = new JButtonCustom("Retour");
     JScrollPane scroll = new JScrollPane(aide);
 
@@ -40,15 +40,15 @@ public class PanneauAide extends PanneauPersonnalise{
         int w = getWidth();
         int h = getHeight();
      
-        titre.setFont(new Font("Gabriela", Font.BOLD, 30));
+        titre.setFont(new Font("Gabriela", Font.BOLD, 20));
         titre.setSize(w/3, h/5);
         titre.setLocation(w/2, h/20);        
 
-        retour.setFont(new Font("Gabriela", Font.BOLD, 30));
+        retour.setFont(new Font("Gabriela", Font.BOLD, 20));
         retour.setSize(w/5, h/8);
         retour.setLocation(w/10, h/10*9);
         
-        aide.setFont(new Font("Gabriela", Font.BOLD, 30));
+        aide.setFont(new Font("Gabriela", Font.BOLD, 20));
         scroll.setSize(w/5*4, h/2);
         scroll.setLocation(w/10, h/5);
     }
