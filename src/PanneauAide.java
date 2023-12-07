@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class PanneauRegle extends PanneauPersonnalise{
+public class PanneauAide extends PanneauPersonnalise{
 
     JLabel titre = new JLabel("Aide");
     JTextArea aide = new JTextArea("Base de faits : Un fait par ligne on peut avoir par exemple sur une ligne :\n\"fievre(elevee)\" ou \"!A\" indiquant que le fait A est faux avec '!' devant\n\nBase de régles, une régle par ligne sachant que une régle est : \n[nom : premice(s) -> consequent(s)] avec par exemple:\n\"R1:A ET !B ET C -> S ET !G\" ou \"reégle test : A -> B\".\n\nPour plus d'informations, voir la documentation technique\n\nSinon le survol des éléments est possible pour plus d'informations.");
