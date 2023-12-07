@@ -1,14 +1,16 @@
-import javax.swing.JOptionPane;
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 public class App implements Runnable {
 	public static void main(String[] args) throws Exception {
-		String[] options = {"Moteur 0+", "Moteur 1"};
+		String[] options = {"Interface complète", "Interface simplifiée"};
 
+		UIManager.put("OptionPane.minimumSize", new Dimension(500,200)); 
 		int result = JOptionPane.showOptionDialog(
                 null,
-                "Choisissez le moteur approprié: ",
-                "Le moteur 1 est plus simple à utiliser mais moins personnalisable",
+                "Choisissez l'interface appropriée: \nSi vous n'êtes pas sûr, sélectionnez la simplifiée",
+                "Choix de l'interface",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,

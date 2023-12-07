@@ -49,46 +49,32 @@ public class Graphism implements Runnable {
 		if (MoteurZeroPlus.moteur1 && !charge) {
 			String contenu = "";
 			charge = true;
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setDialogTitle("Il faut sélectionner le fichier Moteur1.txt qui est placé à côté du .jar");
+
 			
-			FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Text files (*.txt)", "txt");
-			fileChooser.addChoosableFileFilter(txtFilter);
-			fileChooser.setFileFilter(txtFilter);
-
-			int result = fileChooser.showOpenDialog(null);
-
-			if (result == JFileChooser.APPROVE_OPTION) {
-				// L'utilisateur a choisi un fichier
-				File selectedFile = fileChooser.getSelectedFile();
-				String selectedPath = selectedFile.getAbsolutePath();
-				String cheminDuFichier = selectedPath;
-				File f = new File(cheminDuFichier);
-				if (!f.exists()){
-					JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
-					System.exit(0);
-				}
-				try {
-					FileReader fileReader = new FileReader(cheminDuFichier);
-					BufferedReader bufferedReader = new BufferedReader(fileReader);
-					String ligne;
-					while ((ligne = bufferedReader.readLine()) != null) {
-						contenu += ligne + "\n";
-					}
-
-					bufferedReader.close();
-					fileReader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				Fichier.chargerFichier(contenu);
-			}else{
-
-				JOptionPane.showMessageDialog(null,"Vous n'avez pas valider le fichier donc le programme s'arrête.");
+			// L'utilisateur a choisi un fichier
+			String cheminDuFichier = "Moteur1.txt";
+			File f = new File(cheminDuFichier);
+			if (!f.exists()){
+				JOptionPane.showMessageDialog(null, "Le fichier Moteur1.txt n'est pas présent.\nIl doit être juste à côté du dossier src.\n Ici:\n"+cheminDuFichier);
 				System.exit(0);
 			}
-			
+			try {
+				FileReader fileReader = new FileReader(cheminDuFichier);
+				BufferedReader bufferedReader = new BufferedReader(fileReader);
+				String ligne;
+				while ((ligne = bufferedReader.readLine()) != null) {
+					contenu += ligne + "\n";
+				}
+
+				bufferedReader.close();
+				fileReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Fichier.chargerFichier(contenu);
 		}
+			
+		
 		initialiser();
 		changementPanel = false;
 		while (true && !changementPanel) {
