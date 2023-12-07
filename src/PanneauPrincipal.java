@@ -33,6 +33,8 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 
 	// composants graphiques
 	static ArrayList<JCheckBox> observations = new ArrayList<>();
+	static ArrayList<JComboBox<String>> observationsConstantesVariables = new ArrayList<>();
+
 	static JFrame fenetre = new JFrame("Solveur GIOVANNI CARRE, DORIAN BIAGI");
 	static JScrollPane scrollPane2, scrollPane3, scrollPane1;
 	static JTextField input = new JTextField();
@@ -54,9 +56,15 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 	@Override
 	void initialiser() {
 		if (MoteurZeroPlus.moteur1){
-			String[] observationsStrings = {"fievre(faible)", "mal-de-gorge", "toux", "diarrhee"};
+			String[] observationsStrings = {"toux", "anosmie", "perte_odorat", "frissons", "congestion_nasale", "lourdeur", "enflure", "perte_du_gout", "migraine"};
 			for (int i = 0; i < observationsStrings.length;i++){
 				observations.add(new JCheckBox(observationsStrings[i]));
+				add(observations.get(i));
+			}
+			String[][] observationsConstantesStrings = {{"Fièvre", "aucune_fievre", "fievre_faible", "fievre_moderee", "fievre_elevee"},{"Respiration", "respiration_faible", "respiration_normale", "respiration_haletante"},{"Fatigue", "fatigue_faible", "fatigue_moyenne", "fatigue_elevee"}, {"Etat", "etat_inconscient", "etat_confus", "etat_normal"}};
+			
+			for (int i = 0; i < observationsConstantesStrings.length;i++){
+				observationsConstantesVariables.add(new JComboBox(observationsConstantesStrings[i]));
 				add(observations.get(i));
 			}
 		}else{
@@ -393,8 +401,13 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 		if (MoteurZeroPlus.moteur1){
 			for (int i = 0; i < observations.size();i++){
 				observations.get(i).setFont(texteFont);
-				observations.get(i).setSize(w/10, h/15);
+				observations.get(i).setSize(w/7, h/15);
 				observations.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
+			}
+			for (int i = 0; i < observations.size();i++){
+				observationsConstantesVariables.get(i).setFont(texteFont);
+				observationsConstantesVariables.get(i).setSize(w/7, h/15);
+				observationsConstantesVariables.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
 			}
 		}else{
 			faits.setFont(texteFont);
