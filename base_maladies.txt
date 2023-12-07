@@ -3,7 +3,7 @@ douleur(douleur_elevee, jambes)
 perte_odorat
 toux
 ReglesSauvegarde:
-R1: douleur(elevee, PartiesDuCorps) ET fievre -> infection_sur(PartiesDuCorps) ET maux_de_tete
+R1: douleur(elevee, PartiesDuCorps) ET fievre_moderee -> infection_sur(PartiesDuCorps) ET maux_de_tete
 R2: respiration_haletante ET douleur(legere_douleur, bassin) -> appendicite
 R3: respiration_haletante ET douleur(legere_douleur, poitrine) -> pneumonie
 R4: respiration_haletante ET douleur(douleur_elevee, poitrine) -> pneumonie
