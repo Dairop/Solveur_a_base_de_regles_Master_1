@@ -65,7 +65,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 			
 			for (int i = 0; i < observationsConstantesStrings.length;i++){
 				observationsConstantesVariables.add(new JComboBox(observationsConstantesStrings[i]));
-				add(observations.get(i));
+				add(observationsConstantesVariables.get(i));
 			}
 		}else{
 			faits.setToolTipText("Un fait par ligne avec la syntaxe : '!A' ou 'B' ou 'symptome1'");
@@ -307,6 +307,10 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 					for (int i = 0; i < observations.size();i++)
 						if (observations.get(i).isSelected())
 							bf.ajouterFait(new Element(observations.get(i).getText()));
+					for (int i = 0;i < observationsConstantesVariables.size();i++){
+						if (observationsConstantesVariables.get(i).getSelectedIndex() != 0)
+							bf.ajouterFait(new Element(observationsConstantesVariables.get(i).getSelectedItem().toString()));
+					}
 				}else{
 					// Utilisation de StringBuilder pour concaténer les faits
 					StringBuilder faitsBuilder = new StringBuilder();
@@ -404,10 +408,10 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 				observations.get(i).setSize(w/7, h/15);
 				observations.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
 			}
-			for (int i = 0; i < observations.size();i++){
+			for (int i = 0; i < observationsConstantesVariables.size();i++){
 				observationsConstantesVariables.get(i).setFont(texteFont);
 				observationsConstantesVariables.get(i).setSize(w/7, h/15);
-				observationsConstantesVariables.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
+				observationsConstantesVariables.get(i).setLocation(w/5+(i%8)*w/6, h/5+i/8*h/10);
 			}
 		}else{
 			faits.setFont(texteFont);
