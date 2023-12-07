@@ -206,7 +206,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 		aide.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Graphism.setPanel(new PanneauRegle());
+				Graphism.setPanel(new PanneauAide());
 			}
 		});
 		add(aide);
