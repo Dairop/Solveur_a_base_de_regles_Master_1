@@ -319,6 +319,10 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 						if (observationsConstantesVariables.get(i).getSelectedIndex() != 0)
 							bf.ajouterFait(new Element(observationsConstantesVariables.get(i).getSelectedItem().toString()));
 					}
+					for (int i = 0;i < douleur.size();i++){
+						if (douleur.get(i).choixDouleur.getSelectedIndex() != 0 && douleur.get(i).choixDouleur.getSelectedIndex() != 0)
+							bf.ajouterFait(new Element("douleur("+douleur.get(i).choixDouleur.getSelectedItem().toString()+", "+douleur.get(i).choixPartiesCorps.getSelectedItem().toString()+")"));
+					}
 				}else{
 					// Utilisation de StringBuilder pour concaténer les faits
 					StringBuilder faitsBuilder = new StringBuilder();
