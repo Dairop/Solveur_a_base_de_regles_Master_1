@@ -57,7 +57,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 	@Override
 	void initialiser() {
 		if (MoteurZeroPlus.moteur1){
-			String[] observationsStrings = {"perte_du_gout","enflure","diarrhee",
+			String[] observationsStrings = {"diarrhee",
 					"vomissements","toux", "anosmie", "perte_odorat", "frissons", "congestion_nasale", "lourdeur", "enflure", "perte_du_gout", "migraine"};
 			for (int i = 0; i < observationsStrings.length;i++){
 				observations.add(new JCheckBox(observationsStrings[i]));
@@ -218,7 +218,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 				Graphism.setPanel(new PanneauAide());
 			}
 		});
-		add(aide);
+		if(!MoteurZeroPlus.moteur1) add(aide);
 
 		actionListeners = variable.getActionListeners();
 		for (ActionListener listener : actionListeners)
@@ -321,7 +321,7 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 							bf.ajouterFait(new Element(observationsConstantesVariables.get(i).getSelectedItem().toString()));
 					}
 					for (int i = 0;i < douleur.size();i++){
-						if (douleur.get(i).choixDouleur.getSelectedIndex() != 0 && douleur.get(i).choixDouleur.getSelectedIndex() != 0)
+						if (douleur.get(i).choixDouleur.getSelectedIndex() != 0 && douleur.get(i).choixPartiesCorps.getSelectedIndex() != 0)
 							bf.ajouterFait(new Element("douleur("+douleur.get(i).choixDouleur.getSelectedItem().toString()+", "+douleur.get(i).choixPartiesCorps.getSelectedItem().toString()+")"));
 					}
 				}else{

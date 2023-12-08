@@ -54,5 +54,11 @@ R48: fievre(elevee) ET frissons -> malaria ET grippe
 R49: fievre(elevee) ET maux-de-tete ET vomissements -> meningite ET grippe
 R50: fievre(elevee) ET toux ET douleurs-musculaires -> grippe ET rhume
 Variables:
-TypeFievre: faible; moderee; elevee
-Paquets : 
+Fievre: faible; moderee; elevee
+Respiration: faible; normale; haletante
+Fatigue: faible; moyenne; elevee
+Etat: Inconscient; confus; normal
+Douleur: aucune; legere; elevee
+
+Paquets :
+Aucun Paquet
