@@ -11,7 +11,7 @@ R5: etat_inconscient ET fievre_elevee -> méningite
 R6: fievre_elevee ET douleur(douleur_elevee, tout_le_corps) -> infection_sanguine
 R7: aucune_fievre ET etat_confus -> choc_anaphylactique
 R8: douleur(douleur_elevee, tete) -> migraine
-R9:  douleur_elevee ET fievre_elevee ET frissons -> paludisme
+R9: douleur_elevee ET fievre_elevee ET frissons -> paludisme
 R10: respiration_haletante ET douleur_elevee -> crise_cardiaque
 R11: toux ET perte_du_gout -> covid-19
 R12: frissons ET TypeDouleur -> infection(TypeDouleur, PartiesDuCorps)
