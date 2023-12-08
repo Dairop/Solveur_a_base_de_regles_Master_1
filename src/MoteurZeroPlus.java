@@ -24,7 +24,8 @@ public class MoteurZeroPlus extends Moteur{
             if (_verifierIncoherences)
                 verifierIncoherences();
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
+            //e.printStackTrace();
         }
 
         if (_strategie == null) {

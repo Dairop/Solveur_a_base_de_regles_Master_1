@@ -157,8 +157,10 @@ public class BaseDeRegles {
         }
         if (incoherent){
         String reponse = Moteur.lireReponse("\n1 : Arreter le calcul et on laisse l'expert modifier la base de regle\n2 : Executer quand même car cette situation est prévue.");
-            if (reponse.contains("1"))
-                throw new Exception("Programme interrompu car des regles ont des incohérences.");
+            if (reponse.contains("1")){
+                Moteur.print("Arret");
+                throw new Exception("");
+            }
         }
         
     }
