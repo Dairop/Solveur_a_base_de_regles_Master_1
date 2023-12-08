@@ -1,64 +1,49 @@
+fievre_moderee
+douleur(douleur_elevee, jambes)
+perte_odorat
 toux
-fievre(elevee)
-fatigue
-respiration(faible)
 ReglesSauvegarde:
-R1: fievre(moderee) ET maux-de-tete ET diarrhee -> gastro-enterite ET intoxication-alimentaire
-R2: fievre(elevee) ET toux ET mal-de-gorge -> rhume ET grippe
-R3: fievre(elevee) ET respiration(elevee) ET toux -> pneumonie ET grippe
-R4: fievre(elevee) ET maux-de-tete ET fatigue -> grippe ET migraine
-R5: fievre(elevee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET syndrome-du-colon-irritable
-R6: douleurs-abdominales ET vomissements -> gastro-enterite ET intoxication-alimentaire
-R7: fievre(moderee) ET fatigue -> rhinovirus ET maladie-virale
-R8: fievre(elevee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET colite-ulcerative
-R9: fievre(elevee) ET frissons -> malaria ET grippe
-R10: fievre(elevee) ET maux-de-tete ET vomissements -> meningite ET grippe
-R11: toux ET fievre(elevee) ET respiration(faible) -> pneumonie ET insuffisance-respiratoire
-R12: douleurs-abdominales ET vomissements -> gastro-enterite ET dehydration
-R13: fievre(elevee) ET maux-de-tete -> grippe ET maux-de-gorge
-R14: maux-de-tete ET fatigue -> migraine ET stress
-R15: fievre(elevee) ET douleurs-musculaires -> grippe ET fatigue
-R16: toux ET respiration(elevee) -> bronchite ET asthme
-R17: douleurs-musculaires ET fievre(elevee) -> dengue ET fatigue
-R18: fievre(elevee) ET eruption-cutanee -> rougeole ET varicelle
-R19: respiration(faible) ET fievre(elevee) ET maux-de-tete -> grippe ET pneumonie
-R20: fievre(elevee) ET maux-de-ventre -> gastro-enterite ET colique
-R21: douleurs-abdominales ET vomissements -> gastro-enterite ET intoxication-alimentaire
-R22: fievre(moderee) ET fatigue -> rhinovirus ET maladie-virale
-R23: fievre(elevee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET colite-ulcerative
-R24: fievre(elevee) ET frissons -> malaria ET grippe
-R25: fievre(elevee) ET maux-de-tete ET vomissements -> meningite ET grippe
-R26: fievre(elevee) ET toux ET douleurs-musculaires -> grippe ET rhume
-R27: fievre(elevee) ET fatigue ET perte-d'appetit -> mononucleose ET grippe
-R28: fievre(elevee) ET toux ET mal-de-gorge -> rhume ET grippe
-R29: fievre(elevee) ET maux-de-tete ET douleurs-articulaires -> grippe ET chikungunya
-R30: fievre(moderee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET syndrome-du-colon-irritable
-R31: fievre(elevee) ET douleurs-articulaires -> chikungunya ET arthrite
-R32: fievre(elevee) ET maux-de-ventre ET vomissements -> gastro-enterite ET appendicite
-R33: fievre(moderee) ET maux-de-tete ET vomissements -> migraine ET intoxication-alimentaire
-R34: fievre(elevee) ET maux-de-tete ET vertiges -> grippe ET labyrinthite
-R35: fievre(elevee) ET respiration(elevee) ET douleurs-musculaires -> pneumonie ET grippe
-R36: fievre(elevee) ET toux ET perte-de-poids -> tuberculose ET cancer
-R37: fievre(elevee) ET maux-de-tete ET vertiges -> meningite ET grippe
-R38: fievre(elevee) ET fatigue ET maux-de-tete -> grippe ET rhume
-R39: fievre(elevee) ET maux-de-ventre ET diarrhee ET vomissements -> gastro-enterite ET intoxication-alimentaire
-R40: fievre(moderee) ET maux-de-tete ET fatigue -> rhinovirus ET grippe
-R41: fievre(elevee) ET toux ET mal-de-gorge -> rhume ET grippe
-R42: fievre(elevee) ET respiration(elevee) ET toux -> pneumonie ET grippe
-R43: fievre(elevee) ET maux-de-tete ET fatigue -> grippe ET migraine
-R44: fievre(elevee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET syndrome-du-colon-irritable
-R45: douleurs-abdominales ET vomissements -> gastro-enterite ET intoxication-alimentaire
-R46: fievre(moderee) ET fatigue -> rhinovirus ET maladie-virale
-R47: fievre(elevee) ET maux-de-ventre ET diarrhee -> gastro-enterite ET colite-ulcerative
-R48: fievre(elevee) ET frissons -> malaria ET grippe
-R49: fievre(elevee) ET maux-de-tete ET vomissements -> meningite ET grippe
-R50: fievre(elevee) ET toux ET douleurs-musculaires -> grippe ET rhume
+R1: douleur(elevee, PartiesDuCorps) ET fievre_moderee -> infection_sur(PartiesDuCorps) ET maux_de_tete
+R2: respiration_haletante ET douleur(legere_douleur, bassin) -> appendicite
+R3: respiration_haletante ET douleur(legere_douleur, poitrine) -> pneumonie
+R4: respiration_haletante ET douleur(douleur_elevee, poitrine) -> pneumonie
+R5: etat_inconscient ET fievre_elevee -> méningite
+R6: fievre_elevee ET douleur(douleur_elevee, tout_le_corps) -> infection_sanguine
+R7: aucune_fievre ET etat_confus -> choc_anaphylactique
+R8: douleur(douleur_elevee, tete) -> migraine
+R9: douleur_elevee ET fievre_elevee ET frissons -> paludisme
+R10: respiration_haletante ET douleur_elevee -> crise_cardiaque
+R11: toux ET perte_du_gout -> covid-19
+R12: frissons ET TypeDouleur -> infection(TypeDouleur, PartiesDuCorps)
+R13: douleur(douleur_elevee, ventre) ET vomissements -> gastro_enterite
+R14: douleur(legere_douleur, ventre) ET fievre_elevee -> appendicite
+R15: douleur(douleur_elevee, extremites) ET etat_confus -> embolie
+R16: douleur(douleur_elevee, jambes) ET fievre_moderee -> thrombose_veineuse
+R17: fatigue_elevee ET fievre_moderee -> infection_virale
+R18: fatigue_moyenne ET douleur(douleur_elevee, tout_le_corps) -> fibromyalgie
+R19: douleur(douleur_elevee, tout_le_corps) ET fievre_moderee -> syndrome_fatigue_chronique
+R20: douleur(douleur_elevee, tout_le_corps) ET fatigue_elevee -> syndrome_fatigue_chronique
+R21: fievre_elevee ET douleur(douleur_elevee, bassin) -> infection_urinaire
+R22: toux ET fatigue_elevee -> infection_respiratoire
+R23: respiration_normale ET fatigue_elevee ET frissons -> infection_virale
+R24: douleur(legere_douleur, bras) -> hernie_discale
+R25: douleur(legere_douleur, cou) -> hernie_discale
+R26: douleur(legere_douleur, dos) -> hernie_discale
+R27: douleur(legere_douleur, jambes) -> hernie_discale
+R28: perte_odorat -> anosmie
+R29: anosmie -> polypose_nasale
+R30: douleur(douleur_elevee, tete) ET perte_du_gout -> infection_virale
+R31: respiration_haletante ET etat_confus -> insuffisance_respiratoire
+R32: douleur(douleur_elevee, ventre) ET diarrhee ET vomissements -> intoxication
+R33: lourdeur ET enflure ET douleur(legere_douleur, PartiesDuCorps) -> thrombose_arterielle
+R34: douleur(legere_douleur, tout_le_corps) ET fievre_moderee -> rhumatisme
+R35: toux ET fievre_moderee ET congestion_nasale -> infection_respiratoire
 Variables:
-Fievre: faible; moderee; elevee
-Respiration: faible; normale; haletante
-Fatigue: faible; moyenne; elevee
-Etat: Inconscient; confus; normal
-Douleur: aucune; legere; elevee
-
-Paquets :
+TypeFievre: aucune_fievre; fievre_faible; fievre_moderee; fievre_elevee
+TypeRespiration: respiration_faible; respiration_normale; respiration_haletante
+TypeFatigue: fatigue_faible; fatigue_moyenne; fatigue_elevee
+Etat: etat_inconscient; etat_confus; etat_normal
+TypeDouleur: aucune_douleur; legere_douleur; douleur_elevee
+PartiesDuCorps: tete; ventre; bras; bassin; jambes; extremites; dos; cou; tout_le_corps
+Paquets:
 Aucun Paquet
