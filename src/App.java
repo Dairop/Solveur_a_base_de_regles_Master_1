@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class App implements Runnable {
 	public static void main(String[] args) throws Exception {
-		String[] options = {"Interface complète", "Interface simplifiée"};
+		String[] options = {"Interface complète", "Interface simplifiée avec détections de maladies"};
 
 		UIManager.put("OptionPane.minimumSize", new Dimension(500,200)); 
 		int result = JOptionPane.showOptionDialog(

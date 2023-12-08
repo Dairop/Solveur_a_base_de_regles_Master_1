@@ -57,7 +57,8 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 	@Override
 	void initialiser() {
 		if (MoteurZeroPlus.moteur1){
-			String[] observationsStrings = {"toux", "anosmie", "perte_odorat", "frissons", "congestion_nasale", "lourdeur", "enflure", "perte_du_gout", "migraine"};
+			String[] observationsStrings = {"perte_du_gout","enflure","diarrhee",
+					"vomissements","toux", "anosmie", "perte_odorat", "frissons", "congestion_nasale", "lourdeur", "enflure", "perte_du_gout", "migraine"};
 			for (int i = 0; i < observationsStrings.length;i++){
 				observations.add(new JCheckBox(observationsStrings[i]));
 				add(observations.get(i));
@@ -419,11 +420,14 @@ public class PanneauPrincipal extends PanneauPersonnalise {
 				observations.get(i).setFont(texteFont);
 				observations.get(i).setSize(w/7, h/15);
 				observations.get(i).setLocation(w/100+(i%8)*w/6, h/10+i/8*h/10);
+				if (i > 9){
+					observations.get(i).setLocation(w/100+(i%8)*w/6, h/100);
+				}
 			}
 			for (int i = 0; i < observationsConstantesVariables.size();i++){
 				observationsConstantesVariables.get(i).setFont(texteFont);
 				observationsConstantesVariables.get(i).setSize(w/7, h/15);
-				observationsConstantesVariables.get(i).setLocation(w/5+(i%8)*w/6, h/5+i/8*h/10);
+				observationsConstantesVariables.get(i).setLocation(w/3+(i%8)*w/6, h/5+i/8*h/10);
 			}
 			for (int i = 0; i < douleur.size();i++){
 				douleur.get(i).setFont(texteFont);
